@@ -1,5 +1,6 @@
 ﻿using BepInEx;
 using HarmonyLib;
+using Valheim.CustomRaids.PreConfiguredRaids;
 
 namespace Valheim.CustomRaids
 {
@@ -11,6 +12,12 @@ namespace Valheim.CustomRaids
             Logger.LogInfo("Loading configurations...");
 
             ConfigurationManager.LoadGeneralConfigurations();
+
+            if (ConfigurationManager.GeneralConfig.GeneratePresetRaids.Value)
+            {
+                new Ragnarok().CreateConfigIfMissing();
+                new DeathsquitoSeason().CreateConfigIfMissing();
+            }
 
             if(!ConfigurationManager.GeneralConfig.LoadRaidConfigsOnWorldStart.Value)
             {

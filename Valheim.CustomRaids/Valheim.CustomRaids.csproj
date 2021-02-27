@@ -67,10 +67,13 @@
     <Compile Include="Patches\InvestigationPatch.cs" />
     <Compile Include="Patches\RaidEventSystemPatch.cs" />
     <Compile Include="CustomRaidPlugin.cs" />
+    <Compile Include="PreConfiguredRaids\DeathsquitoSeason.cs" />
+    <Compile Include="PreConfiguredRaids\Ragnarok.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Thunderstorm\README.md" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

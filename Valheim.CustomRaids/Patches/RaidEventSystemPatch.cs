@@ -1,12 +1,9 @@
 ﻿using BepInEx;
 using HarmonyLib;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
 
 namespace Valheim.CustomRaids
@@ -43,6 +40,25 @@ namespace Valheim.CustomRaids
 
             foreach(var raid in ConfigurationManager.RaidConfig)
             {
+                if (ConfigurationManager.GeneralConfig.OverrideExisting.Value)
+                {
+                    //Check for overrides
+                    if (__instance.m_events.Count > 0)
+                    {
+                        for (int i = 0; i < __instance.m_events.Count; ++i)
+                        {
+                            string cleanedEventName = __instance.m_events[i].m_name.ToUpperInvariant().Trim();
+                            string cleanedRaidName = raid.Name.Value.ToUpperInvariant().Trim();
+                            if (cleanedEventName == cleanedRaidName)
+                            {
+                                if (ConfigurationManager.DebugOn) Debug.Log($"Overriding existing event {__instance.m_events[i].m_name} with configured");
+                                __instance.m_events.RemoveAt(i);
+                                break;
+                            }
+                        }
+                    }
+                }
+
                 if(!raid.Enabled.Value)
                 {
                     continue;
