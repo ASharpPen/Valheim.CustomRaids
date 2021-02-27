@@ -1,4 +1,5 @@
 ﻿using BepInEx.Configuration;
+using UnityEngine;
 
 namespace Valheim.CustomRaids.ConfigurationCore
 {
@@ -31,7 +32,18 @@ namespace Valheim.CustomRaids.ConfigurationCore
             return $"[{Config.Definition.Key}:{Config.Definition.Section}]: {Config.Value}";
         }
 
-        public TIn Value => Config.Value;
+        public TIn Value 
+        {
+            get
+            {
+                if(Config is null)
+                {
+                    return DefaultValue;
+                }
+
+                return Config.Value;
+            }
+        }
 
         public ConfigurationEntry()
         {
