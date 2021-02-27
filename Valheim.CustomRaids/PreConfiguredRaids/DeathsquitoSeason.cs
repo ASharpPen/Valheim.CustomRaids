@@ -23,11 +23,11 @@ namespace Valheim.CustomRaids.PreConfiguredRaids
             @"
 [DeathsquitoSeason]
 Name = DeathsquitoSeason
-Biome=513
+Biome=0
 Duration=3600
 NearBaseOnly=true
-StartMessage=It's the season
-EndMessage=The mosquito season has ended
+StartMessage=Deathsquito season
+EndMessage=The season has ended
 Enabled=false
 RequiredGlobalKeys=defeated_bonemass
 
@@ -35,13 +35,13 @@ RequiredGlobalKeys=defeated_bonemass
 Name=Deathsquito
 Enabled=True
 PrefabName=Deathsquito
-MaxSpawned=3
-SpawnInterval=60
+MaxSpawned=10
+SpawnInterval=10
 SpawnDistance=0
 SpawnRadiusMin=0
 SpawnRadiusMax=1
-GroupSizeMin=1
-GroupSizeMax=1
+GroupSizeMin=3
+GroupSizeMax=3
 SpawnAtNight=True
 SpawnAtDay=True
 HuntPlayer=True

@@ -23,7 +23,7 @@ namespace Valheim.CustomRaids.PreConfiguredRaids
             @"
 [Ragnarok]
 Name = Ragnarok
-Biome=513
+Biome=0
 Duration=300
 NearBaseOnly=true
 PauseIfNoPlayerInArea=True
@@ -39,7 +39,8 @@ Name=Eikthyr
 Enabled=True
 PrefabName=Eikthyr
 MaxSpawned=1
-SpawnInterval=600
+SpawnInterval=1
+SpawnChancePerInterval=100
 SpawnDistance=0
 SpawnRadiusMin=0
 SpawnRadiusMax=1
@@ -53,11 +54,12 @@ MaxLevel=1
 MinLevel=1
 
 [Ragnarok.1]
-Name=ElderBark
+Name=Bonemass
 Enabled=True
-PrefabName=ElderBark
+PrefabName=Bonemass
 MaxSpawned=1
-SpawnInterval=600
+SpawnInterval=1
+SpawnChancePerInterval=100
 SpawnDistance=0
 SpawnRadiusMin=0
 SpawnRadiusMax=1
@@ -71,11 +73,12 @@ MaxLevel=1
 MinLevel=1
 
 [Ragnarok.2]
-Name=Bonemass
+Name=Dragon
 Enabled=True
-PrefabName=Bonemass
+PrefabName=Dragon
 MaxSpawned=1
-SpawnInterval=600
+SpawnInterval=1
+SpawnChancePerInterval=100
 SpawnDistance=0
 SpawnRadiusMin=0
 SpawnRadiusMax=1
@@ -84,16 +87,17 @@ GroupSizeMax=1
 SpawnAtNight=True
 SpawnAtDay=True
 HuntPlayer=True
-GroundOffset=0.5
+GroundOffset=5
 MaxLevel=1
 MinLevel=1
 
 [Ragnarok.3]
-Name=Dragon
+Name=gd_king
 Enabled=True
-PrefabName=Dragon
+PrefabName=gd_king
 MaxSpawned=1
-SpawnInterval=600
+SpawnInterval=1
+SpawnChancePerInterval=100
 SpawnDistance=0
 SpawnRadiusMin=0
 SpawnRadiusMax=1
@@ -107,16 +111,18 @@ MaxLevel=1
 MinLevel=1
 
 [Ragnarok.4]
-Name=gd_king
+Name=Draugr Troopers
 Enabled=True
-PrefabName=gd_king
-MaxSpawned=1
-SpawnInterval=600
+PrefabName=Draugr
+MaxSpawned=30
+SpawnInterval=1
+SpawnChancePerInterval=100
 SpawnDistance=0
 SpawnRadiusMin=0
-SpawnRadiusMax=1
-GroupSizeMin=1
-GroupSizeMax=1
+SpawnRadiusMax=10
+GroupSizeMin=5
+GroupSizeMax=5
+GroupSizeRadius=2
 SpawnAtNight=True
 SpawnAtDay=True
 HuntPlayer=True
@@ -125,11 +131,12 @@ MaxLevel=1
 MinLevel=1
 
 [Ragnarok.5]
-Name=Draugr Troopers
+Name=Skelly Troopers
 Enabled=True
-PrefabName=Draugr
-MaxSpawned=15
-SpawnInterval=10
+PrefabName=Skeleton
+MaxSpawned=30
+SpawnInterval=1
+SpawnChancePerInterval=100
 SpawnDistance=0
 SpawnRadiusMin=0
 SpawnRadiusMax=10
@@ -144,30 +151,12 @@ MaxLevel=1
 MinLevel=1
 
 [Ragnarok.6]
-Name=Skelly Troopers
-Enabled=True
-PrefabName=Skeleton
-MaxSpawned=15
-SpawnInterval=10
-SpawnDistance=0
-SpawnRadiusMin=0
-SpawnRadiusMax=10
-GroupSizeMin=5
-GroupSizeMax=5
-GroupSizeRadius=2
-SpawnAtNight=True
-SpawnAtDay=True
-HuntPlayer=True
-GroundOffset=5
-MaxLevel=1
-MinLevel=1
-
-[Ragnarok.7]
 Name=Fenring
 Enabled=True
 PrefabName=Fenring
 MaxSpawned=1
-SpawnInterval=600
+SpawnInterval=1
+SpawnChancePerInterval=100
 SpawnDistance=0
 SpawnRadiusMin=0
 SpawnRadiusMax=1

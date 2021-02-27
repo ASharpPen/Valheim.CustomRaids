@@ -77,6 +77,8 @@ namespace Valheim.CustomRaids
                     if (ConfigurationManager.DebugOn) Debug.LogException(e);
                 }
             }
+
+            WriteToFile(__instance.m_events, ConfigurationManager.DebugOn, "custom_random_events.txt");
         }
 
         private static RandomEvent CreateEvent(RaidEventConfiguration raidEvent)
@@ -97,6 +99,7 @@ namespace Valheim.CustomRaids
 
                 SpawnSystem.SpawnData spawn = new SpawnSystem.SpawnData
                 {
+                    m_name = spawnConfig.Name.Value,
                     m_enabled = spawnConfig.Enabled.Value,
                     m_prefab = spawnObject,
                     m_maxSpawned = spawnConfig.MaxSpawned.Value,
@@ -110,7 +113,6 @@ namespace Valheim.CustomRaids
                     m_huntPlayer = spawnConfig.HuntPlayer.Value,
                     m_maxLevel = spawnConfig.MaxLevel.Value,
                     m_minLevel = spawnConfig.MinLevel.Value,
-                    m_biome = (Heightmap.Biome)spawnConfig.Biome.Value,
                     m_groundOffset = spawnConfig.GroundOffset.Value,
                     m_groupRadius = spawnConfig.GroupRadius.Value,
                     m_inForest = spawnConfig.InForest.Value,
@@ -121,11 +123,11 @@ namespace Valheim.CustomRaids
                     m_minTilt = spawnConfig.TerrainTiltMin.Value,
                     m_maxTilt = spawnConfig.TerrainTiltMax.Value,
                     m_outsideForest = spawnConfig.OutsideForest.Value,
-                    m_name = spawnConfig.Name.Value,
                     m_spawnAtDay = spawnConfig.SpawnAtDay.Value,
                     m_spawnAtNight = spawnConfig.SpawnAtNight.Value,
                     m_requiredGlobalKey = spawnConfig.RequiredGlobalKey.Value,
                     m_requiredEnvironments = requiredEnvironments?.ToList() ?? new List<string>(),
+                    m_biome = Heightmap.Biome.BiomesMax,
                     m_biomeArea = (Heightmap.BiomeArea)spawnConfig.BiomeArea.Value,
                 };
 
@@ -139,7 +141,6 @@ namespace Valheim.CustomRaids
 
             RandomEvent newEvent = new RandomEvent
             {
-                m_biome = (Heightmap.Biome)raidEvent.Biome.Value,
                 m_name = raidEvent.Name.Value,
                 m_duration = raidEvent.Duration.Value,
                 m_forceEnvironment = raidEvent.ForceEnvironment.Value,
@@ -150,6 +151,7 @@ namespace Valheim.CustomRaids
                 m_enabled = raidEvent.Enabled.Value,
                 m_random = raidEvent.Random.Value,
                 m_spawn = spawnList,
+                m_biome = (Heightmap.Biome)raidEvent.Biome.Value,
                 m_notRequiredGlobalKeys = notRequiredGlobalKeys?.ToList() ?? new List<string>(),
                 m_requiredGlobalKeys = requiredGlobalKeys?.ToList() ?? new List<string>(),
                 m_pauseIfNoPlayerInArea = raidEvent.PauseIfNoPlayerInArea.Value,                
@@ -158,9 +160,9 @@ namespace Valheim.CustomRaids
             return newEvent;
         }
 
-        public static void WriteToFile(List<RandomEvent> events, bool debug)
+        public static void WriteToFile(List<RandomEvent> events, bool debug, string fileName = "default_random_events.txt")
         {
-            string filePath = Path.Combine(Paths.PluginPath, "default_random_events.txt");
+            string filePath = Path.Combine(Paths.PluginPath, fileName);
             if (debug) Debug.Log($"Writing default random events to '{filePath}'.");
 
             List<string> lines = new List<string>(events.Count * 30);

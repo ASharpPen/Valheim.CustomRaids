@@ -120,7 +120,8 @@ namespace Valheim.CustomRaids.ConfigurationCore
             foreach (var field in fields)
             {
                 if (debug) Debug.Log($"Creating and binding entry for '{sectionHeader}:{field.Name}'");
-                var entry = (IConfigurationEntry)Activator.CreateInstance(field.FieldType);
+
+                var entry = (IConfigurationEntry)field.GetValue(configuration);
                 entry.Bind(configFile, sectionHeader, field.Name);
 
                 configuration.Entries[field.Name] = entry;

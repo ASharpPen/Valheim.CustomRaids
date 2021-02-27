@@ -12,8 +12,8 @@ namespace Valheim.CustomRaids
 {
     public static class ConfigurationManager
     {
-        private static string DefaultRaidFile = "custom_raid.raids.cfg";
-        private static string DefaultConfigFile = "custom_raid.cfg";
+        private static string DefaultRaidFile = "custom_raids.raids.cfg";
+        private static string DefaultConfigFile = "custom_raids.cfg";
 
         public static bool DebugOn = false;
 
@@ -87,7 +87,7 @@ namespace Valheim.CustomRaids
 
             var configFile = new ConfigFile(configPath, true);
 
-            if (GeneralConfig != null) configFile.SaveOnConfigSet = GeneralConfig.StopTouchingMyConfigs.Value;
+            if (GeneralConfig != null) configFile.SaveOnConfigSet = !GeneralConfig.StopTouchingMyConfigs.Value;
 
             if (DebugOn) Debug.Log("Scanning bindings...");
             ConfigurationLoader.ScanBindings<RaidEventConfiguration, SpawnConfiguration>(configFile, DebugOn);

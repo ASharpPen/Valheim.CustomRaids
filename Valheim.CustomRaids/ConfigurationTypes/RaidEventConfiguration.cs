@@ -10,7 +10,7 @@ namespace Valheim.CustomRaids
 
         public ConfigurationEntry<bool> Random = new ConfigurationEntry<bool>(true, "Sets whether event is random or not. Eg. boss fights are events, but not random.");
 
-        public ConfigurationEntry<int> Biome = new ConfigurationEntry<int>((int)Heightmap.Biome.BiomesMax, "Biome flag for allowed biomes. See mod documentation.");
+        public ConfigurationEntry<int> Biome = new ConfigurationEntry<int>(0, "Biome flag for allowed biomes. See mod documentation.");
 
         public ConfigurationEntry<float> Duration = new ConfigurationEntry<float>(60, "Duration of raid? Unsure of the exact measure used here.");
 
@@ -28,7 +28,7 @@ namespace Valheim.CustomRaids
 
         public ConfigurationEntry<bool> PauseIfNoPlayerInArea = new ConfigurationEntry<bool>(true);
 
-        public ConfigurationEntry<string> ForceEnvironment = new ConfigurationEntry<string>("Misty", "Environmental effect to set for raid.");
+        public ConfigurationEntry<string> ForceEnvironment = new ConfigurationEntry<string>("", "Environmental effect to set for raid.");
 
         public ConfigurationEntry<string> ForceMusic = new ConfigurationEntry<string>("CombatEventL1", "Music to play for raid.");
 
@@ -43,8 +43,6 @@ namespace Valheim.CustomRaids
 
         public ConfigurationEntry<string> PrefabName = new ConfigurationEntry<string>("Deer", "Prefab name of entity to spawn. This... might actually allow for anything.");
 
-        public ConfigurationEntry<int> Biome = new ConfigurationEntry<int>(0, "Spawn biome. Unknown if this has any effect on raids. Binary flag for enums. See Biome flags in docs.");
-
         public ConfigurationEntry<int> BiomeArea = new ConfigurationEntry<int>(3, "Spawn location in biome. Binary flag for enum. See Biome areas in docs.");
 
         public ConfigurationEntry<int> MaxSpawned = new ConfigurationEntry<int>(2, "Maximum alive at a time.");
@@ -53,9 +51,9 @@ namespace Valheim.CustomRaids
 
         public ConfigurationEntry<float> SpawnChancePerInterval = new ConfigurationEntry<float>(100, "Chance (0 to 100) to spawn new wave per check.");
 
-        public ConfigurationEntry<float> SpawnDistance = new ConfigurationEntry<float>(0);
+        public ConfigurationEntry<float> SpawnDistance = new ConfigurationEntry<float>(1);
 
-        public ConfigurationEntry<float> SpawnRadiusMin = new ConfigurationEntry<float>(0);
+        public ConfigurationEntry<float> SpawnRadiusMin = new ConfigurationEntry<float>(1);
 
         public ConfigurationEntry<float> SpawnRadiusMax = new ConfigurationEntry<float>(10);
 
@@ -73,7 +71,7 @@ namespace Valheim.CustomRaids
         
         public ConfigurationEntry<bool> SpawnAtDay = new ConfigurationEntry<bool>(true, "Can spawn at day");
 
-        public ConfigurationEntry<float> AltitudeMin = new ConfigurationEntry<float>(0);
+        public ConfigurationEntry<float> AltitudeMin = new ConfigurationEntry<float>(-1000);
 
         public ConfigurationEntry<float> AltitudeMax = new ConfigurationEntry<float>(1000);
 
