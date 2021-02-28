@@ -78,6 +78,8 @@ Biomes were a big annoyance to me during testing. To just "make it work", ensure
 
 ForcedEnvironment also seems to be taken more as a hint, than something forced. It should trigger most of the time though.
 
+A pretty comprehensive guide for prefabs can be found here https://gist.github.com/Sonata26/e2b85d53e125fb40081b18e2aee6d584 or here https://steamcommunity.com/sharedfiles/filedetails/?id=2392080520
+
 # The Details - Raid Event
 
 | Setting | Type | Example Value | Description |
