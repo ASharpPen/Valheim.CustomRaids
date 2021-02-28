@@ -1,6 +1,6 @@
 {
   "name": "Custom_Raids",
-  "version_number": "1.0.0",
+  "version_number": "1.0.1",
   "website_url": "https://github.com/ASharpPen/Valheim.CustomRaids",
   "description": "Customize raid events, override existing, extend with your own raids.",
   "dependencies": [

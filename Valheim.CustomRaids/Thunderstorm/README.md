@@ -1,11 +1,12 @@
-﻿
-This mod allows for customizing raids to your liking.
+﻿This mod allows for customizing raids to your liking.
 
 Want to have armies besieging your fortress? A bit of extra environmental effects along your way? Or just disable trolls?
 
 This mod can help you do all of that!
 
 Comes preconfigured with two additional end-game raids (disabled by default), to show how and what can be done.
+
+Enable those raids at own risk.
 
 # Features
 
@@ -189,3 +190,7 @@ As with biome flags. Use 3 for all.
 - defeated_gdking
 - defeated_bonemass
 - defeated_dragon
+
+# Changelog
+
+- 1.0.1: Fixed debug output file not being enable-only by toggle in options

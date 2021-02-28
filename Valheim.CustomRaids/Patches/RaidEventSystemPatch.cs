@@ -78,7 +78,11 @@ namespace Valheim.CustomRaids
                 }
             }
 
-            WriteToFile(__instance.m_events, ConfigurationManager.DebugOn, "custom_random_events.txt");
+            if (ConfigurationManager.GeneralConfig.WritePostChangeEventDataToDisk.Value)
+            {
+                WriteToFile(__instance.m_events, ConfigurationManager.DebugOn, "custom_random_events.txt");
+            }
+
         }
 
         private static RandomEvent CreateEvent(RaidEventConfiguration raidEvent)
