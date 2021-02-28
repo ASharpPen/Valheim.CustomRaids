@@ -4,7 +4,7 @@ using Valheim.CustomRaids.PreConfiguredRaids;
 
 namespace Valheim.CustomRaids
 {
-    [BepInPlugin("asharppen.valheim.custom_raids", "Custom Raids", "1.0.0")]
+    [BepInPlugin("asharppen.valheim.custom_raids", "Custom Raids", "1.0.1")]
     public class CustomRaidPlugin : BaseUnityPlugin
     {
         void Awake()
