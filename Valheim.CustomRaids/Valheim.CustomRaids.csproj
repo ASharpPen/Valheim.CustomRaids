@@ -64,6 +64,7 @@
     <Compile Include="ConfigurationManager.cs" />
     <Compile Include="ConfigurationTypes\GeneralConfiguration.cs" />
     <Compile Include="ConfigurationTypes\RaidEventConfiguration.cs" />
+    <Compile Include="CustomLog.cs" />
     <Compile Include="Patches\InvestigationPatch.cs" />
     <Compile Include="Patches\RaidEventSystemPatch.cs" />
     <Compile Include="CustomRaidPlugin.cs" />

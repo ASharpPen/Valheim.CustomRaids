@@ -13,7 +13,7 @@ namespace Valheim.CustomRaids
     {
         private static void Postfix(ref RandEventSystem __instance)
         {
-            if (ConfigurationManager.DebugOn) Debug.Log("Starting RandEventSystem");
+            if (ConfigurationManager.DebugOn) CustomLog.LogDebug("Starting RandEventSystem");
 
             if (ConfigurationManager.GeneralConfig.LoadRaidConfigsOnWorldStart.Value)
             {
@@ -32,11 +32,11 @@ namespace Valheim.CustomRaids
 
             if (ConfigurationManager.GeneralConfig.RemoveAllExistingRaids.Value)
             {
-                if (ConfigurationManager.DebugOn) Debug.Log("Removing default raids.");
+                if (ConfigurationManager.DebugOn) CustomLog.LogDebug("Removing default raids.");
                 __instance.m_events.Clear();
             }
 
-            if (ConfigurationManager.DebugOn) Debug.Log($"Found {ConfigurationManager.RaidConfig.Count} raid configurations to apply.");
+            if (ConfigurationManager.DebugOn) CustomLog.LogDebug($"Found {ConfigurationManager.RaidConfig.Count} raid configurations to apply.");
 
             foreach(var raid in ConfigurationManager.RaidConfig)
             {
@@ -51,7 +51,7 @@ namespace Valheim.CustomRaids
                             string cleanedRaidName = raid.Name.Value.ToUpperInvariant().Trim();
                             if (cleanedEventName == cleanedRaidName)
                             {
-                                if (ConfigurationManager.DebugOn) Debug.Log($"Overriding existing event {__instance.m_events[i].m_name} with configured");
+                                if (ConfigurationManager.DebugOn) CustomLog.LogDebug($"Overriding existing event {__instance.m_events[i].m_name} with configured");
                                 __instance.m_events.RemoveAt(i);
                                 break;
                             }
@@ -64,7 +64,7 @@ namespace Valheim.CustomRaids
                     continue;
                 }
 
-                if (ConfigurationManager.DebugOn) Debug.Log($"Adding raid '{raid.Name}' to possible raids");
+                if (ConfigurationManager.DebugOn) CustomLog.LogDebug($"Adding raid '{raid.Name}' to possible raids");
 
                 try
                 {
@@ -72,7 +72,7 @@ namespace Valheim.CustomRaids
                 }
                 catch(Exception e)
                 {
-                    Debug.LogWarning($"Failed to create possible raid {raid.Name}: " + e.Message);
+                    CustomLog.LogWarning($"Failed to create possible raid {raid.Name}: " + e.Message);
 
                     if (ConfigurationManager.DebugOn) Debug.LogException(e);
                 }
@@ -85,6 +85,36 @@ namespace Valheim.CustomRaids
 
         }
 
+        private static Heightmap.Biome GetBiome(RaidEventConfiguration config)
+        {
+            var biomeString = config.Biomes.Value;
+
+            if(string.IsNullOrEmpty(biomeString))
+            {
+                return (Heightmap.Biome)1023;
+            }
+
+            List<Heightmap.Biome> biomes = new List<Heightmap.Biome>();
+
+            var biomeRequest = Heightmap.Biome.None;
+
+            foreach (var biome in biomeString.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+            {
+                if(Enum.TryParse(biome.Trim(), true, out Heightmap.Biome biomeFlag))
+                {
+                    biomes.Add(biomeFlag);
+
+                    biomeRequest = biomeRequest | biomeFlag;
+                }
+                else
+                {
+                    CustomLog.LogWarning($"Unable to parse biome '{biome}'");
+                }
+            }
+
+            return biomeRequest;
+        }
+
         private static RandomEvent CreateEvent(RaidEventConfiguration raidEvent)
         {
             var spawnList = new List<SpawnSystem.SpawnData>();
@@ -95,7 +125,7 @@ namespace Valheim.CustomRaids
 
                 if(spawnObject is null)
                 {
-                    Debug.LogWarning($"Unable to find spawn {spawnConfig.PrefabName.Value}");
+                    CustomLog.LogWarning($"Unable to find spawn {spawnConfig.PrefabName.Value}");
                     continue;
                 }
 
@@ -131,17 +161,19 @@ namespace Valheim.CustomRaids
                     m_spawnAtNight = spawnConfig.SpawnAtNight.Value,
                     m_requiredGlobalKey = spawnConfig.RequiredGlobalKey.Value,
                     m_requiredEnvironments = requiredEnvironments?.ToList() ?? new List<string>(),
-                    m_biome = Heightmap.Biome.BiomesMax,
-                    m_biomeArea = (Heightmap.BiomeArea)spawnConfig.BiomeArea.Value,
+                    m_biome = (Heightmap.Biome)1023,
+                    m_biomeArea = (Heightmap.BiomeArea)7,
                 };
 
-                if (ConfigurationManager.DebugOn) Debug.Log($"Adding {spawnConfig.Name} to {raidEvent.Name}");
+                if (ConfigurationManager.DebugOn) CustomLog.LogDebug($"Adding {spawnConfig.Name} to {raidEvent.Name}");
 
                 spawnList.Add(spawn);
             }
 
             var notRequiredGlobalKeys = raidEvent.NotRequiredGlobalKeys?.Value?.Split(new []{','}, StringSplitOptions.RemoveEmptyEntries);
             var requiredGlobalKeys = raidEvent.RequiredGlobalKeys?.Value?.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+
+
 
             RandomEvent newEvent = new RandomEvent
             {
@@ -152,10 +184,10 @@ namespace Valheim.CustomRaids
                 m_nearBaseOnly = raidEvent.NearBaseOnly.Value,
                 m_startMessage = raidEvent.StartMessage.Value,
                 m_endMessage = raidEvent.EndMessage.Value,
-                m_enabled = raidEvent.Enabled.Value,
+                m_enabled = true,
                 m_random = raidEvent.Random.Value,
                 m_spawn = spawnList,
-                m_biome = (Heightmap.Biome)raidEvent.Biome.Value,
+                m_biome = GetBiome(raidEvent),
                 m_notRequiredGlobalKeys = notRequiredGlobalKeys?.ToList() ?? new List<string>(),
                 m_requiredGlobalKeys = requiredGlobalKeys?.ToList() ?? new List<string>(),
                 m_pauseIfNoPlayerInArea = raidEvent.PauseIfNoPlayerInArea.Value,                
@@ -167,7 +199,7 @@ namespace Valheim.CustomRaids
         public static void WriteToFile(List<RandomEvent> events, bool debug, string fileName = "default_random_events.txt")
         {
             string filePath = Path.Combine(Paths.PluginPath, fileName);
-            if (debug) Debug.Log($"Writing default random events to '{filePath}'.");
+            if (debug) CustomLog.LogDebug($"Writing default random events to '{filePath}'.");
 
             List<string> lines = new List<string>(events.Count * 30);
 

@@ -22,6 +22,8 @@ namespace Valheim.CustomRaids.ConfigurationTypes
 
         public ConfigEntry<bool> DebugOn;
 
+        public ConfigEntry<bool> TraceLogging;
+
         public ConfigEntry<bool> WriteDefaultEventDataToDisk;
 
         public ConfigEntry<bool> WritePostChangeEventDataToDisk;
@@ -54,6 +56,7 @@ namespace Valheim.CustomRaids.ConfigurationTypes
             GeneratePresetRaids = configFile.Bind<bool>("General", nameof(GeneratePresetRaids), true, "Generates pre-defined supplemental raids. The generated raids are disabled by default.");
 
             DebugOn = configFile.Bind<bool>("Debug", "DebugOn", false, "Enables debug logging.");
+            TraceLogging = configFile.Bind<bool>("Debug", nameof(TraceLogging), false, "Enables trace logging. Note, this will generate a LOT of log entries.");
             WriteDefaultEventDataToDisk = configFile.Bind<bool>("Debug", nameof(WriteDefaultEventDataToDisk), false, "If enabled, scans existing raid event data, and dumps to a file on disk.");
             WritePostChangeEventDataToDisk = configFile.Bind<bool>("Debug", nameof(WritePostChangeEventDataToDisk), false, "If enabled, dumps raid event data after applying configuration to a file on disk.");
             WriteEnvironmentDataToDisk = configFile.Bind<bool>("Debug", nameof(WriteEnvironmentDataToDisk), false, "If enabled, scans existing environment data, and dumps to a file on disk.");

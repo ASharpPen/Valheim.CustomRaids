@@ -89,10 +89,10 @@ namespace Valheim.CustomRaids
 
             if (GeneralConfig != null) configFile.SaveOnConfigSet = !GeneralConfig.StopTouchingMyConfigs.Value;
 
-            if (DebugOn) Debug.Log("Scanning bindings...");
+            if (DebugOn) CustomLog.LogTrace("Scanning bindings...");
             ConfigurationLoader.ScanBindings<RaidEventConfiguration, SpawnConfiguration>(configFile, false);
 
-            if (DebugOn) Debug.Log("Creating configuration...");
+            if (DebugOn) CustomLog.LogTrace("Creating configuration...");
             Dictionary<string, RaidEventConfiguration> raidConfiguration = ConfigurationLoader.LoadArrayConfigurations<RaidEventConfiguration, SpawnConfiguration>(configFile, false);
             return raidConfiguration.Values.ToList();
         }

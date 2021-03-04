@@ -2,3 +2,4 @@
 Valheim.CustomRaids/bin
 Valheim.CustomRaids/.vs
 Valheim.CustomRaids/Thunderstorm/*/*
+Valheim.CustomRaids/Patches/SpawnDebuggingPatch.cs

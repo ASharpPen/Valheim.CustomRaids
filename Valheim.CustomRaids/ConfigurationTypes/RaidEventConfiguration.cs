@@ -10,7 +10,7 @@ namespace Valheim.CustomRaids
 
         public ConfigurationEntry<bool> Random = new ConfigurationEntry<bool>(true, "Sets whether event is random or not. Eg. boss fights are events, but not random.");
 
-        public ConfigurationEntry<int> Biome = new ConfigurationEntry<int>(0, "Biome flag for allowed biomes. See mod documentation.");
+        public ConfigurationEntry<string> Biomes = new ConfigurationEntry<string>("", "Array (separate by \",\") of biomes required to allow spawn.\nLeave empty for all");
 
         public ConfigurationEntry<float> Duration = new ConfigurationEntry<float>(60, "Duration of raid? Unsure of the exact measure used here.");
 
@@ -42,8 +42,6 @@ namespace Valheim.CustomRaids
         public ConfigurationEntry<string> Name = new ConfigurationEntry<string>("DeerALot", "Spawn configuration name.");
 
         public ConfigurationEntry<string> PrefabName = new ConfigurationEntry<string>("Deer", "Prefab name of entity to spawn. This... might actually allow for anything.");
-
-        public ConfigurationEntry<int> BiomeArea = new ConfigurationEntry<int>(3, "Spawn location in biome. Binary flag for enum. See Biome areas in docs.");
 
         public ConfigurationEntry<int> MaxSpawned = new ConfigurationEntry<int>(2, "Maximum alive at a time.");
 
