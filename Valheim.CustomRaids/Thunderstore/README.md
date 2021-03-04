@@ -1,12 +1,16 @@
-﻿This mod allows for customizing raids to your liking.
+﻿# Custom Raids
+
+This mod allows for customizing raids to your liking.
 
 Want to have armies besieging your fortress? A bit of extra environmental effects along your way? Or just disable trolls?
 
 This mod can help you do all of that!
 
-Comes preconfigured with two additional end-game raids (disabled by default), to show how and what can be done.
+Comes preconfigured with two additional end-game raids (disabled by default), to show how and what can be done:
+- Ragnarok
+- Deathsquitoseason
 
-Enable those raids at own risk.
+Enable those raids at own risk!
 
 # Features
 
@@ -74,9 +78,9 @@ Enabling only your own change, and use console commands "randomevent" and "stope
 
 Spawning during also seems to be very inconsistent, meaning with the same interval setting, you will sometimes have a bunch of wave triggers inside a short span, and sometimes it takes ages.
 
-Biomes were a big annoyance to me during testing. To just "make it work", ensure that biome is set to 0 (everything).
-
 ForcedEnvironment also seems to be taken more as a hint, than something forced. It should trigger most of the time though.
+
+A pretty comprehensive guide for prefabs can be found [here](https://gist.github.com/Sonata26/e2b85d53e125fb40081b18e2aee6d584)
 
 # The Details - Raid Event
 
@@ -88,13 +92,13 @@ ForcedEnvironment also seems to be taken more as a hint, than something forced. 
 | StartMessage | String | Raid started | Message shown on raid start |
 | EndMessage | String | Raid ended | Message shown on raid end |
 | NearBaseOnly | bool | true | Spawn raid near base only. Looks like this one might need to always be true due to the games valid spawn logic. |
-| RequiredGlobalKeys | string | defeated_bonemass, defeated_dragon | Array (separate by \",\" of required global keys. Leave empty for no requirement. |
-| NotRequiredGlobalKeys | string | defeated_bonemass, defeated_dragon | Array (separate by \",\" of required global keys. Leave empty for no requirement. Not sure what it is used for. |
+| RequiredGlobalKeys | string | defeated_bonemass, defeated_dragon | Array (separate by \",\") of required global keys. Leave empty for no requirement. |
+| NotRequiredGlobalKeys | string | defeated_bonemass, defeated_dragon | Array (separate by \",\") of required global keys. Leave empty for no requirement. Not sure what it is used for. |
 | PauseIfNoPlayerInArea | bool | true | |
 | ForceEnvironment | string | Misty | Name of environment to set for raid |
 | ForceMusic | string | CombatEventL1 | Name of music to set for raid |
 | Random | bool | true | Include raid in random raid spawning. |
-| Biome | int | 9 | Biome flag for allowed biomes. See biome documentation. |
+| Biomes | string | | Array (separate by \",\") of biomes. See biome documentation. |
 
 # The Details - Raid Spawns
 
@@ -117,8 +121,6 @@ ForcedEnvironment also seems to be taken more as a hint, than something forced. 
 | GroundOffset | float | 0.5 | Distance to ground on spawn |
 | MinLevel | int | 1 | Min level to spawn. Range 1 to 3.
 | MaxLevel | int | 3 | Max level to spawn. Range 1 to 3.
-| Biome | int | 513 | Spawn biome. Unknown if this has any effect on raids. Binary flag for enums. See Biome flags |
-| BiomeArea | int 7 | Spawn location in biome. Binary flag for enum. See Biome areas |
 | RequiredGlobalKey | string | defeated_bonemass | Global key required for spawning. Leave empty for no requirement. |
 | RequiredEnvironments | string | Array (separate by \",\" of required environments. Leave empty for no requirement. |
 | GroupRadius | float | 1 | |
@@ -133,30 +135,18 @@ ForcedEnvironment also seems to be taken more as a hint, than something forced. 
 
 ## Configuration Options
 
-### Biome flags:
-Biomes are registered as binary flags in valheim, meaning they each have a specific bit of a number, which is checked for true or false.
-This means to allow for both Meadows (value 1, position 1) and Blackforest (value 8, position 4), the biome flag should be 9 (binary value 1001);
-Just use 0 (biomes none) if you are uncertain. That enables all biomes.
+See the [Valheim Wiki - Event Syste](https://github.com/Valheim-Modding/Wiki/wiki/Valheim-Event-System) for further details on raid configuration.
 
 ### Biomes (Name, Value, Position)
-- None, 0, 0
-- Meadows, 1, 1
-- Swamp, 2, 2,
-- Mountain, 4, 3
-- Blackforest, 8, 4
-- Plains, 16, 5
-- AshLands, 32, 6
-- DeepNorth, 64, 7
-- Ocean, 256, 8
-- Mistlands, 512, 9
-- BiomesMax, 513
-
-### BiomeArea (Name, Value, Position)
-As with biome flags. Use 3 for all.
-
-- Edge, 1, 0,
-- Median, 2, 1,
-- Everything, 3
+- Meadows
+- Swamp
+- Mountain
+- Blackforest
+- Plains
+- AshLands
+- DeepNorth
+- Ocean
+- Mistlands
 
 ### ForcedEnvironment (defaults, it should be possible to mod in more, and refer to them by name):
 - Clear
@@ -192,5 +182,8 @@ As with biome flags. Use 3 for all.
 - defeated_dragon
 
 # Changelog
-
+- 1.1.0: 
+	- Removing biome area. It is simply a gun to shoot yourselves in the foot with.
+	- Removing Biome, replacing with Biomes, now with actual names, and not some insane binary flag!
+	- Fixed spawn issue, where a lot of biomes were getting disabled by mistake. It should now be a lot easier to get raids to spawn as intended.
 - 1.0.1: Fixed debug output file not being enable-only by toggle in options

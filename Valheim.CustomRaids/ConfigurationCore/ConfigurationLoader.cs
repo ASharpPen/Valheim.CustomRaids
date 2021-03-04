@@ -40,7 +40,7 @@ namespace Valheim.CustomRaids.ConfigurationCore
                     {
                         string key = keyValue[0].Trim();
 
-                        if (debug) Debug.Log($"Attempting to bind configuration {lastSection}:{key}");
+                        if (debug) CustomLog.LogTrace($"Attempting to bind configuration {lastSection}:{key}");
 
                         var fields = lastSectionWasHeader
                             ? groupFields
@@ -53,7 +53,7 @@ namespace Valheim.CustomRaids.ConfigurationCore
                             var entry = (IConfigurationEntry)Activator.CreateInstance(field.FieldType);
                             entry.Bind(config, lastSection, key);
 
-                            if (debug) Debug.Log($"Successfully bound '{field.Name}'.");
+                            if (debug) CustomLog.LogTrace($"Successfully bound '{field.Name}'.");
                         }
                     }
                 }
@@ -66,10 +66,10 @@ namespace Valheim.CustomRaids.ConfigurationCore
         {
             if (debug)
             {
-                Debug.Log("Keys available for binding:");
+                CustomLog.LogTrace("Keys available for binding:");
                 foreach (var key in configFile.Keys)
                 {
-                    Debug.Log(key);
+                    CustomLog.LogTrace(key.Key);
                 }
             }
 
@@ -79,7 +79,7 @@ namespace Valheim.CustomRaids.ConfigurationCore
 
             foreach (var sectionKey in sectionKeys)
             {
-                if (debug) Debug.Log($"Binding group: {sectionKey.Key}");
+                if (debug) CustomLog.LogTrace($"Binding group: {sectionKey.Key}");
 
                 var components = sectionKey.Key.Split('.');
 
@@ -119,7 +119,7 @@ namespace Valheim.CustomRaids.ConfigurationCore
 
             foreach (var field in fields)
             {
-                if (debug) Debug.Log($"Creating and binding entry for '{sectionHeader}:{field.Name}'");
+                if (debug) CustomLog.LogTrace($"Creating and binding entry for '{sectionHeader}:{field.Name}'");
 
                 var entry = (IConfigurationEntry)field.GetValue(configuration);
                 entry.Bind(configFile, sectionHeader, field.Name);
