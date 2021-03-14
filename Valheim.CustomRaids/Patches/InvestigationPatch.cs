@@ -4,6 +4,8 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
+using Valheim.CustomRaids.ConfigurationTypes;
+
 namespace Valheim.CustomRaids
 {
 	[HarmonyPatch(typeof(EnvMan), "Awake")]

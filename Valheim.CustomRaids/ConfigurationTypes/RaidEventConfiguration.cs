@@ -1,9 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Valheim.CustomRaids.ConfigurationCore;
 
 namespace Valheim.CustomRaids
 {
+    [Serializable]
     public class RaidEventConfiguration : ConfigurationGroup<SpawnConfiguration>
     {
         public ConfigurationEntry<bool> Enabled = new ConfigurationEntry<bool>(true, "Enable/disable raid configuration from being used.");
@@ -35,6 +37,7 @@ namespace Valheim.CustomRaids
         public List<SpawnConfiguration> SpawnConfigurations => Sections.Values.ToList();
     }
 
+    [Serializable]
     public class SpawnConfiguration : ConfigurationSection
     {
         public ConfigurationEntry<bool> Enabled = new ConfigurationEntry<bool>(true);

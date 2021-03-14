@@ -1,9 +1,10 @@
 ﻿using System;
 using UnityEngine;
+using Valheim.CustomRaids.ConfigurationTypes;
 
 namespace Valheim.CustomRaids
 {
-    public static class CustomLog
+    public static class Log
     {
         private static string PluginName => "Custom Raids";
 
