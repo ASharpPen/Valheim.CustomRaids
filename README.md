@@ -17,8 +17,27 @@ Enable those raids at own risk!
 - Can change frequency of raids
 - Add new raid events, with full configuration options, including spawns
 - Override existing raid (eg. disable trolls)
-- Supplemental raid configurations. Add your own file, and Custom Raids will scan and apply it
+- Supplemental raid configurations. Add your own raid in its own file, and Custom Raids will scan and apply it. 
 - Potential for hours of frustration/fun as you figure out how to best configure these damn things to work as expected.
+- Server-side configurations
+
+# FAQ
+
+- Is it server side only?
+	- No. Both client and server needs the mod.
+	- The way events work is that the host / dedicated server will run the logic for when to apply raids, and then send a message with the name of the raid to be assigned to all clients. The client in charge of zone (valheim multiplayer is weird) will then manage the actual spawning for the raid.
+- Can I just have no raids?
+	- Yes. Raid activation happens serverside, making this even simpler, you should only need this mod serverside if you just want no raids. (You can also use Event Enhancer for this)
+	- Set configuration "EventTriggerChance=0" or
+	- Set configuration "RemoveAllExistingRaids=true", as long you don't have something custom, this will remove the options, thereby removing raids.
+
+# Client / Server
+
+Custom Raids needs to be installed on all clients (and server) to work.
+
+From v1.2.0 clients will request the configurations currently loaded by the server, and use those without affecting the clients config files.
+This means you should be able to have server-specific configurations, and the client can have its own setup for singleplayer.
+For this to work, the mod needs to be installed on the server, and have configs set up properly there. When players join with Custom Raids v1.2.0, their mod will use the servers configs.
 
 # Configuration
 
@@ -27,6 +46,83 @@ All configurations are placed in the default BepInEx configuration folder, and g
 ## General "custom_raids.cfg"
 
 General configuration includes general mod controls, overall event system changes, and debugging options.
+
+``` INI
+
+[General]
+
+## Loads raid configurations from supplemental files.
+## Eg. custom_raid.supplemental.my_raid.cfg will be included on load.
+# Setting type: Boolean
+# Default value: true
+LoadSupplementalRaids = true
+
+## Generates pre-defined supplemental raids. The generated raids are disabled by default.
+# Setting type: Boolean
+# Default value: true
+GeneratePresetRaids = true
+
+## Disables automatic updating and saving of raid configurations.
+## This means no helpers will be added, but.. allows you to keep things compact.
+# Setting type: Boolean
+# Default value: false
+StopTouchingMyConfigs = false
+
+[EventSystem]
+
+## If enabled, removes all existing raids and only allows configured.
+# Setting type: Boolean
+# Default value: false
+RemoveAllExistingRaids = false
+
+## Enable/disable override of existing events when event names match.
+# Setting type: Boolean
+# Default value: true
+OverrideExisting = true
+
+## Frequency between checks for new raids. Value is in mintues.
+# Setting type: Single
+# Default value: 46
+EventCheckInterval = 46
+
+## Chance of raid, per check interval. 100 is 100%.
+# Setting type: Single
+# Default value: 20
+EventTriggerChance = 20
+
+[Debug]
+
+## Enables debug logging.
+# Setting type: Boolean
+# Default value: false
+DebugOn = false
+
+## Enables trace logging. Note, this will generate a LOT of log entries.
+# Setting type: Boolean
+# Default value: false
+TraceLogging = false
+
+## If enabled, scans existing raid event data, and dumps to a file on disk.
+# Setting type: Boolean
+# Default value: false
+WriteDefaultEventDataToDisk = false
+
+## If enabled, dumps raid event data after applying configuration to a file on disk.
+# Setting type: Boolean
+# Default value: false
+WritePostChangeEventDataToDisk = false
+
+## If enabled, scans existing environment data, and dumps to a file on disk.
+# Setting type: Boolean
+# Default value: false
+WriteEnvironmentDataToDisk = false
+
+## If enabled, scans existing global keys, and dumps to a file on disk.
+# Setting type: Boolean
+# Default value: false
+WriteGlobalKeyDataToDisk = false
+
+```
 
 ## Main raid file "custom_raids.raids.cfg"
 
@@ -59,7 +155,7 @@ For multiple raids, repeat from step 1.
 
 ## Supplemental raid file "custom_raids.supplemental.my_raid_name.cfg"
 
-Exactly as for the main raid file. This is simply to allow for easy splitting into multiple files, and for others to easily add new raids to Custom Raids.
+Exactly as for the main raid file (custom_raids.raids.cfg). This is simply to allow for easy splitting into multiple files, and for others to easily add new raids to Custom Raids.
 
 ## Just disable the trolls please
 
@@ -73,14 +169,32 @@ Enabled=false
 
 ## Tips for configuring
 
-Raid events are generally a bit "janky" to configure, so I suggest making use of the "RemoveAllExistingRaids" and "LoadRaidConfigsOnWorldStart"option from the general config. 
-Enabling only your own change, and use console commands "randomevent" and "stopevent" to test things out.
+Raid events are generally a bit "janky" to configure, so I suggest making use of the "RemoveAllExistingRaids" and console while testing. 
+Enable only your own change, and use console commands "randomevent" and "stopevent" to test things out.
 
 Spawning during also seems to be very inconsistent, meaning with the same interval setting, you will sometimes have a bunch of wave triggers inside a short span, and sometimes it takes ages.
 
+You wil only see possible event count in logs, if the RandEventSystem made a check that passed the random chance. Ie. If you have the chance set to 20, you will only see 1 out of 5 checks in logs.
+
 ForcedEnvironment also seems to be taken more as a hint, than something forced. It should trigger most of the time though.
 
+It is also important to understand how raids are started and run. 
+
 A pretty comprehensive guide for prefabs can be found [here](https://gist.github.com/Sonata26/e2b85d53e125fb40081b18e2aee6d584)
+
+See the [Valheim Wiki - Event System](https://github.com/Valheim-Modding/Wiki/wiki/Valheim-Event-System) for further details on raid configuration and how they work.
+
+### Raid initialization:
+Basically, the host/server will make a check every once in a while. When the check happens, it then rolls a die to check if it should start an event.
+A list of what it believes are "possible" raids is calculated, and a random one is picked.
+These raids are based off the host/server instances configurations, meaning it needs to know about a raid to even to any checks.
+Any clients are then notified that the raid should be started.
+
+### Raid spawning:
+When a client receives a start event message, and is in charge of the area, its world spawners (see [Spawning](https://github.com/Valheim-Modding/Wiki/wiki/Spawning)) will then start attempting to spawn in mobs.
+It does this by finding the raid event it has loaded itself, based on the name received from the host.
+If the event is found, the world spawners will try to spawn in the mobs in the event. For each mob they will check if spawn conditions are right. 
+THIS is what usually makes most raids stumble. If the raid starts, but nothing spawns in, it is usually because the spawners can't get the conditions right.
 
 # The Details - Raid Event
 
@@ -92,13 +206,13 @@ A pretty comprehensive guide for prefabs can be found [here](https://gist.github
 | StartMessage | String | Raid started | Message shown on raid start |
 | EndMessage | String | Raid ended | Message shown on raid end |
 | NearBaseOnly | bool | true | Spawn raid near base only. Looks like this one might need to always be true due to the games valid spawn logic. |
-| RequiredGlobalKeys | string | defeated_bonemass, defeated_dragon | Array (separate by \",\") of required global keys. Leave empty for no requirement. |
-| NotRequiredGlobalKeys | string | defeated_bonemass, defeated_dragon | Array (separate by \",\") of required global keys. Leave empty for no requirement. Not sure what it is used for. |
+| RequiredGlobalKeys | string | defeated_bonemass, defeated_dragon | Array (separate by ",") of required global keys. Leave empty for no requirement. |
+| NotRequiredGlobalKeys | string | defeated_bonemass, defeated_dragon | Array (separate by ",") of required global keys. Leave empty for no requirement. Not sure what it is used for. |
 | PauseIfNoPlayerInArea | bool | true | |
 | ForceEnvironment | string | Misty | Name of environment to set for raid |
 | ForceMusic | string | CombatEventL1 | Name of music to set for raid |
 | Random | bool | true | Include raid in random raid spawning. |
-| Biomes | string | | Array (separate by \",\") of biomes. See biome documentation. |
+| Biomes | string | | Array (separate by ",") of biomes. Leave empty for all allowed. |
 
 # The Details - Raid Spawns
 
@@ -119,10 +233,10 @@ A pretty comprehensive guide for prefabs can be found [here](https://gist.github
 | SpawnAtDay | bool | true | |
 | HuntPlayer | bool | true | Does what it says. Will not work for all mobs, Deer will ignore it. |
 | GroundOffset | float | 0.5 | Distance to ground on spawn |
-| MinLevel | int | 1 | Min level to spawn. Range 1 to 3.
-| MaxLevel | int | 3 | Max level to spawn. Range 1 to 3.
+| MinLevel | int | 1 | Min level to spawn. Level 3 is two star mobs.
+| MaxLevel | int | 3 | Max level to spawn. Level 3 is two star mobs.
 | RequiredGlobalKey | string | defeated_bonemass | Global key required for spawning. Leave empty for no requirement. |
-| RequiredEnvironments | string | Array (separate by \",\" of required environments. Leave empty for no requirement. |
+| RequiredEnvironments | string | Array (separate by "," of required environments. Leave empty for no requirement. |
 | GroupRadius | float | 1 | |
 | AltitudeMin | float | -1000 | |
 | AltitudeMax | float | 1000 | |
@@ -135,9 +249,7 @@ A pretty comprehensive guide for prefabs can be found [here](https://gist.github
 
 ## Configuration Options
 
-See the [Valheim Wiki - Event Syste](https://github.com/Valheim-Modding/Wiki/wiki/Valheim-Event-System) for further details on raid configuration.
-
-### Biomes (Name, Value, Position)
+### Biomes
 - Meadows
 - Swamp
 - Mountain
@@ -182,8 +294,13 @@ See the [Valheim Wiki - Event Syste](https://github.com/Valheim-Modding/Wiki/wik
 - defeated_dragon
 
 # Changelog
-- 1.1.0: 
+- v1.2.0:
+	- Server-to-client config synchronization added.
+	- Fixed various mistakes in config descriptions. Sorry guys, I am bad at reading. EventChance is in range 0-100, frequency is in minutes.
+	- Removed "LoadRaidConfigsOnWorldStart" option. This is always done by default now.
+- v1.1.0: 
 	- Removing biome area. It is simply a gun to shoot yourselves in the foot with.
 	- Removing Biome, replacing with Biomes, now with actual names, and not some insane binary flag!
 	- Fixed spawn issue, where a lot of biomes were getting disabled by mistake. It should now be a lot easier to get raids to spawn as intended.
-- 1.0.1: Fixed debug output file not being enable-only by toggle in options
+- v1.0.1: 
+	- Fixed debug output file not being enable-only by toggle in options
