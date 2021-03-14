@@ -4,84 +4,34 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
-using UnityEngine;
 
 namespace Valheim.CustomRaids.ConfigurationCore
 {
     public static class ConfigurationLoader
     {
-        public static void ScanBindings<TGroup, TSection>(ConfigFile config, bool debug)
+        private static readonly Regex SectionHeader = new Regex(@"(?<=[[]).+(?=[]])", RegexOptions.Compiled);
+
+        public static Dictionary<string, TGroup> LoadConfigurationGroup<TGroup, TSection>(ConfigFile configFile)
             where TGroup : ConfigurationGroup<TSection>
             where TSection : ConfigurationSection
         {
-            var lines = File.ReadAllLines(config.ConfigFilePath);
-
-            var groupFields = typeof(TGroup).GetFields().ToDictionary(x => x.Name);
-            var sectionFields = typeof(TSection).GetFields().ToDictionary(x => x.Name);
-
-            string lastSection = null;
-            bool lastSectionWasHeader = false;
-
-            foreach (var line in lines)
+            if (string.IsNullOrEmpty(configFile.ConfigFilePath))
             {
-                if (line.StartsWith("["))
-                {
-                    string sectionName = new Regex(@"(?<=[[]).+(?=[]])").Match(line).Value;
-
-                    lastSection = sectionName;
-
-                    lastSectionWasHeader = lastSection.Split('.').Length == 1;
-                }
-                else if (line.Length > 0 && line.Contains("="))
-                {
-                    var keyValue = line.Split('=');
-
-                    if (keyValue.Length == 2)
-                    {
-                        string key = keyValue[0].Trim();
-
-                        if (debug) CustomLog.LogTrace($"Attempting to bind configuration {lastSection}:{key}");
-
-                        var fields = lastSectionWasHeader
-                            ? groupFields
-                            : sectionFields;
-
-                        if(fields.ContainsKey(key))
-                        {
-                            var field = fields[key];
-
-                            var entry = (IConfigurationEntry)Activator.CreateInstance(field.FieldType);
-                            entry.Bind(config, lastSection, key);
-
-                            if (debug) CustomLog.LogTrace($"Successfully bound '{field.Name}'.");
-                        }
-                    }
-                }
-            }
-        }
-
-        public static Dictionary<string, TGroup> LoadArrayConfigurations<TGroup, TSection>(ConfigFile configFile, bool debug)
-            where TGroup : ConfigurationGroup<TSection>
-            where TSection : ConfigurationSection
-        {
-            if (debug)
-            {
-                CustomLog.LogTrace("Keys available for binding:");
-                foreach (var key in configFile.Keys)
-                {
-                    CustomLog.LogTrace(key.Key);
-                }
+                Log.LogError("Unable to load unloaded ConfigFile.");
+                return new Dictionary<string, TGroup>();
             }
 
-            var sectionKeys = configFile.Keys.GroupBy(x => x.Section).ToList();
+            //Scan for headers
+            var sectionHeaders = ScanSectionHeads(configFile.ConfigFilePath);
 
-            var configurations = new Dictionary<string, TGroup>(sectionKeys.Count());
+            Dictionary<string, TGroup> configurations = new Dictionary<string, TGroup>();
 
-            foreach (var sectionKey in sectionKeys)
+            foreach (var sectionHead in sectionHeaders)
             {
-                if (debug) CustomLog.LogTrace($"Binding group: {sectionKey.Key}");
+                Log.LogTrace($"Loading config entries for {sectionHead}.");
 
-                var components = sectionKey.Key.Split('.');
+                //Identify header type
+                var components = sectionHead.Split('.');
 
                 string groupName = components[0];
                 string elementKey = components.Length > 1
@@ -89,46 +39,83 @@ namespace Valheim.CustomRaids.ConfigurationCore
                     : null;
 
                 TGroup group = GetOrInitializeGroup<TGroup, TSection>(configurations, groupName);
-                Dictionary<string, TSection> groupSections = group.Sections;
-                Dictionary<string, IConfigurationEntry> groupEntries = group.Entries;
 
                 if (string.IsNullOrEmpty(elementKey))
                 {
                     //Assume that this is a group definition. Load in group entries.
-                    BindObjectEntries(configFile, group, groupName, debug);
+                    BindObjectEntries(configFile, group, groupName);
                 }
                 else
                 {
-                    TSection section = GetOrInitializeSection(groupSections, elementKey);
-                    Dictionary<string, IConfigurationEntry> entries = section.Entries;
+                    TSection section = GetOrInitializeSection(group.Sections, elementKey);
 
                     //Start loading in the configuration key:values of the section
-                    BindObjectEntries(configFile, section, sectionKey.Key, debug);
+                    BindObjectEntries(configFile, section, sectionHead);
                 }
             }
 
             return configurations;
         }
 
-        private static void BindObjectEntries(ConfigFile configFile, IHaveEntries configuration, string sectionHeader, bool debug)
+        private static void BindObjectEntries(ConfigFile configFile, IHaveEntries configuration, string sectionHeader)
         {
+            Type entryType = typeof(IConfigurationEntry);
+
             var fields = configuration
                     .GetType()
                     .GetFields()
+                    .Where(x => entryType.IsAssignableFrom(x.FieldType))
                     .ToList();
 
             foreach (var field in fields)
             {
-                if (debug) CustomLog.LogTrace($"Creating and binding entry for '{sectionHeader}:{field.Name}'");
+                Log.LogTrace($"Creating and binding entry for '{sectionHeader}:{field.Name}'");
 
                 var entry = (IConfigurationEntry)field.GetValue(configuration);
+
+                if (entry is null)
+                {
+                    entry = (IConfigurationEntry)Activator.CreateInstance(field.FieldType);
+                }
+
                 entry.Bind(configFile, sectionHeader, field.Name);
 
                 configuration.Entries[field.Name] = entry;
                 field.SetValue(configuration, entry);
 
-                if (debug) Debug.Log($"[{sectionHeader}]: Loaded [{field.Name}:{entry}]");
+                Log.LogTrace($"[{sectionHeader}]: Loaded {field.Name}:{entry}");
             }
+        }
+
+        private static List<string> ScanSectionHeads(string configFile)
+        {
+            if (!File.Exists(configFile))
+            {
+                return new List<string>();
+            }
+
+            Log.LogTrace($"Scanning config sections in {configFile}");
+
+            //Scan for headers
+            var lines = File.ReadAllLines(configFile);
+
+            var sectionHeaders = new List<string>(lines.Count() / 5); //Just some random guess at lines pr header.
+
+            foreach (var line in lines)
+            {
+                var sectionMatch = SectionHeader.Match(line);
+
+                if (sectionMatch.Success)
+                {
+                    var sectionHeader = sectionMatch.Value;
+
+                    Log.LogTrace($"Found section '{sectionHeader}'");
+
+                    sectionHeaders.Add(sectionHeader);
+                }
+            }
+
+            return sectionHeaders;
         }
 
         private static TGroup GetOrInitializeGroup<TGroup, TSection>(Dictionary<string, TGroup> groups, string groupName)
@@ -152,7 +139,7 @@ namespace Valheim.CustomRaids.ConfigurationCore
             return group;
         }
 
-        private static TSection GetOrInitializeSection<TSection>(Dictionary<string, TSection> sections, string sectionKey) 
+        private static TSection GetOrInitializeSection<TSection>(Dictionary<string, TSection> sections, string sectionKey)
             where TSection : ConfigurationSection
         {
             TSection section;
@@ -172,3 +159,4 @@ namespace Valheim.CustomRaids.ConfigurationCore
         }
     }
 }
+

@@ -1,5 +1,6 @@
 ﻿using BepInEx;
 using HarmonyLib;
+using Valheim.CustomRaids.ConfigurationTypes;
 using Valheim.CustomRaids.PreConfiguredRaids;
 
 namespace Valheim.CustomRaids
@@ -17,11 +18,6 @@ namespace Valheim.CustomRaids
             {
                 new Ragnarok().CreateConfigIfMissing();
                 new DeathsquitoSeason().CreateConfigIfMissing();
-            }
-
-            if(!ConfigurationManager.GeneralConfig.LoadRaidConfigsOnWorldStart.Value)
-            {
-                ConfigurationManager.LoadRaidConfigurations();
             }
 
             new Harmony("mod.custom_raids").PatchAll();

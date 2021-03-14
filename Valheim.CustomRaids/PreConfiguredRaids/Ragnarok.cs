@@ -13,7 +13,7 @@ namespace Valheim.CustomRaids.PreConfiguredRaids
             string configPath = Path.Combine(Paths.ConfigPath, Filename);
             if (!File.Exists(configPath))
             {
-                if (ConfigurationManager.DebugOn) Debug.Log($"Generating supplemental raid {configPath}");
+                Log.LogDebug($"Generating supplemental raid {configPath}");
 
                 File.WriteAllText(configPath, FileDump);
             }
@@ -23,7 +23,6 @@ namespace Valheim.CustomRaids.PreConfiguredRaids
             @"
 [Ragnarok]
 Name = Ragnarok
-Biome=0
 Duration=300
 NearBaseOnly=true
 PauseIfNoPlayerInArea=True
@@ -87,7 +86,7 @@ GroupSizeMax=1
 SpawnAtNight=True
 SpawnAtDay=True
 HuntPlayer=True
-GroundOffset=5
+GroundOffset=0.5
 MaxLevel=1
 MinLevel=1
 
@@ -106,7 +105,7 @@ GroupSizeMax=1
 SpawnAtNight=True
 SpawnAtDay=True
 HuntPlayer=True
-GroundOffset=5
+GroundOffset=0.5
 MaxLevel=1
 MinLevel=1
 
@@ -126,7 +125,7 @@ GroupSizeRadius=2
 SpawnAtNight=True
 SpawnAtDay=True
 HuntPlayer=True
-GroundOffset=5
+GroundOffset=0.5
 MaxLevel=1
 MinLevel=1
 
@@ -146,7 +145,7 @@ GroupSizeRadius=2
 SpawnAtNight=True
 SpawnAtDay=True
 HuntPlayer=True
-GroundOffset=5
+GroundOffset=0.5
 MaxLevel=1
 MinLevel=1
 
@@ -165,7 +164,26 @@ GroupSizeMax=1
 SpawnAtNight=True
 SpawnAtDay=True
 HuntPlayer=True
-GroundOffset=5
+GroundOffset=0.5
+MaxLevel=1
+MinLevel=1
+
+[Ragnarok.7]
+Name=Yagluth
+Enabled=True
+PrefabName=GoblinKing
+MaxSpawned=1
+SpawnInterval=1
+SpawnChancePerInterval=100
+SpawnDistance=0
+SpawnRadiusMin=0
+SpawnRadiusMax=1
+GroupSizeMin=1
+GroupSizeMax=1
+SpawnAtNight=True
+SpawnAtDay=True
+HuntPlayer=True
+GroundOffset=0.5
 MaxLevel=1
 MinLevel=1
 ";
