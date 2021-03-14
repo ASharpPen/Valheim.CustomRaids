@@ -34,6 +34,9 @@
     <Reference Include="0Harmony">
       <HintPath>..\..\..\Games\Steam\steamapps\common\Valheim\BepInEx\core\0Harmony.dll</HintPath>
     </Reference>
+    <Reference Include="assembly_utils">
+      <HintPath>..\..\..\Games\Steam\steamapps\common\Valheim\valheim_Data\Managed\assembly_utils.dll</HintPath>
+    </Reference>
     <Reference Include="assembly_valheim">
       <HintPath>..\..\..\Games\Steam\steamapps\common\Valheim\valheim_Data\Managed\assembly_valheim.dll</HintPath>
     </Reference>
@@ -61,20 +64,18 @@
     <Compile Include="ConfigurationCore\ConfigurationSection.cs" />
     <Compile Include="ConfigurationCore\ConfigurationLoader.cs" />
     <Compile Include="ConfigurationCore\IHaveEntries.cs" />
-    <Compile Include="ConfigurationManager.cs" />
+    <Compile Include="ConfigurationTypes\ConfigurationManager.cs" />
     <Compile Include="ConfigurationTypes\GeneralConfiguration.cs" />
     <Compile Include="ConfigurationTypes\RaidEventConfiguration.cs" />
-    <Compile Include="CustomLog.cs" />
+    <Compile Include="Log.cs" />
+    <Compile Include="Multiplayer\ConfigMultiplayerPatch.cs" />
+    <Compile Include="Multiplayer\ConfigurationPackage.cs" />
     <Compile Include="Patches\InvestigationPatch.cs" />
-    <Compile Include="Patches\RaidEventSystemPatch.cs" />
+    <Compile Include="Patches\RandEventSystemPatch.cs" />
     <Compile Include="CustomRaidPlugin.cs" />
     <Compile Include="PreConfiguredRaids\DeathsquitoSeason.cs" />
     <Compile Include="PreConfiguredRaids\Ragnarok.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Thunderstorm\manifest.json" />
-    <None Include="Thunderstorm\README.md" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

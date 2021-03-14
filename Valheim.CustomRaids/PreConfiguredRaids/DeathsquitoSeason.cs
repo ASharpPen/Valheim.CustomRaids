@@ -1,6 +1,8 @@
 ﻿using BepInEx;
+using HarmonyLib;
 using System.IO;
 using UnityEngine;
+using Valheim.CustomRaids.ConfigurationTypes;
 
 namespace Valheim.CustomRaids.PreConfiguredRaids
 {
@@ -13,7 +15,7 @@ namespace Valheim.CustomRaids.PreConfiguredRaids
             string configPath = Path.Combine(Paths.ConfigPath, Filename);
             if (!File.Exists(configPath))
             {
-                if (ConfigurationManager.DebugOn) Debug.Log($"Generating supplemental raid {configPath}");
+                Log.LogDebug($"Generating supplemental raid {configPath}");
 
                 File.WriteAllText(configPath, FileDump);
             }
@@ -23,7 +25,6 @@ namespace Valheim.CustomRaids.PreConfiguredRaids
             @"
 [DeathsquitoSeason]
 Name = DeathsquitoSeason
-Biome=0
 Duration=3600
 NearBaseOnly=true
 StartMessage=Deathsquito season

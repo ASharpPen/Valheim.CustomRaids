@@ -1,4 +1,4 @@
-# Custom Raids
+﻿# Custom Raids
 
 This mod allows for customizing raids to your liking.
 

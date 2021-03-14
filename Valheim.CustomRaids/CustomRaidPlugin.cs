@@ -1,10 +1,11 @@
 ﻿using BepInEx;
 using HarmonyLib;
+using Valheim.CustomRaids.ConfigurationTypes;
 using Valheim.CustomRaids.PreConfiguredRaids;
 
 namespace Valheim.CustomRaids
 {
-    [BepInPlugin("asharppen.valheim.custom_raids", "Custom Raids", "1.1.0")]
+    [BepInPlugin("asharppen.valheim.custom_raids", "Custom Raids", "1.2.0")]
     public class CustomRaidPlugin : BaseUnityPlugin
     {
         void Awake()
@@ -17,11 +18,6 @@ namespace Valheim.CustomRaids
             {
                 new Ragnarok().CreateConfigIfMissing();
                 new DeathsquitoSeason().CreateConfigIfMissing();
-            }
-
-            if(!ConfigurationManager.GeneralConfig.LoadRaidConfigsOnWorldStart.Value)
-            {
-                ConfigurationManager.LoadRaidConfigurations();
             }
 
             new Harmony("mod.custom_raids").PatchAll();

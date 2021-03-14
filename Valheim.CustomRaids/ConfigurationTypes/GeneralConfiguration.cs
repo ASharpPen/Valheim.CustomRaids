@@ -1,48 +1,50 @@
 ﻿using BepInEx.Configuration;
+using System;
+using Valheim.CustomRaids.ConfigurationCore;
 
 namespace Valheim.CustomRaids.ConfigurationTypes
 {
+    [Serializable]
     public class GeneralConfiguration
     {
+        [NonSerialized]
         private ConfigFile Config;
 
         #region General
 
-        public ConfigEntry<bool> StopTouchingMyConfigs;
+        public ConfigurationEntry<bool> StopTouchingMyConfigs = new ConfigurationEntry<bool>(false, "Disables automatic updating and saving of raid configurations.\nThis means no helpers will be added, but.. allows you to keep things compact.");
 
-        public ConfigEntry<bool> LoadRaidConfigsOnWorldStart;
+        public ConfigurationEntry<bool> LoadSupplementalRaids = new ConfigurationEntry<bool>(true, "Loads raid configurations from supplemental files.\nEg. custom_raid.supplemental.my_raid.cfg will be included on load.");
 
-        public ConfigEntry<bool> LoadSupplementalRaids;
-
-        public ConfigEntry<bool> GeneratePresetRaids;
+        public ConfigurationEntry<bool> GeneratePresetRaids = new ConfigurationEntry<bool>(true, "Generates pre-defined supplemental raids. The generated raids are disabled by default.");
 
         #endregion
 
         #region Debug
 
-        public ConfigEntry<bool> DebugOn;
+        public ConfigurationEntry<bool> DebugOn = new ConfigurationEntry<bool>(false, "Enables debug logging.");
 
-        public ConfigEntry<bool> TraceLogging;
+        public ConfigurationEntry<bool> TraceLogging = new ConfigurationEntry<bool>(false, "Enables trace logging. Note, this will generate a LOT of log entries.");
 
-        public ConfigEntry<bool> WriteDefaultEventDataToDisk;
+        public ConfigurationEntry<bool> WriteDefaultEventDataToDisk = new ConfigurationEntry<bool>(false, "If enabled, scans existing raid event data, and dumps to a file on disk.");
 
-        public ConfigEntry<bool> WritePostChangeEventDataToDisk;
+        public ConfigurationEntry<bool> WritePostChangeEventDataToDisk = new ConfigurationEntry<bool>(false, "If enabled, dumps raid event data after applying configuration to a file on disk.");
 
-        public ConfigEntry<bool> WriteEnvironmentDataToDisk;
+        public ConfigurationEntry<bool> WriteEnvironmentDataToDisk = new ConfigurationEntry<bool>(false, "If enabled, scans existing environment data, and dumps to a file on disk.");
 
-        public ConfigEntry<bool> WriteGlobalKeyDataToDisk;
+        public ConfigurationEntry<bool> WriteGlobalKeyDataToDisk = new ConfigurationEntry<bool>(false, "If enabled, scans existing global keys, and dumps to a file on disk.");
 
         #endregion
 
         #region EventSystem
 
-        public ConfigEntry<bool> RemoveAllExistingRaids;
+        public ConfigurationEntry<bool> RemoveAllExistingRaids = new ConfigurationEntry<bool>(false, "If enabled, removes all existing raids and only allows configured.");
 
-        public ConfigEntry<bool> OverrideExisting;
+        public ConfigurationEntry<bool> OverrideExisting = new ConfigurationEntry<bool>(true, "Enable/disable override of existing events when event names match.");
 
-        public ConfigEntry<float> EventCheckInterval;
+        public ConfigurationEntry<float> EventCheckInterval = new ConfigurationEntry<float>(46f, "Frequency between checks for new raids. Value is in minutes");
 
-        public ConfigEntry<float> EventTriggerChance;
+        public ConfigurationEntry<float> EventTriggerChance = new ConfigurationEntry<float>(20f, "Chance of raid, per check interval. 100 is 100%.");
 
         #endregion
 
@@ -50,22 +52,21 @@ namespace Valheim.CustomRaids.ConfigurationTypes
         {
             Config = configFile;
 
-            StopTouchingMyConfigs = configFile.Bind<bool>("General", "StopTouchingMyConfigs", false, "Disables automatic updating and saving of raid configurations.\nThis means no helpers will be added, but.. allows you to keep things compact.");
-            LoadRaidConfigsOnWorldStart = configFile.Bind<bool>("General", nameof(LoadRaidConfigsOnWorldStart), false, "Reloads raid configurations when a game world starts.\nThis means if you are playing solo, you can edit the raid files while logged out, without exiting the game completely.");
-            LoadSupplementalRaids = configFile.Bind<bool>("General", nameof(LoadSupplementalRaids), true, "Loads raid configurations from supplemental files.\nEg. custom_raid.supplemental.my_raid.cfg will be included on load.");
-            GeneratePresetRaids = configFile.Bind<bool>("General", nameof(GeneratePresetRaids), true, "Generates pre-defined supplemental raids. The generated raids are disabled by default.");
+            LoadSupplementalRaids.Bind(Config, "General", nameof(LoadSupplementalRaids));
+            GeneratePresetRaids.Bind(Config, "General", nameof(GeneratePresetRaids));
+            StopTouchingMyConfigs.Bind(Config, "General", "StopTouchingMyConfigs");
 
-            DebugOn = configFile.Bind<bool>("Debug", "DebugOn", false, "Enables debug logging.");
-            TraceLogging = configFile.Bind<bool>("Debug", nameof(TraceLogging), false, "Enables trace logging. Note, this will generate a LOT of log entries.");
-            WriteDefaultEventDataToDisk = configFile.Bind<bool>("Debug", nameof(WriteDefaultEventDataToDisk), false, "If enabled, scans existing raid event data, and dumps to a file on disk.");
-            WritePostChangeEventDataToDisk = configFile.Bind<bool>("Debug", nameof(WritePostChangeEventDataToDisk), false, "If enabled, dumps raid event data after applying configuration to a file on disk.");
-            WriteEnvironmentDataToDisk = configFile.Bind<bool>("Debug", nameof(WriteEnvironmentDataToDisk), false, "If enabled, scans existing environment data, and dumps to a file on disk.");
-            WriteGlobalKeyDataToDisk = configFile.Bind<bool>("Debug", nameof(WriteGlobalKeyDataToDisk), false, "If enabled, scans existing global keys, and dumps to a file on disk.");
+            RemoveAllExistingRaids.Bind(Config, "EventSystem", nameof(RemoveAllExistingRaids));
+            OverrideExisting.Bind(Config, "EventSystem", nameof(OverrideExisting));
+            EventCheckInterval.Bind(Config, "EventSystem", "EventCheckInterval");
+            EventTriggerChance.Bind(Config, "EventSystem", "EventTriggerChance");
 
-            RemoveAllExistingRaids = configFile.Bind<bool>("EventSystem", nameof(RemoveAllExistingRaids), false, "If enabled, removes all existing raids and only allows configured.");
-            OverrideExisting = configFile.Bind<bool>("EventSystem", nameof(OverrideExisting), true, "Enable/disable override of existing events when event names match.");
-            EventCheckInterval = configFile.Bind<float>("EventSystem", "EventCheckInterval", 1f, "Frequency between checks for new raids. Value is in hours");
-            EventTriggerChance = configFile.Bind<float>("EventSystem", "EventTriggerChance", 1f, "Chance of raid, per check interval. 1 is 100%.");
+            DebugOn.Bind(Config, "Debug", "DebugOn");
+            TraceLogging.Bind(Config, "Debug", nameof(TraceLogging));
+            WriteDefaultEventDataToDisk.Bind(Config, "Debug", nameof(WriteDefaultEventDataToDisk));
+            WritePostChangeEventDataToDisk.Bind(Config, "Debug", nameof(WritePostChangeEventDataToDisk));
+            WriteEnvironmentDataToDisk.Bind(Config, "Debug", nameof(WriteEnvironmentDataToDisk));
+            WriteGlobalKeyDataToDisk.Bind(Config, "Debug", nameof(WriteGlobalKeyDataToDisk));
         }
     }
 }
