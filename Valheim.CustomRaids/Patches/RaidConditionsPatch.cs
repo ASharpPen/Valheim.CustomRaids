@@ -1,5 +1,7 @@
 ﻿using HarmonyLib;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace Valheim.CustomRaids.Patches
@@ -33,13 +35,42 @@ namespace Valheim.CustomRaids.Patches
 
                     if (raidConfig.ConditionWorldAgeDaysMin.Value > day)
                     {
-                        Log.LogTrace($"Raid {raidConfig.Name} disabled due to world not being old enough. {raidConfig.ConditionWorldAgeDaysMin} > {day}");
+                        Log.LogDebug($"Raid {raidConfig.Name} disabled due to world not being old enough. {raidConfig.ConditionWorldAgeDaysMin} > {day}");
                         continue;
                     }
                     else if (raidConfig.ConditionWorldAgeDaysMax.Value > 0 && raidConfig.ConditionWorldAgeDaysMax.Value < day)
                     {
-                        Log.LogTrace($"Raid {raidConfig.Name} disabled due to world being too old. {raidConfig.ConditionWorldAgeDaysMax.Value} < {day}");
+                        Log.LogDebug($"Raid {raidConfig.Name} disabled due to world being too old. {raidConfig.ConditionWorldAgeDaysMax.Value} < {day}");
                         continue;
+                    }
+
+                    //Check key conditions.
+                    if(raidConfig.RequireOneOfGlobalKeys.Value.Length > 0)
+                    {
+                        var keys = raidConfig.RequireOneOfGlobalKeys.Value.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+
+                        HashSet<string> globalKeys = ZoneSystem.instance
+                            .GetGlobalKeys()
+                            .Select(x => x.Trim().ToUpperInvariant())
+                            .ToHashSet();
+
+                        bool foundRequiredKey = false;
+                        foreach(var key in keys)
+                        {
+                            if(globalKeys.Contains(key.Trim().ToUpperInvariant()))
+                            {
+                                foundRequiredKey = true;
+                                break;
+                            }
+                        }
+
+                        if(foundRequiredKey == false)
+                        {
+#if DEBUG
+                            Log.LogDebug($"Unable to find any of the keys {raidConfig.RequireOneOfGlobalKeys.Value}");
+#endif
+                            continue;
+                        }
                     }
                 }
                 else
