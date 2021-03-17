@@ -34,6 +34,10 @@ namespace Valheim.CustomRaids
 
         public ConfigurationEntry<string> ForceMusic = new ConfigurationEntry<string>("CombatEventL1", "Music to play for raid.");
 
+        public ConfigurationEntry<float> ConditionWorldAgeDaysMin = new ConfigurationEntry<float>(0, "Minimum number of in-game days of the world, for this raid to be possible.");
+
+        public ConfigurationEntry<float> ConditionWorldAgeDaysMax = new ConfigurationEntry<float>(0, "Maximum number of in-game days of the world, for this raid to be possible. 0 means no limit");
+        
         public List<SpawnConfiguration> SpawnConfigurations => Sections.Values.ToList();
     }
 

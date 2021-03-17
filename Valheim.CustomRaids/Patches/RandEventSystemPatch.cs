@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using UnityEngine;
 using Valheim.CustomRaids.ConfigurationTypes;
+using Valheim.CustomRaids.Patches;
 
 namespace Valheim.CustomRaids
 {
@@ -87,7 +88,10 @@ namespace Valheim.CustomRaids
 
                 try
                 {
-                    __instance.m_events.Add(CreateEvent(raid));
+                    var randomEvent = CreateEvent(raid);
+                    RandomEventCache.Initialize(randomEvent, raid);
+
+                    __instance.m_events.Add(randomEvent);
                 }
                 catch (Exception e)
                 {
