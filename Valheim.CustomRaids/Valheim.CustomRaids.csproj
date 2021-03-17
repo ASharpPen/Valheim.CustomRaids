@@ -67,12 +67,15 @@
     <Compile Include="ConfigurationTypes\ConfigurationManager.cs" />
     <Compile Include="ConfigurationTypes\GeneralConfiguration.cs" />
     <Compile Include="ConfigurationTypes\RaidEventConfiguration.cs" />
-    <Compile Include="Log.cs" />
+    <Compile Include="ConfigurationCore\Log.cs" />
     <Compile Include="Multiplayer\ConfigMultiplayerPatch.cs" />
     <Compile Include="Multiplayer\ConfigurationPackage.cs" />
     <Compile Include="Patches\InvestigationPatch.cs" />
+    <Compile Include="Patches\RaidConditionsPatch.cs" />
     <Compile Include="Patches\RandEventSystemPatch.cs" />
     <Compile Include="CustomRaidPlugin.cs" />
+    <Compile Include="Patches\WorldStartPatch.cs" />
+    <Compile Include="RandomEventCache.cs" />
     <Compile Include="PreConfiguredRaids\DeathsquitoSeason.cs" />
     <Compile Include="PreConfiguredRaids\Ragnarok.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

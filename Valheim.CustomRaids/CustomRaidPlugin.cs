@@ -10,6 +10,8 @@ namespace Valheim.CustomRaids
     {
         void Awake()
         {
+            Log.Logger = Logger;
+
             Logger.LogInfo("Loading configurations...");
 
             ConfigurationManager.LoadGeneralConfigurations();
@@ -21,6 +23,8 @@ namespace Valheim.CustomRaids
             }
 
             new Harmony("mod.custom_raids").PatchAll();
+
+            Log.Logger = Logger;
         }
     }
 }
