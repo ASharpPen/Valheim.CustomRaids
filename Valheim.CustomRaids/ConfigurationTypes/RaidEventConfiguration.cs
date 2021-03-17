@@ -24,9 +24,11 @@ namespace Valheim.CustomRaids
 
         public ConfigurationEntry<bool> NearBaseOnly = new ConfigurationEntry<bool>(true, "Spawn raid near base only. Looks like this one might need to always be true due to the games valid spawn logic.");
 
-        public ConfigurationEntry<string> NotRequiredGlobalKeys = new ConfigurationEntry<string>("", "Array (separate by \",\" of required global keys. Leave empty for no requirement.");
+        public ConfigurationEntry<string> NotRequiredGlobalKeys = new ConfigurationEntry<string>("", "Array (separate by \",\") of required global keys. Leave empty for no requirement.");
 
-        public ConfigurationEntry<string> RequiredGlobalKeys = new ConfigurationEntry<string>("", "Array (separate by \",\" of required global keys. Leave empty for no requirement.");
+        public ConfigurationEntry<string> RequiredGlobalKeys = new ConfigurationEntry<string>("", "Array (separate by \",\") of required global keys. Leave empty for no requirement.");
+
+        public ConfigurationEntry<string> RequireOneOfGlobalKeys = new ConfigurationEntry<string>("", "Array (separte by \",\") of global keys of which one is required. Leave empty for no requirement.");
 
         public ConfigurationEntry<bool> PauseIfNoPlayerInArea = new ConfigurationEntry<bool>(true);
 
