@@ -1,4 +1,5 @@
 ﻿using HarmonyLib;
+using System;
 using System.Linq;
 
 namespace Valheim.CustomRaids.Compatibility
@@ -17,14 +18,28 @@ namespace Valheim.CustomRaids.Compatibility
         /// </summary>
         private static void RemoveLevelControl(Harmony harmony)
         {
-            var spawnSystemSpawnPatch = AccessTools.Method(typeof(SpawnSystem), "Spawn");
-            var conflictingPatches = Harmony.GetPatchInfo(spawnSystemSpawnPatch)
-                .Transpilers
-                .Where(x => x.owner == "org.bepinex.plugins.creaturelevelcontrol");
-
-            foreach (var conflictingPatch in conflictingPatches)
+            try
             {
-                harmony.Unpatch(spawnSystemSpawnPatch, conflictingPatch.PatchMethod);
+                var spawnSystemSpawnPatch = AccessTools.Method(typeof(SpawnSystem), "Spawn");
+                var conflictingPatches = Harmony.GetPatchInfo(spawnSystemSpawnPatch)?
+                    .Transpilers?
+                    .Where(x => x.owner == "org.bepinex.plugins.creaturelevelcontrol");
+
+                if (conflictingPatches == null)
+                {
+                    return;
+                }
+
+                foreach (var conflictingPatch in conflictingPatches)
+                {
+                    harmony.Unpatch(spawnSystemSpawnPatch, conflictingPatch.PatchMethod);
+                }
+            }
+            catch(Exception e)
+            {
+#if DEBUG
+                Log.LogError("Error during compatibility fixes.", e);
+#endif
             }
         }
     }

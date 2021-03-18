@@ -33,6 +33,18 @@ namespace Valheim.CustomRaids.Patches
 
                     Log.LogTrace($"Checking raid conditionals at time {day}");
 
+                    if(!raidConfig.CanStartDuringDay.Value && EnvMan.instance.IsDay())
+                    {
+                        Log.LogDebug($"Raid {raidConfig.Name} disabled due to not being allowed to start during day.");
+                        continue;
+                    }
+
+                    if(!raidConfig.CanStartDuringNight.Value && EnvMan.instance.IsNight())
+                    {
+                        Log.LogDebug($"Raid {raidConfig.Name} disabled due to not being allowed to start during night.");
+                        continue;
+                    }
+
                     if (raidConfig.ConditionWorldAgeDaysMin.Value > day)
                     {
                         Log.LogDebug($"Raid {raidConfig.Name} disabled due to world not being old enough. {raidConfig.ConditionWorldAgeDaysMin} > {day}");
