@@ -59,6 +59,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Compatibility\CreatureLevelAndLootControlCompatibility.cs" />
     <Compile Include="ConfigurationCore\ConfigurationEntry.cs" />
     <Compile Include="ConfigurationCore\ConfigurationGroup.cs" />
     <Compile Include="ConfigurationCore\ConfigurationSection.cs" />
