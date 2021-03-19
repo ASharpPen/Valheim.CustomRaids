@@ -44,6 +44,8 @@ namespace Valheim.CustomRaids
 
         public ConfigurationEntry<bool> CanStartDuringNight = new ConfigurationEntry<bool>(true, "Enable/toggle this raid activating during night.");
 
+        public ConfigurationEntry<string> Faction = new ConfigurationEntry<string>("Boss", "Assign a faction to all entities in raid. See readme for faction options.");
+
         public List<SpawnConfiguration> SpawnConfigurations => Sections.Values.ToList();
     }
 
@@ -105,5 +107,7 @@ namespace Valheim.CustomRaids
         public ConfigurationEntry<int> MaxLevel = new ConfigurationEntry<int>(3, "Max level of spawn. Range 1 to 3 (3 is two stars).");
 
         public ConfigurationEntry<float> GroundOffset = new ConfigurationEntry<float>(0.5f, "Distance to ground on spawn.");
+
+        public ConfigurationEntry<string> Faction = new ConfigurationEntry<string>("", "Set custom faction for mob. This overrules the raids faction setting if set.");
     }
 }
