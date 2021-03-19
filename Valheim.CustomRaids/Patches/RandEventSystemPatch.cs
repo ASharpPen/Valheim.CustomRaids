@@ -155,7 +155,7 @@ namespace Valheim.CustomRaids
 
                 SpawnSystem.SpawnData spawn = new SpawnSystem.SpawnData
                 {
-                    m_name = spawnConfig.Name.Value,
+                    m_name = $"{raidEvent.GroupName}.{spawnConfig.SectionName}",
                     m_enabled = spawnConfig.Enabled.Value,
                     m_prefab = spawnObject,
                     m_maxSpawned = spawnConfig.MaxSpawned.Value,
@@ -194,8 +194,6 @@ namespace Valheim.CustomRaids
 
             var notRequiredGlobalKeys = raidEvent.NotRequiredGlobalKeys?.Value?.Split(new []{','}, StringSplitOptions.RemoveEmptyEntries);
             var requiredGlobalKeys = raidEvent.RequiredGlobalKeys?.Value?.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
-
-
 
             RandomEvent newEvent = new RandomEvent
             {

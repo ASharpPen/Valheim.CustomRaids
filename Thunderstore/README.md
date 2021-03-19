@@ -293,6 +293,18 @@ THIS is what usually makes most raids stumble. If the raid starts, but nothing s
 - defeated_bonemass
 - defeated_dragon
 
+### Factions
+
+- Players,
+- AnimalsVeg,
+- ForestMonsters,
+- Undead,
+- Demon,
+- MountainMonsters,
+- SeaMonsters,
+- PlainsMonsters,
+- Boss
+
 # Changelog
 - v1.2.0:
 	- Server-to-client config synchronization added.
