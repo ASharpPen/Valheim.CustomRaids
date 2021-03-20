@@ -71,6 +71,7 @@
     <Compile Include="ConfigurationCore\Log.cs" />
     <Compile Include="Multiplayer\ConfigMultiplayerPatch.cs" />
     <Compile Include="Multiplayer\ConfigurationPackage.cs" />
+    <Compile Include="Patches\FixNearBaseOnlyPatch.cs" />
     <Compile Include="Patches\InvestigationPatch.cs" />
     <Compile Include="Patches\OnSpawnFactionPatch.cs" />
     <Compile Include="Patches\RaidConditionsPatch.cs" />
