@@ -46,6 +46,10 @@ namespace Valheim.CustomRaids
 
         public ConfigurationEntry<string> Faction = new ConfigurationEntry<string>("Boss", "Assign a faction to all entities in raid. See readme for faction options.");
 
+        public ConfigurationEntry<float> RaidFrequency = new ConfigurationEntry<float>(0, "Minutes between checks for this raid to run. 0 uses game default (46 minutes). This is only used if UseIndividualRaidChecks is set in general config.");
+
+        public ConfigurationEntry<float> RaidChance = new ConfigurationEntry<float>(0, "Chance at each check for this raid to run. 0 uses game default (20%). This is only used if UseIndividualRaidChecks is set in general config.");
+
         public List<SpawnConfiguration> SpawnConfigurations => Sections.Values.ToList();
     }
 

@@ -1,6 +1,5 @@
 ﻿using HarmonyLib;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using Valheim.CustomRaids.ConfigurationTypes;
@@ -17,7 +16,7 @@ namespace Valheim.CustomRaids.Multiplayer
 			if (ZNet.instance.IsServer())
 			{
 				Log.LogDebug("Registering server RPC for sending configs on request from client.");
-				peer.m_rpc.Register(nameof(RPC_RquestConfigsCustomRaids), new ZRpc.RpcMethod.Method(RPC_RquestConfigsCustomRaids));
+				peer.m_rpc.Register(nameof(RPC_RequestConfigsCustomRaids), new ZRpc.RpcMethod.Method(RPC_RequestConfigsCustomRaids));
 			}
 			else
 			{
@@ -25,11 +24,11 @@ namespace Valheim.CustomRaids.Multiplayer
 				peer.m_rpc.Register<ZPackage>(nameof(RPC_ReceiveConfigsCustomRaids), new Action<ZRpc, ZPackage>(RPC_ReceiveConfigsCustomRaids));
 
 				Log.LogDebug("Requesting configs from server.");
-				peer.m_rpc.Invoke(nameof(RPC_RquestConfigsCustomRaids));
+				peer.m_rpc.Invoke(nameof(RPC_RequestConfigsCustomRaids));
 			}
 		}
 
-		private static void RPC_RquestConfigsCustomRaids(ZRpc rpc)
+		private static void RPC_RequestConfigsCustomRaids(ZRpc rpc)
 		{
 			try
 			{
@@ -90,12 +89,12 @@ namespace Valheim.CustomRaids.Multiplayer
 
 						Log.LogTrace("Unpackaging general config.");
 
-						ConfigurationManager.GeneralConfig = (GeneralConfiguration)configPackage.GeneralConfig;
+						ConfigurationManager.GeneralConfig = configPackage.GeneralConfig;
 
 						Log.LogTrace("Successfully set general config.");
 						Log.LogTrace("Unpackaging raid event configs.");
 
-						ConfigurationManager.RaidConfig = (List<RaidEventConfiguration>)configPackage.RaidConfigs;
+						ConfigurationManager.RaidConfig = configPackage.RaidConfigs;
 
 						Log.LogTrace("Successfully set raid event configs.");
 

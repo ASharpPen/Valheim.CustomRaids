@@ -78,6 +78,8 @@
     <Compile Include="Patches\RandEventSystemPatch.cs" />
     <Compile Include="CustomRaidPlugin.cs" />
     <Compile Include="Patches\WorldStartPatch.cs" />
+    <Compile Include="RaidFrequencyOverhaul\PossibleRaid.cs" />
+    <Compile Include="RaidFrequencyOverhaul\RaidFrequencyOverhaul.cs" />
     <Compile Include="RandomEventCache.cs" />
     <Compile Include="PreConfiguredRaids\DeathsquitoSeason.cs" />
     <Compile Include="PreConfiguredRaids\Ragnarok.cs" />
