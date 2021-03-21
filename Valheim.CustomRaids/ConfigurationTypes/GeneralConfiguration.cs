@@ -48,6 +48,14 @@ namespace Valheim.CustomRaids.ConfigurationTypes
 
         #endregion
 
+        #region IndividualRaids
+
+        public ConfigurationEntry<bool> UseIndividualRaidChecks = new ConfigurationEntry<bool>(false, "If enabled, Custom Raids will overhaul the games way of checking for raids.\nThis allows for setting individual frequences and chances for each raid.");
+
+        public ConfigurationEntry<float> MinimumTimeBetweenRaids = new ConfigurationEntry<float>(46, "If overhaul is enhabled, ensures a minimum amount of minutes between each raid.");
+
+        #endregion
+
         public void LoadConfig(ConfigFile configFile)
         {
             Config = configFile;
@@ -60,6 +68,9 @@ namespace Valheim.CustomRaids.ConfigurationTypes
             OverrideExisting.Bind(Config, "EventSystem", nameof(OverrideExisting));
             EventCheckInterval.Bind(Config, "EventSystem", "EventCheckInterval");
             EventTriggerChance.Bind(Config, "EventSystem", "EventTriggerChance");
+
+            UseIndividualRaidChecks.Bind(Config, "IndividualRaids", nameof(UseIndividualRaidChecks));
+            MinimumTimeBetweenRaids.Bind(Config, "IndividualRaids", nameof(MinimumTimeBetweenRaids));
 
             DebugOn.Bind(Config, "Debug", "DebugOn");
             TraceLogging.Bind(Config, "Debug", nameof(TraceLogging));

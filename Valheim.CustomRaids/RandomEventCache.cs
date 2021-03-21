@@ -18,6 +18,11 @@ namespace Valheim.CustomRaids.Patches
             data.Config = config;
         }
 
+        public static RandomEventData Get(RandomEvent randomEvent)
+        {
+            return EventTable.GetOrCreateValue(randomEvent);
+        }
+
         public static RaidEventConfiguration GetConfig(RandomEvent randomEvent)
         {
             if(EventTable.TryGetValue(randomEvent, out RandomEventData data))
@@ -32,5 +37,7 @@ namespace Valheim.CustomRaids.Patches
     public class RandomEventData
     {
         public RaidEventConfiguration Config;
+
+        public double LastRun;
     }
 }
