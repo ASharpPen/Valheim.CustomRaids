@@ -29,7 +29,10 @@ namespace Valheim.CustomRaids
 
             var harmony = new Harmony("mod.custom_raids");
 
-            CreatureLevelAndLootControlCompatibility.MakeCompatible(harmony);
+            if (ConfigurationManager.GeneralConfig.DisableCreatureLevelAndControlWorldSpawnSpawnControl.Value)
+            {
+                CreatureLevelAndLootControlCompatibility.MakeCompatible(harmony);
+            }
 
             harmony.PatchAll();
 

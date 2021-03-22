@@ -50,6 +50,10 @@ namespace Valheim.CustomRaids
 
         public ConfigurationEntry<float> RaidChance = new ConfigurationEntry<float>(0, "Chance at each check for this raid to run. 0 uses game default (20%). This is only used if UseIndividualRaidChecks is set in general config.");
 
+        public ConfigurationEntry<float> ConditionDistanceToCenterMin = new ConfigurationEntry<float>(0, "Minimum distance to center for this raid to activate.");
+
+        public ConfigurationEntry<float> ConditionDistanceToCenterMax = new ConfigurationEntry<float>(0, "Maximum distance to center for this raid to activate.. 0 means limitless.");
+
         public List<SpawnConfiguration> SpawnConfigurations => Sections.Values.ToList();
     }
 

@@ -20,6 +20,7 @@ namespace Valheim.CustomRaids.Patches
             for (int i = 0; i < __result.Count; ++i)
             {
                 var randomEvent = __result[i].Key;
+                var raidPosition = __result[i].Value;
 
                 //Do we have a config for it?
                 var raidConfig = RandomEventCache.GetConfig(randomEvent);
@@ -56,8 +57,25 @@ namespace Valheim.CustomRaids.Patches
                         continue;
                     }
 
+                    var distanceToCenter = raidPosition.magnitude;
+
+                    if (raidConfig.ConditionDistanceToCenterMin.Value > distanceToCenter)
+                    {
+#if DEBUG
+                        Log.LogDebug($"Raid {raidConfig.Name} disabled due being too far from center. {raidConfig.ConditionDistanceToCenterMin.Value} > {distanceToCenter}");
+#endif
+                        continue;
+                    }
+                    else if(raidConfig.ConditionDistanceToCenterMax.Value > 0 && raidConfig.ConditionDistanceToCenterMax.Value < distanceToCenter)
+                    {
+#if DEBUG
+                        Log.LogDebug($"Raid {raidConfig.Name} disabled due being too close to center. {raidConfig.ConditionDistanceToCenterMax.Value} < {distanceToCenter}");
+#endif
+                        continue;
+                    }
+
                     //Check key conditions.
-                    if(raidConfig.RequireOneOfGlobalKeys.Value.Length > 0)
+                    if (raidConfig.RequireOneOfGlobalKeys.Value.Length > 0)
                     {
                         var keys = raidConfig.RequireOneOfGlobalKeys.Value.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
 

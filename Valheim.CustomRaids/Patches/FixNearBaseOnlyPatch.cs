@@ -13,9 +13,6 @@ namespace Valheim.CustomRaids.Patches
         private static IEnumerable<CodeInstruction> AddEscapeIfNotRelevant(IEnumerable<CodeInstruction> instructions)
         {
             var codes = instructions.ToList();
-
-            var pos = -1;
-
             var labelRetTrue = new Label();
 
             for(int i = 0; i < codes.Count; ++i)
@@ -32,12 +29,6 @@ namespace Valheim.CustomRaids.Patches
                     }
                 }
             }
-
-            if(pos < 0)
-            {
-                Log.LogError("Unable to transpile in fix for NearBaseOnly=true requirement for raids.");
-            }
-
             List<CodeInstruction> result = new List<CodeInstruction>();
 
             result.Add(new CodeInstruction(OpCodes.Ldarg_1));

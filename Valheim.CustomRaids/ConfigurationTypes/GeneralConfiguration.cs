@@ -56,9 +56,17 @@ namespace Valheim.CustomRaids.ConfigurationTypes
 
         #endregion
 
+        #region Compatibility
+
+        public ConfigurationEntry<bool> DisableCreatureLevelAndControlWorldSpawnSpawnControl = new ConfigurationEntry<bool>(false, "If enabled, disables the changes Creature Level and Loot Control makes to the world spawners. Custom Raids is unable to set levels otherwise.");
+
+        #endregion
+
         public void LoadConfig(ConfigFile configFile)
         {
             Config = configFile;
+
+            DisableCreatureLevelAndControlWorldSpawnSpawnControl.Bind(Config, "Compatibility", nameof(DisableCreatureLevelAndControlWorldSpawnSpawnControl));
 
             LoadSupplementalRaids.Bind(Config, "General", nameof(LoadSupplementalRaids));
             GeneratePresetRaids.Bind(Config, "General", nameof(GeneratePresetRaids));
