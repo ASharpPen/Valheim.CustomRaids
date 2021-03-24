@@ -10,7 +10,7 @@ using Valheim.CustomRaids.Compatibility;
 namespace Valheim.CustomRaids
 {
     [BepInDependency("org.bepinex.plugins.creaturelevelcontrol", BepInDependency.DependencyFlags.SoftDependency)]
-    [BepInPlugin("asharppen.valheim.custom_raids", "Custom Raids", "1.2.0")]
+    [BepInPlugin("asharppen.valheim.custom_raids", "Custom Raids", "1.3.0")]
     public class CustomRaidPlugin : BaseUnityPlugin
     {
         void Awake()
