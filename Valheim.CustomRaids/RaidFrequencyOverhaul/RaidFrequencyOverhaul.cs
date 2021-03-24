@@ -3,10 +3,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
+using Valheim.CustomRaids.Conditions;
 using Valheim.CustomRaids.ConfigurationTypes;
 using Valheim.CustomRaids.Patches;
 
@@ -24,16 +22,28 @@ namespace Valheim.CustomRaids.RaidFrequencyOverhaul
         {
             if ((ConfigurationManager.GeneralConfig?.UseIndividualRaidChecks?.Value ?? false) == false)
             {
+#if DEBUG
+                Log.LogInfo("Use default event loop.");
+#endif
+
                 return true;
             }
 
             if(!ZNet.instance.IsServer())
             {
+#if DEBUG
+                Log.LogInfo("Instance is not a server. Skipping event loop.");
+#endif
+
                 return true;
             }
 
             if (ZNet.instance.IsServer())
             {
+#if DEBUG
+                Log.LogInfo("Checking for possible raids.");
+#endif
+
                 CheckAndStartRaids(__instance, dt, ref ___m_eventTimer);
 
                 //Update current event timer. 
@@ -126,6 +136,12 @@ namespace Valheim.CustomRaids.RaidFrequencyOverhaul
                     if (possibleRaidCenterPositions.Count != 0)
                     {
                         Vector3 raidCenter = possibleRaidCenterPositions[UnityEngine.Random.Range(0, possibleRaidCenterPositions.Count)];
+
+                        if(ConditionChecker.ShouldFilter(randomEvent, raidCenter))
+                        {
+                            continue;
+                        }
+
                         possibleRaids.Add(new PossibleRaid
                         {
                             EventData = eventData,
