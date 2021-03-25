@@ -67,12 +67,16 @@ namespace Valheim.CustomRaids.Conditions
                     var keys = raidConfig.RequireOneOfGlobalKeys.Value.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
 
 #if DEBUG
-                    Log.LogInfo("Found RequireOneOfGlobalKeys keys: " + keys.Join());
+                    Log.LogInfo("Found RequireOneOfGlobalKeys keys: ");
+                    foreach(var key in keys)
+                    {
+                        Log.LogInfo("\t" + key);
+                    }
 #endif
                     bool foundRequiredKey = false;
                     foreach (var key in keys)
                     {
-                        if (ZoneSystem.instance.GetGlobalKey(key))
+                        if (ZoneSystem.instance.GetGlobalKey(key.Trim()))
                         {
 #if DEBUG
                             Log.LogInfo("Found RequiredOneOfKey: " + key);
