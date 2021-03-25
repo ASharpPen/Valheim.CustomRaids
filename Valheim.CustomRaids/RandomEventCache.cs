@@ -38,6 +38,6 @@ namespace Valheim.CustomRaids.Patches
     {
         public RaidEventConfiguration Config;
 
-        public double LastRun;
+        public double LastChecked;
     }
 }

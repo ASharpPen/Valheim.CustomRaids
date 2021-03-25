@@ -25,7 +25,6 @@ namespace Valheim.CustomRaids.RaidFrequencyOverhaul
 #if DEBUG
                 Log.LogInfo("Use default event loop.");
 #endif
-
                 return true;
             }
 
@@ -34,41 +33,39 @@ namespace Valheim.CustomRaids.RaidFrequencyOverhaul
 #if DEBUG
                 Log.LogInfo("Instance is not a server. Skipping event loop.");
 #endif
-
                 return true;
             }
 
-            if (ZNet.instance.IsServer())
+            ___m_eventTimer += dt;
+            ___m_sendTimer += dt;
+
+            if (___m_sendTimer > 2f)
             {
-                ___m_eventTimer += dt;
-                ___m_sendTimer += dt;
+                Log.LogTrace("Checking for possible raids.");
 
-                if (___m_sendTimer > 1f)
+                if(CheckAndStartRaids(__instance, ___m_eventTimer))
                 {
-                    Log.LogTrace("Checking for possible raids.");
+                    ___m_eventTimer = 0;
+                }
 
-                    CheckAndStartRaids(__instance, ___m_eventTimer);
-
-                    //Update current event timer. 
-                    //Just using the default solution here... It apparently sends out an update every 2 seconds with the current raid event.
-                    ___m_sendTimer += dt;
-                    if (___m_sendTimer > 2f)
-                    {
-                        ___m_sendTimer = 0f;
-                        SendCurrentRandomEvent(__instance);
-                    }
+                //Update current event timer. 
+                //Just using the default solution here... It apparently sends out an update every 2 seconds with the current raid event.
+                if (___m_sendTimer > 2f)
+                {
+                    ___m_sendTimer = 0f;
+                    SendCurrentRandomEvent(__instance);
                 }
             }
 
             return false;
         }
 
-        private static void CheckAndStartRaids(RandEventSystem instance, float m_eventTimer)
+        private static bool CheckAndStartRaids(RandEventSystem instance, float m_eventTimer)
         {
             //Check if we have passed the minimum time between raids.
             if (m_eventTimer < ConfigurationManager.GeneralConfig.MinimumTimeBetweenRaids.Value * 60) //EventTimer is in seconds.
             {
-                return;
+                return false;
             }
 
             var time = ZNet.instance.GetTimeSeconds();
@@ -80,26 +77,21 @@ namespace Valheim.CustomRaids.RaidFrequencyOverhaul
             Log.LogDebug($"Raids possible to spawn: {possibleRaids?.Count ?? 0}");
 #endif
 
-            //Filter by rolling chance on each.
-            possibleRaids = possibleRaids
-                .Where(x => UnityEngine.Random.Range(0, 100) <= x.EventChance)
-                .ToList();
-
-#if DEBUG
-            Log.LogDebug($"Raids that passed chance check: {possibleRaids?.Count ?? 0}");
-#endif
-
             if (possibleRaids.Count == 0)
             {
-                return;
+                return false;
             }
 
             //Select one randomly
             var selectedRaid = possibleRaids[UnityEngine.Random.Range(0, possibleRaids.Count)];
 
-            //Set event timer.
-            m_eventTimer = 0;
-            selectedRaid.EventData.LastRun = time;
+            selectedRaid.EventData.LastChecked = time;
+
+            //Check chance
+            if(selectedRaid.EventChance < UnityEngine.Random.Range(0, 100))
+            {
+                return false;
+            }
 
 #if DEBUG
             Log.LogDebug($"Starting raid: {selectedRaid?.Raid?.m_name}");
@@ -107,6 +99,7 @@ namespace Valheim.CustomRaids.RaidFrequencyOverhaul
 
             //Start event.
             SetRandomEvent(instance, selectedRaid.Raid, selectedRaid.RaidCenter);
+            return true;
         }
 
         private static List<PossibleRaid> GetPossibleRaids(RandEventSystem randomEventSystem, double currentTime)
@@ -122,7 +115,7 @@ namespace Valheim.CustomRaids.RaidFrequencyOverhaul
                     //Get event config
                     var eventData = RandomEventCache.Get(randomEvent);
 
-                    var lastRun = eventData.LastRun;
+                    var lastRun = eventData.LastChecked;
                     var delta = currentTime - lastRun;
 
                     //Check if enough time has passed
