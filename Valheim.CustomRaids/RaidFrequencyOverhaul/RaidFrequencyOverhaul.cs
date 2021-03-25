@@ -40,29 +40,31 @@ namespace Valheim.CustomRaids.RaidFrequencyOverhaul
 
             if (ZNet.instance.IsServer())
             {
-#if DEBUG
-                Log.LogInfo("Checking for possible raids.");
-#endif
-
-                CheckAndStartRaids(__instance, dt, ref ___m_eventTimer);
-
-                //Update current event timer. 
-                //Just using the default solution here... It apparently sends out an update every 2 seconds with the current raid event.
+                ___m_eventTimer += dt;
                 ___m_sendTimer += dt;
-                if (___m_sendTimer > 2f)
+
+                if (___m_sendTimer > 1f)
                 {
-                    ___m_sendTimer = 0f;
-                    SendCurrentRandomEvent(__instance);
+                    Log.LogTrace("Checking for possible raids.");
+
+                    CheckAndStartRaids(__instance, ___m_eventTimer);
+
+                    //Update current event timer. 
+                    //Just using the default solution here... It apparently sends out an update every 2 seconds with the current raid event.
+                    ___m_sendTimer += dt;
+                    if (___m_sendTimer > 2f)
+                    {
+                        ___m_sendTimer = 0f;
+                        SendCurrentRandomEvent(__instance);
+                    }
                 }
             }
 
             return false;
         }
 
-        private static void CheckAndStartRaids(RandEventSystem instance, float dt, ref float m_eventTimer)
+        private static void CheckAndStartRaids(RandEventSystem instance, float m_eventTimer)
         {
-            m_eventTimer += dt;
-
             //Check if we have passed the minimum time between raids.
             if (m_eventTimer < ConfigurationManager.GeneralConfig.MinimumTimeBetweenRaids.Value * 60) //EventTimer is in seconds.
             {

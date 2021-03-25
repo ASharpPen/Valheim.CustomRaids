@@ -66,19 +66,17 @@ namespace Valheim.CustomRaids.Conditions
                 {
                     var keys = raidConfig.RequireOneOfGlobalKeys.Value.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
 
+#if DEBUG
                     Log.LogInfo("Found RequireOneOfGlobalKeys keys: " + keys.Join());
-
-                    HashSet<string> globalKeys = ZoneSystem.instance
-                        .GetGlobalKeys()
-                        .Select(x => x.Trim().ToUpperInvariant())
-                        .ToHashSet();
-
+#endif
                     bool foundRequiredKey = false;
                     foreach (var key in keys)
                     {
-                        if (globalKeys.Contains(key.Trim().ToUpperInvariant()))
+                        if (ZoneSystem.instance.GetGlobalKey(key))
                         {
+#if DEBUG
                             Log.LogInfo("Found RequiredOneOfKey: " + key);
+#endif
 
                             foundRequiredKey = true;
                             break;
@@ -93,14 +91,12 @@ namespace Valheim.CustomRaids.Conditions
                         return true;
                     }
                 }
-                else
-                {
-                    Log.LogInfo("No RequireOneOfGlobalKeys keys set.");
-                }
             }
             else
             {
-                Log.LogTrace($"No config for event {randomEvent.m_name}");
+#if DEBUG
+                Log.LogDebug($"No config for event {randomEvent.m_name}");
+#endif
             }
 
             return false;
