@@ -5,7 +5,6 @@ using System.Linq;
 using System.Collections.Generic;
 using Valheim.CustomRaids.ConfigurationTypes;
 using Valheim.CustomRaids.PreConfiguredRaids;
-using Valheim.CustomRaids.Compatibility;
 
 namespace Valheim.CustomRaids
 {
@@ -28,11 +27,6 @@ namespace Valheim.CustomRaids
             }
 
             var harmony = new Harmony("mod.custom_raids");
-
-            if (ConfigurationManager.GeneralConfig.DisableCreatureLevelAndControlWorldSpawnSpawnControl.Value)
-            {
-                CreatureLevelAndLootControlCompatibility.MakeCompatible(harmony);
-            }
 
             harmony.PatchAll();
 
