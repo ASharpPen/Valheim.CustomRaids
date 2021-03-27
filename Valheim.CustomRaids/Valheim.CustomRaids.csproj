@@ -30,6 +30,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <LangVersion>preview</LangVersion>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="0Harmony">
       <HintPath>..\..\..\Games\Steam\steamapps\common\Valheim\BepInEx\core\0Harmony.dll</HintPath>
@@ -57,10 +60,17 @@
     <Reference Include="UnityEngine.CoreModule">
       <HintPath>..\..\..\Games\Steam\steamapps\common\Valheim\valheim_Data\Managed\UnityEngine.CoreModule.dll</HintPath>
     </Reference>
+    <Reference Include="Valheim.EnhancedProgressTracker, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Libs\Valheim.EnhancedProgressTracker.dll</HintPath>
+      <Private>False</Private>
+      <EmbedInteropTypes>False</EmbedInteropTypes>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Compatibility\CreatureLevelAndLootControlCompatibility.cs" />
+    <Compile Include="Compatibilities\EnhancedProgressTrackerCompatibilities.cs" />
     <Compile Include="Conditions\ConditionChecker.cs" />
+    <Compile Include="Conditions\ConditionRequireOneOfGlobalKeys.cs" />
     <Compile Include="ConfigurationCore\ConfigurationEntry.cs" />
     <Compile Include="ConfigurationCore\ConfigurationGroup.cs" />
     <Compile Include="ConfigurationCore\ConfigurationSection.cs" />
@@ -76,6 +86,7 @@
     <Compile Include="Patches\InvestigationPatch.cs" />
     <Compile Include="Patches\OnSpawnFactionPatch.cs" />
     <Compile Include="Patches\RaidConditionsPatch.cs" />
+    <Compile Include="Patches\RandEventSystemHaveGlobalKeyPatch.cs" />
     <Compile Include="Patches\RandEventSystemPatch.cs" />
     <Compile Include="CustomRaidPlugin.cs" />
     <Compile Include="Patches\WorldStartPatch.cs" />
@@ -86,6 +97,8 @@
     <Compile Include="PreConfiguredRaids\Ragnarok.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="Libs\Valheim.EnhancedProgressTracker.dll" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

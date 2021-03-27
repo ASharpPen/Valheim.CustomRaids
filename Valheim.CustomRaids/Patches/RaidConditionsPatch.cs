@@ -23,7 +23,7 @@ namespace Valheim.CustomRaids.Patches
                 var randomEvent = __result[i].Key;
                 var raidPosition = __result[i].Value;
 
-                if(ConditionChecker.ShouldFilter(randomEvent, raidPosition))
+                if(ConditionChecker.ShouldFilter(randomEvent, raidPosition) || ConditionRequireOneOfGlobalKeys.ShouldFilter(randomEvent))
                 {
                     continue;
                 }

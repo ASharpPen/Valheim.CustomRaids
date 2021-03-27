@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using UnityEngine;
+using Valheim.CustomRaids.Compatibilities;
 using Valheim.CustomRaids.Conditions;
 using Valheim.CustomRaids.ConfigurationTypes;
 using Valheim.CustomRaids.Patches;
@@ -110,8 +111,14 @@ namespace Valheim.CustomRaids.RaidFrequencyOverhaul
 
             foreach (RandomEvent randomEvent in randomEventSystem.m_events)
             {
-                if (randomEvent.m_enabled && randomEvent.m_random && ValidGlobalKeys(randomEventSystem, randomEvent))
+                if (randomEvent.m_enabled && randomEvent.m_random)
                 {
+                    //Check for default global key handling. Only check standard ValidGlobalKeys if enhanced keys are NOT installed.
+                    if(!CustomRaidPlugin.EnhancedProgressTrackerInstalled && !ValidGlobalKeys(randomEventSystem, randomEvent))
+                    {
+                        continue;
+                    }
+
                     //Get event config
                     var eventData = RandomEventCache.Get(randomEvent);
 
