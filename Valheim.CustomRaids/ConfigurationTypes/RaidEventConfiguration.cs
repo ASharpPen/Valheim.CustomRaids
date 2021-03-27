@@ -24,15 +24,35 @@ namespace Valheim.CustomRaids
 
         public ConfigurationEntry<bool> NearBaseOnly = new ConfigurationEntry<bool>(true, "Spawn raid near base only. Looks like this one might need to always be true due to the games valid spawn logic.");
 
-        public ConfigurationEntry<string> NotRequiredGlobalKeys = new ConfigurationEntry<string>("", "Array (separate by \",\" of required global keys. Leave empty for no requirement.");
+        public ConfigurationEntry<string> NotRequiredGlobalKeys = new ConfigurationEntry<string>("", "Array (separate by \",\") of required global keys. Leave empty for no requirement.");
 
-        public ConfigurationEntry<string> RequiredGlobalKeys = new ConfigurationEntry<string>("", "Array (separate by \",\" of required global keys. Leave empty for no requirement.");
+        public ConfigurationEntry<string> RequiredGlobalKeys = new ConfigurationEntry<string>("", "Array (separate by \",\") of required global keys. Leave empty for no requirement.");
+
+        public ConfigurationEntry<string> RequireOneOfGlobalKeys = new ConfigurationEntry<string>("", "Array (separate by \",\") of global keys of which one is required. Leave empty for no requirement.");
 
         public ConfigurationEntry<bool> PauseIfNoPlayerInArea = new ConfigurationEntry<bool>(true);
 
         public ConfigurationEntry<string> ForceEnvironment = new ConfigurationEntry<string>("", "Environmental effect to set for raid.");
 
         public ConfigurationEntry<string> ForceMusic = new ConfigurationEntry<string>("CombatEventL1", "Music to play for raid.");
+
+        public ConfigurationEntry<float> ConditionWorldAgeDaysMin = new ConfigurationEntry<float>(0, "Minimum number of in-game days of the world, for this raid to be possible.");
+
+        public ConfigurationEntry<float> ConditionWorldAgeDaysMax = new ConfigurationEntry<float>(0, "Maximum number of in-game days of the world, for this raid to be possible. 0 means no limit");
+
+        public ConfigurationEntry<bool> CanStartDuringDay = new ConfigurationEntry<bool>(true, "Enable/toggle this raid activating during day.");
+
+        public ConfigurationEntry<bool> CanStartDuringNight = new ConfigurationEntry<bool>(true, "Enable/toggle this raid activating during night.");
+
+        public ConfigurationEntry<string> Faction = new ConfigurationEntry<string>("Boss", "Assign a faction to all entities in raid. See readme for faction options.");
+
+        public ConfigurationEntry<float> RaidFrequency = new ConfigurationEntry<float>(0, "Minutes between checks for this raid to run. 0 uses game default (46 minutes). This is only used if UseIndividualRaidChecks is set in general config.");
+
+        public ConfigurationEntry<float> RaidChance = new ConfigurationEntry<float>(0, "Chance at each check for this raid to run. 0 uses game default (20%). This is only used if UseIndividualRaidChecks is set in general config.");
+
+        public ConfigurationEntry<float> ConditionDistanceToCenterMin = new ConfigurationEntry<float>(0, "Minimum distance to center for this raid to activate.");
+
+        public ConfigurationEntry<float> ConditionDistanceToCenterMax = new ConfigurationEntry<float>(0, "Maximum distance to center for this raid to activate.. 0 means limitless.");
 
         public List<SpawnConfiguration> SpawnConfigurations => Sections.Values.ToList();
     }
@@ -95,5 +115,7 @@ namespace Valheim.CustomRaids
         public ConfigurationEntry<int> MaxLevel = new ConfigurationEntry<int>(3, "Max level of spawn. Range 1 to 3 (3 is two stars).");
 
         public ConfigurationEntry<float> GroundOffset = new ConfigurationEntry<float>(0.5f, "Distance to ground on spawn.");
+
+        public ConfigurationEntry<string> Faction = new ConfigurationEntry<string>("", "Set custom faction for mob. This overrules the raids faction setting if set.");
     }
 }

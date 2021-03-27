@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using UnityEngine;
 using Valheim.CustomRaids.ConfigurationTypes;
+using Valheim.CustomRaids.Patches;
 
 namespace Valheim.CustomRaids
 {
@@ -87,7 +88,10 @@ namespace Valheim.CustomRaids
 
                 try
                 {
-                    __instance.m_events.Add(CreateEvent(raid));
+                    var randomEvent = CreateEvent(raid);
+                    RandomEventCache.Initialize(randomEvent, raid);
+
+                    __instance.m_events.Add(randomEvent);
                 }
                 catch (Exception e)
                 {
@@ -151,7 +155,7 @@ namespace Valheim.CustomRaids
 
                 SpawnSystem.SpawnData spawn = new SpawnSystem.SpawnData
                 {
-                    m_name = spawnConfig.Name.Value,
+                    m_name = $"{raidEvent.GroupName}.{spawnConfig.SectionName}",
                     m_enabled = spawnConfig.Enabled.Value,
                     m_prefab = spawnObject,
                     m_maxSpawned = spawnConfig.MaxSpawned.Value,
@@ -190,8 +194,6 @@ namespace Valheim.CustomRaids
 
             var notRequiredGlobalKeys = raidEvent.NotRequiredGlobalKeys?.Value?.Split(new []{','}, StringSplitOptions.RemoveEmptyEntries);
             var requiredGlobalKeys = raidEvent.RequiredGlobalKeys?.Value?.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
-
-
 
             RandomEvent newEvent = new RandomEvent
             {

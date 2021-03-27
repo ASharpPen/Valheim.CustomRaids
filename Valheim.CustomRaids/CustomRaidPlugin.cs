@@ -1,15 +1,21 @@
 ﻿using BepInEx;
 using HarmonyLib;
+using System;
+using System.Linq;
+using System.Collections.Generic;
 using Valheim.CustomRaids.ConfigurationTypes;
 using Valheim.CustomRaids.PreConfiguredRaids;
 
 namespace Valheim.CustomRaids
 {
-    [BepInPlugin("asharppen.valheim.custom_raids", "Custom Raids", "1.2.0")]
+    [BepInDependency("sharppen.valheim.enhanced_progress_tracker", BepInDependency.DependencyFlags.SoftDependency)]
+    [BepInPlugin("asharppen.valheim.custom_raids", "Custom Raids", "1.3.0")]
     public class CustomRaidPlugin : BaseUnityPlugin
     {
         void Awake()
         {
+            Log.Logger = Logger;
+
             Logger.LogInfo("Loading configurations...");
 
             ConfigurationManager.LoadGeneralConfigurations();
@@ -20,7 +26,13 @@ namespace Valheim.CustomRaids
                 new DeathsquitoSeason().CreateConfigIfMissing();
             }
 
-            new Harmony("mod.custom_raids").PatchAll();
+            var harmony = new Harmony("mod.custom_raids");
+
+            harmony.PatchAll();
+
+            Log.Logger = Logger;
         }
+
+        public static bool EnhancedProgressTrackerInstalled { get; } = Type.GetType("Valheim.EnhancedProgressTracker.EnhancedProgressTracker") is not null;
     }
 }

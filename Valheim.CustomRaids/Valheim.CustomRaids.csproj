@@ -30,6 +30,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <LangVersion>preview</LangVersion>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="0Harmony">
       <HintPath>..\..\..\Games\Steam\steamapps\common\Valheim\BepInEx\core\0Harmony.dll</HintPath>
@@ -57,8 +60,17 @@
     <Reference Include="UnityEngine.CoreModule">
       <HintPath>..\..\..\Games\Steam\steamapps\common\Valheim\valheim_Data\Managed\UnityEngine.CoreModule.dll</HintPath>
     </Reference>
+    <Reference Include="Valheim.EnhancedProgressTracker, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Libs\Valheim.EnhancedProgressTracker.dll</HintPath>
+      <Private>False</Private>
+      <EmbedInteropTypes>False</EmbedInteropTypes>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Compatibilities\EnhancedProgressTrackerCompatibilities.cs" />
+    <Compile Include="Conditions\ConditionChecker.cs" />
+    <Compile Include="Conditions\ConditionRequireOneOfGlobalKeys.cs" />
     <Compile Include="ConfigurationCore\ConfigurationEntry.cs" />
     <Compile Include="ConfigurationCore\ConfigurationGroup.cs" />
     <Compile Include="ConfigurationCore\ConfigurationSection.cs" />
@@ -67,16 +79,26 @@
     <Compile Include="ConfigurationTypes\ConfigurationManager.cs" />
     <Compile Include="ConfigurationTypes\GeneralConfiguration.cs" />
     <Compile Include="ConfigurationTypes\RaidEventConfiguration.cs" />
-    <Compile Include="Log.cs" />
+    <Compile Include="ConfigurationCore\Log.cs" />
     <Compile Include="Multiplayer\ConfigMultiplayerPatch.cs" />
     <Compile Include="Multiplayer\ConfigurationPackage.cs" />
+    <Compile Include="Patches\FixNearBaseOnlyPatch.cs" />
     <Compile Include="Patches\InvestigationPatch.cs" />
+    <Compile Include="Patches\OnSpawnFactionPatch.cs" />
+    <Compile Include="Patches\RaidConditionsPatch.cs" />
+    <Compile Include="Patches\RandEventSystemHaveGlobalKeyPatch.cs" />
     <Compile Include="Patches\RandEventSystemPatch.cs" />
     <Compile Include="CustomRaidPlugin.cs" />
+    <Compile Include="Patches\WorldStartPatch.cs" />
+    <Compile Include="RaidFrequencyOverhaul\PossibleRaid.cs" />
+    <Compile Include="RaidFrequencyOverhaul\RaidFrequencyOverhaul.cs" />
+    <Compile Include="RandomEventCache.cs" />
     <Compile Include="PreConfiguredRaids\DeathsquitoSeason.cs" />
     <Compile Include="PreConfiguredRaids\Ragnarok.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="Libs\Valheim.EnhancedProgressTracker.dll" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
