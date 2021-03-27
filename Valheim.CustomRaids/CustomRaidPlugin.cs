@@ -8,7 +8,7 @@ using Valheim.CustomRaids.PreConfiguredRaids;
 
 namespace Valheim.CustomRaids
 {
-    [BepInDependency("org.bepinex.plugins.creaturelevelcontrol", BepInDependency.DependencyFlags.SoftDependency)]
+    [BepInDependency("sharppen.valheim.enhanced_progress_tracker", BepInDependency.DependencyFlags.SoftDependency)]
     [BepInPlugin("asharppen.valheim.custom_raids", "Custom Raids", "1.3.0")]
     public class CustomRaidPlugin : BaseUnityPlugin
     {
@@ -32,5 +32,7 @@ namespace Valheim.CustomRaids
 
             Log.Logger = Logger;
         }
+
+        public static bool EnhancedProgressTrackerInstalled { get; } = Type.GetType("Valheim.EnhancedProgressTracker.EnhancedProgressTracker") is not null;
     }
 }

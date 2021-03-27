@@ -23,7 +23,7 @@ namespace Valheim.CustomRaids.Conditions
                 var seconds = ZNet.instance.GetTimeSeconds();
                 var day = EnvMan.instance.GetDay(seconds);
 
-                Log.LogTrace($"Checking raid conditionals at time {day}");
+                Log.LogTrace($"Checking raid conditionals at day {day}");
 
                 if (!raidConfig.CanStartDuringDay.Value && EnvMan.instance.IsDay())
                 {
@@ -59,41 +59,6 @@ namespace Valheim.CustomRaids.Conditions
                 {
                     Log.LogDebug($"Raid {raidConfig.Name} disabled due being too close to center. {raidConfig.ConditionDistanceToCenterMax.Value} < {distanceToCenter}");
                     return true;
-                }
-
-                //Check key conditions.
-                if (raidConfig.RequireOneOfGlobalKeys.Value.Length > 0)
-                {
-                    var keys = raidConfig.RequireOneOfGlobalKeys.Value.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
-
-#if DEBUG
-                    Log.LogInfo("Found RequireOneOfGlobalKeys keys: ");
-                    foreach(var key in keys)
-                    {
-                        Log.LogInfo("\t" + key);
-                    }
-#endif
-                    bool foundRequiredKey = false;
-                    foreach (var key in keys)
-                    {
-                        if (ZoneSystem.instance.GetGlobalKey(key.Trim()))
-                        {
-#if DEBUG
-                            Log.LogInfo("Found RequiredOneOfKey: " + key);
-#endif
-
-                            foundRequiredKey = true;
-                            break;
-                        }
-                    }
-
-                    if (foundRequiredKey == false)
-                    {
-#if DEBUG
-                        Log.LogDebug($"Unable to find any of the keys {raidConfig.RequireOneOfGlobalKeys.Value}");
-#endif
-                        return true;
-                    }
                 }
             }
             else
