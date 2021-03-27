@@ -1,4 +1,4 @@
-﻿# Custom Raids
+# Custom Raids
 
 This mod allows for customizing raids to your liking.
 
@@ -53,73 +53,46 @@ General configuration includes general mod controls, overall event system change
 
 ## Loads raid configurations from supplemental files.
 ## Eg. custom_raid.supplemental.my_raid.cfg will be included on load.
-# Setting type: Boolean
-# Default value: true
 LoadSupplementalRaids = true
 
 ## Generates pre-defined supplemental raids. The generated raids are disabled by default.
-# Setting type: Boolean
-# Default value: true
 GeneratePresetRaids = true
-
-## Disables automatic updating and saving of raid configurations.
-## This means no helpers will be added, but.. allows you to keep things compact.
-# Setting type: Boolean
-# Default value: false
-StopTouchingMyConfigs = false
 
 [EventSystem]
 
 ## If enabled, removes all existing raids and only allows configured.
-# Setting type: Boolean
-# Default value: false
 RemoveAllExistingRaids = false
 
 ## Enable/disable override of existing events when event names match.
-# Setting type: Boolean
-# Default value: true
 OverrideExisting = true
 
 ## Frequency between checks for new raids. Value is in mintues.
-# Setting type: Single
-# Default value: 46
 EventCheckInterval = 46
 
 ## Chance of raid, per check interval. 100 is 100%.
-# Setting type: Single
-# Default value: 20
 EventTriggerChance = 20
+
+[IndividualRaids]
+
+## If enabled, Custom Raids will overhaul the games way of checking for raids.
+## This allows for setting individual frequences and chances for each raid.
+UseIndividualRaidChecks = false
+
+## If overhaul is enhabled, ensures a minimum amount of minutes between each raid.
+MinimumTimeBetweenRaids = 46
 
 [Debug]
 
-## Enables debug logging.
-# Setting type: Boolean
-# Default value: false
-DebugOn = false
-
-## Enables trace logging. Note, this will generate a LOT of log entries.
-# Setting type: Boolean
-# Default value: false
-TraceLogging = false
-
 ## If enabled, scans existing raid event data, and dumps to a file on disk.
-# Setting type: Boolean
-# Default value: false
 WriteDefaultEventDataToDisk = false
 
 ## If enabled, dumps raid event data after applying configuration to a file on disk.
-# Setting type: Boolean
-# Default value: false
 WritePostChangeEventDataToDisk = false
 
 ## If enabled, scans existing environment data, and dumps to a file on disk.
-# Setting type: Boolean
-# Default value: false
 WriteEnvironmentDataToDisk = false
 
 ## If enabled, scans existing global keys, and dumps to a file on disk.
-# Setting type: Boolean
-# Default value: false
 WriteGlobalKeyDataToDisk = false
 
 ```
@@ -169,14 +142,10 @@ Enabled=false
 
 ## Tips for configuring
 
-Raid events are generally a bit "janky" to configure, so I suggest making use of the "RemoveAllExistingRaids" and console while testing. 
+Raid events are generally a bit "janky" to configure, so I suggest making use of the "RemoveAllExistingRaids" and console while testing.
 Enable only your own change, and use console commands "randomevent" and "stopevent" to test things out.
 
 Spawning during also seems to be very inconsistent, meaning with the same interval setting, you will sometimes have a bunch of wave triggers inside a short span, and sometimes it takes ages.
-
-You wil only see possible event count in logs, if the RandEventSystem made a check that passed the random chance. Ie. If you have the chance set to 20, you will only see 1 out of 5 checks in logs.
-
-ForcedEnvironment also seems to be taken more as a hint, than something forced. It should trigger most of the time though.
 
 It is also important to understand how raids are started and run. 
 
@@ -205,14 +174,25 @@ THIS is what usually makes most raids stumble. If the raid starts, but nothing s
 | Duration | float | 90 | |
 | StartMessage | String | Raid started | Message shown on raid start |
 | EndMessage | String | Raid ended | Message shown on raid end |
-| NearBaseOnly | bool | true | Spawn raid near base only. Looks like this one might need to always be true due to the games valid spawn logic. |
+| NearBaseOnly | bool | true | Spawn raid near base only. |
 | RequiredGlobalKeys | string | defeated_bonemass, defeated_dragon | Array (separate by ",") of required global keys. Leave empty for no requirement. |
 | NotRequiredGlobalKeys | string | defeated_bonemass, defeated_dragon | Array (separate by ",") of required global keys. Leave empty for no requirement. Not sure what it is used for. |
+| RequireOneOfGlobalKeys | string | defeated_bonemass, defeated_gdking | Array (separate by ",") of global keys of which one is required. Leave empty for no requirement.
 | PauseIfNoPlayerInArea | bool | true | |
 | ForceEnvironment | string | Misty | Name of environment to set for raid |
 | ForceMusic | string | CombatEventL1 | Name of music to set for raid |
 | Random | bool | true | Include raid in random raid spawning. |
 | Biomes | string | | Array (separate by ",") of biomes. Leave empty for all allowed. |
+| ConditionWorldAgeDaysMin | float | 10 | Minimum number of in-game days of the world, for this raid to be possible. | 
+| ConditionWorldAgeDaysMax | float | 100 | Maximum number of in-game days of the world, for this raid to be possible. 0 means no limit |
+| ConditionDistanceToCenterMin | float | 1000 | Minimum distance to center for this raid to activate. |
+| ConditionDistanceToCenterMax | float | 2000 | Maximum distance to center for this raid to activate.. 0 means limitless. |
+| CanStartDuringDay | bool | true | Enable/toggle this raid activating during day. |
+| CanStartDuringNight | bool | true | Enable/toggle this raid activating during night |
+| Faction | string | Boss | Assign a faction to all entities in raid. |
+| RaidFrequency | float | 46 | Minutes between checks for this raid to run. 0 uses game default (46 minutes). This is only used if UseIndividualRaidChecks is set in general config. |
+| RaidChance | float | 20 | Chance at each check for this raid to run. 0 uses game default (20%). This is only used if UseIndividualRaidChecks is set in general config. |
+
 
 # The Details - Raid Spawns
 
@@ -246,6 +226,7 @@ THIS is what usually makes most raids stumble. If the raid starts, but nothing s
 | OutsideForest | bool | true | |
 | OceanDepthMin | float | 0 | |
 | OceanDepthMax | float | 0 | |
+| Faction | string | ForestMonsters | Set custom faction for mob. This overrules the raids faction setting if set. |
 
 ## Configuration Options
 
@@ -259,6 +240,17 @@ THIS is what usually makes most raids stumble. If the raid starts, but nothing s
 - DeepNorth
 - Ocean
 - Mistlands
+
+### Factions
+- Players
+- AnimalsVeg
+- ForestMonsters
+- Undead
+- Demon
+- MountainMonsters
+- SeaMonsters
+- PlainsMonsters
+- Boss
 
 ### ForcedEnvironment (defaults, it should be possible to mod in more, and refer to them by name):
 - Clear
@@ -285,27 +277,16 @@ THIS is what usually makes most raids stumble. If the raid starts, but nothing s
 - Crypt
 - SunkenCrypt
 
-### Global Keys (incomplete list)
-- defeated_eikthyr
-- KilledTroll
-- killed_surtling
-- defeated_gdking
-- defeated_bonemass
-- defeated_dragon
-
-### Factions
-
-- Players,
-- AnimalsVeg,
-- ForestMonsters,
-- Undead,
-- Demon,
-- MountainMonsters,
-- SeaMonsters,
-- PlainsMonsters,
-- Boss
-
 # Changelog
+- v1.3.0:
+	- Set raid faction. Defaults to boss now, for all spawned creatures.
+	- Conditions for day/night
+	- Conditions for world age
+	- Conditions for distance to world center
+	- Condition for requiring one global key out of multiple
+	- Fixed Valheim bug of NearBaseOnly being required. This enables raids anywhere in the world when false.
+	- Overhaul of raid frequencies and chances. Can now select individual frequency and chance for each raid.
+	- Support for Enhanced Progress Tracker.
 - v1.2.0:
 	- Server-to-client config synchronization added.
 	- Fixed various mistakes in config descriptions. Sorry guys, I am bad at reading. EventChance is in range 0-100, frequency is in minutes.
