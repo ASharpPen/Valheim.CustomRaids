@@ -13,39 +13,40 @@ namespace Valheim.CustomRaids.Patches
     [HarmonyPatch(typeof(SpawnSystem))]
     public static class OnSpawnFactionPatch
     {
-        private static MethodInfo CharacterComponentAnchor = AccessTools.Method(typeof(GameObject), "GetComponent", generics: new[] { typeof(Character) });
-        private static MethodInfo ApplyFactionMethod = AccessTools.Method(typeof(OnSpawnFactionPatch), "ApplyFactionToRaidMobs", new[] { typeof(Character), typeof(SpawnSystem.SpawnData), typeof(bool) });
+        private static MethodInfo ApplyFactionMethod = AccessTools.Method(typeof(OnSpawnFactionPatch), nameof(OnSpawnFactionPatch.ApplyFactionToRaidMobs), new[] { typeof(GameObject), typeof(SpawnSystem.SpawnData), typeof(bool) });
 
         [HarmonyPatch("Spawn")]
         [HarmonyTranspiler]
         private static IEnumerable<CodeInstruction> AddSpawnedCreatureHook(IEnumerable<CodeInstruction> instructions)
         {
-            var traverser = new CodeMatcher(instructions)
-                .MatchForward(true, new CodeMatch(OpCodes.Callvirt, CharacterComponentAnchor))
-                .Advance(2); //Skip the next line, where result is stored
-
-            var loadCharacter = traverser.Instruction; //Get load character component instruction
-
-            traverser
-                .InsertAndAdvance(loadCharacter) //Load Character component
-                .InsertAndAdvance(new CodeInstruction(OpCodes.Ldarg_1)) //Load SpawnData itself
-                .InsertAndAdvance(new CodeInstruction(OpCodes.Ldarg_3)) //Load if eventSpawner bool
-                .InsertAndAdvance(new CodeInstruction(OpCodes.Call, ApplyFactionMethod)); //Call new method
-
-            var result = traverser.InstructionEnumeration();
-
-            foreach(var instr in result)
-            {
-                Debug.Log(instr);
-            }
-
-            return result;
+            return new CodeMatcher(instructions)
+                .MatchForward(true, new CodeMatch(OpCodes.Stloc_0))
+                .Advance(1)
+                .InsertAndAdvance(new CodeInstruction(OpCodes.Ldloc_0))
+                .InsertAndAdvance(new CodeInstruction(OpCodes.Ldarg_1))
+                .InsertAndAdvance(new CodeInstruction(OpCodes.Ldarg_3))
+                .InsertAndAdvance(new CodeInstruction(OpCodes.Call, ApplyFactionMethod))
+                .InstructionEnumeration();
         }
 
-        private static void ApplyFactionToRaidMobs(Character character, SpawnSystem.SpawnData spawner, bool isEventSpawner)
+        private static void ApplyFactionToRaidMobs(GameObject spawn, SpawnSystem.SpawnData spawner, bool isEventSpawner)
         {
-            if(!isEventSpawner)
+#if DEBUG
+            Log.LogDebug($"Attempting to apply faction for spawner {spawner.m_prefab.name}");
+#endif
+
+            if (!isEventSpawner)
             {
+                return;
+            }
+
+            Character character = spawn.GetComponent<Character>();
+
+            if(!character)
+            {
+#if DEBUG
+                Log.LogDebug($"No character component for spawned object '{spawner.m_prefab.name}'");
+#endif
                 return;
             }
 
@@ -54,6 +55,9 @@ namespace Valheim.CustomRaids.Patches
             if (spawnerExtension == null || 
                 (spawnerExtension.Item1 == null && spawnerExtension.Item2 == null))
             {
+#if DEBUG
+                Log.LogDebug($"Unable to find config for spawner {spawner.m_prefab.name}");
+#endif
                 return;
             }
 
@@ -66,6 +70,10 @@ namespace Valheim.CustomRaids.Patches
             if(Enum.TryParse(factionName.Trim(), out Character.Faction faction))
             {
                 creatureFaction = faction;
+            }
+            else
+            {
+                Log.LogWarning($"Failed to parse faction '{factionName}'");
             }
 
 #if DEBUG
