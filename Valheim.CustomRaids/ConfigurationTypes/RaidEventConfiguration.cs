@@ -14,7 +14,7 @@ namespace Valheim.CustomRaids
 
         public ConfigurationEntry<string> Biomes = new ConfigurationEntry<string>("", "Array (separate by \",\") of biomes required to allow spawn.\nLeave empty for all");
 
-        public ConfigurationEntry<float> Duration = new ConfigurationEntry<float>(60, "Duration of raid? Unsure of the exact measure used here.");
+        public ConfigurationEntry<float> Duration = new ConfigurationEntry<float>(60, "Duration of raid in seconds.");
 
         public ConfigurationEntry<string> StartMessage = new ConfigurationEntry<string>("Raid start", "Raid start message");
 
@@ -52,7 +52,7 @@ namespace Valheim.CustomRaids
 
         public ConfigurationEntry<float> ConditionDistanceToCenterMin = new ConfigurationEntry<float>(0, "Minimum distance to center for this raid to activate.");
 
-        public ConfigurationEntry<float> ConditionDistanceToCenterMax = new ConfigurationEntry<float>(0, "Maximum distance to center for this raid to activate.. 0 means limitless.");
+        public ConfigurationEntry<float> ConditionDistanceToCenterMax = new ConfigurationEntry<float>(0, "Maximum distance to center for this raid to activate. 0 means limitless.");
 
         public List<SpawnConfiguration> SpawnConfigurations => Sections.Values.ToList();
     }
@@ -64,25 +64,25 @@ namespace Valheim.CustomRaids
 
         public ConfigurationEntry<string> Name = new ConfigurationEntry<string>("DeerALot", "Spawn configuration name.");
 
-        public ConfigurationEntry<string> PrefabName = new ConfigurationEntry<string>("Deer", "Prefab name of entity to spawn. This... might actually allow for anything.");
+        public ConfigurationEntry<string> PrefabName = new ConfigurationEntry<string>("Deer", "Prefab name of entity to spawn. This can be any prefab.");
 
-        public ConfigurationEntry<int> MaxSpawned = new ConfigurationEntry<int>(2, "Maximum alive at a time.");
+        public ConfigurationEntry<int> MaxSpawned = new ConfigurationEntry<int>(2, "Maximum entities of type spawned in area.");
 
        public ConfigurationEntry<float> SpawnInterval = new ConfigurationEntry<float>(1, "Interval (seconds) between wave checks.");
 
         public ConfigurationEntry<float> SpawnChancePerInterval = new ConfigurationEntry<float>(100, "Chance (0 to 100) to spawn new wave per check.");
 
-        public ConfigurationEntry<float> SpawnDistance = new ConfigurationEntry<float>(1);
+        public ConfigurationEntry<float> SpawnDistance = new ConfigurationEntry<float>(1, "Minimum distance to another entity. Highly volatile setting.");
 
-        public ConfigurationEntry<float> SpawnRadiusMin = new ConfigurationEntry<float>(1);
+        public ConfigurationEntry<float> SpawnRadiusMin = new ConfigurationEntry<float>(1, "Minimum spawn radius. Highly volatile setting.");
 
-        public ConfigurationEntry<float> SpawnRadiusMax = new ConfigurationEntry<float>(10);
+        public ConfigurationEntry<float> SpawnRadiusMax = new ConfigurationEntry<float>(10, "Maximum spawn radius. Highly volatile setting.");
 
         public ConfigurationEntry<string> RequiredGlobalKey = new ConfigurationEntry<string>("", "Global key required for spawning. Leave empty for no requirement.");
 
         public ConfigurationEntry<string> RequiredEnvironments = new ConfigurationEntry<string>("", "Array (separate by \",\" of required environments. Leave empty for no requirement.");
 
-        public ConfigurationEntry<float> GroupRadius = new ConfigurationEntry<float>(1);
+        public ConfigurationEntry<float> GroupRadius = new ConfigurationEntry<float>(1, "Size of circle to spawn group inside.");
 
         public ConfigurationEntry<int> GroupSizeMin = new ConfigurationEntry<int>(1, "Minimum amount of spawns per wave.");
 
@@ -90,31 +90,31 @@ namespace Valheim.CustomRaids
 
         public ConfigurationEntry<bool> SpawnAtNight = new ConfigurationEntry<bool>(true, "Can spawn at night.");
         
-        public ConfigurationEntry<bool> SpawnAtDay = new ConfigurationEntry<bool>(true, "Can spawn at day");
+        public ConfigurationEntry<bool> SpawnAtDay = new ConfigurationEntry<bool>(true, "Can spawn at day.");
 
-        public ConfigurationEntry<float> AltitudeMin = new ConfigurationEntry<float>(-1000);
+        public ConfigurationEntry<float> AltitudeMin = new ConfigurationEntry<float>(-1000, "Minimum required altitude (distance to water surface) to spawn in.");
 
-        public ConfigurationEntry<float> AltitudeMax = new ConfigurationEntry<float>(1000);
+        public ConfigurationEntry<float> AltitudeMax = new ConfigurationEntry<float>(1000, "Maximum required altitude (distance to water surface) to spawn in.");
 
-        public ConfigurationEntry<float> TerrainTiltMin = new ConfigurationEntry<float>(0);
+        public ConfigurationEntry<float> TerrainTiltMin = new ConfigurationEntry<float>(0, "Minium required tilt of terrain to spawn in.");
 
-        public ConfigurationEntry<float> TerrainTiltMax = new ConfigurationEntry<float>(35);
+        public ConfigurationEntry<float> TerrainTiltMax = new ConfigurationEntry<float>(35, "Maximum required tilt of terrain to spawn in.");
 
-        public ConfigurationEntry<bool> InForest = new ConfigurationEntry<bool>(true);
+        public ConfigurationEntry<bool> InForest = new ConfigurationEntry<bool>(true, "Toggles spawning in forest.");
 
-        public ConfigurationEntry<bool> OutsideForest = new ConfigurationEntry<bool>(true);
+        public ConfigurationEntry<bool> OutsideForest = new ConfigurationEntry<bool>(true, "Toggles spawning outside of forest.");
 
-        public ConfigurationEntry<float> OceanDepthMin = new ConfigurationEntry<float>(0);
+        public ConfigurationEntry<float> OceanDepthMin = new ConfigurationEntry<float>(0, "Minimum required ocean depth to spawn in. Ignored if min == max.");
 
-        public ConfigurationEntry<float> OceanDepthMax = new ConfigurationEntry<float>(0);
+        public ConfigurationEntry<float> OceanDepthMax = new ConfigurationEntry<float>(0, "Maximum required ocean depth to spawn in. Ignored if min == max.");
 
         public ConfigurationEntry<bool> HuntPlayer = new ConfigurationEntry<bool>(true, "Does what it says. Will not work for all mobs, Deer will ignore it.");
 
-        public ConfigurationEntry<int> MinLevel = new ConfigurationEntry<int>(1, "Min level of spawn. Range 1 to 3 (3 is two stars).");
+        public ConfigurationEntry<int> MinLevel = new ConfigurationEntry<int>(1, "Min level of spawn. (2 is one star).");
 
-        public ConfigurationEntry<int> MaxLevel = new ConfigurationEntry<int>(3, "Max level of spawn. Range 1 to 3 (3 is two stars).");
+        public ConfigurationEntry<int> MaxLevel = new ConfigurationEntry<int>(3, "Max level of spawn. (2 is one star).");
 
-        public ConfigurationEntry<float> GroundOffset = new ConfigurationEntry<float>(0.5f, "Distance to ground on spawn.");
+        public ConfigurationEntry<float> GroundOffset = new ConfigurationEntry<float>(0.5f, "Offset above ground at which entity will be spawned.");
 
         public ConfigurationEntry<string> Faction = new ConfigurationEntry<string>("", "Set custom faction for mob. This overrules the raids faction setting if set.");
     }

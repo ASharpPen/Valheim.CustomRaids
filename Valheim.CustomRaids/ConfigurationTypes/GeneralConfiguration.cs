@@ -26,13 +26,13 @@ namespace Valheim.CustomRaids.ConfigurationTypes
 
         public ConfigurationEntry<bool> TraceLogging = new ConfigurationEntry<bool>(false, "Enables trace logging. Note, this will generate a LOT of log entries.");
 
-        public ConfigurationEntry<bool> WriteDefaultEventDataToDisk = new ConfigurationEntry<bool>(false, "If enabled, scans existing raid event data, and dumps to a file on disk.");
+        public ConfigurationEntry<bool> WriteDefaultEventDataToDisk = new ConfigurationEntry<bool>(false, "If enabled, scans existing raid event data, and dumps to a file in the plugin folder.");
 
-        public ConfigurationEntry<bool> WritePostChangeEventDataToDisk = new ConfigurationEntry<bool>(false, "If enabled, dumps raid event data after applying configuration to a file on disk.");
+        public ConfigurationEntry<bool> WritePostChangeEventDataToDisk = new ConfigurationEntry<bool>(false, "If enabled, dumps raid event data after applying configuration to a file in the plugin folder.");
 
-        public ConfigurationEntry<bool> WriteEnvironmentDataToDisk = new ConfigurationEntry<bool>(false, "If enabled, scans existing environment data, and dumps to a file on disk.");
+        public ConfigurationEntry<bool> WriteEnvironmentDataToDisk = new ConfigurationEntry<bool>(false, "If enabled, scans existing environment data, and dumps to a file in the plugin folder.");
 
-        public ConfigurationEntry<bool> WriteGlobalKeyDataToDisk = new ConfigurationEntry<bool>(false, "If enabled, scans existing global keys, and dumps to a file on disk.");
+        public ConfigurationEntry<bool> WriteGlobalKeyDataToDisk = new ConfigurationEntry<bool>(false, "If enabled, scans existing global keys, and dumps to a file in the plugin folder.");
 
         #endregion
 

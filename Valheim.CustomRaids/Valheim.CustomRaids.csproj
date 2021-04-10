@@ -100,5 +100,6 @@
   <ItemGroup>
     <None Include="Libs\Valheim.EnhancedProgressTracker.dll" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -9,7 +9,7 @@ using Valheim.CustomRaids.PreConfiguredRaids;
 namespace Valheim.CustomRaids
 {
     [BepInDependency("sharppen.valheim.enhanced_progress_tracker", BepInDependency.DependencyFlags.SoftDependency)]
-    [BepInPlugin("asharppen.valheim.custom_raids", "Custom Raids", "1.3.0")]
+    [BepInPlugin("asharppen.valheim.custom_raids", "Custom Raids", "1.3.1")]
     public class CustomRaidPlugin : BaseUnityPlugin
     {
         void Awake()

@@ -23,17 +23,11 @@ namespace Valheim.CustomRaids.RaidFrequencyOverhaul
         {
             if ((ConfigurationManager.GeneralConfig?.UseIndividualRaidChecks?.Value ?? false) == false)
             {
-#if DEBUG
-                Log.LogInfo("Use default event loop.");
-#endif
                 return true;
             }
 
             if(!ZNet.instance.IsServer())
             {
-#if DEBUG
-                Log.LogInfo("Instance is not a server. Skipping event loop.");
-#endif
                 return true;
             }
 
