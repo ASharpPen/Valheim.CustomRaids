@@ -20,6 +20,7 @@ Enable those raids at own risk!
 - Supplemental raid configurations. Add your own raid in its own file, and Custom Raids will scan and apply it. 
 - Potential for hours of frustration/fun as you figure out how to best configure these damn things to work as expected.
 - Server-side configurations
+- Fixed bug with raids only being able to spawn near player bases.
 
 # FAQ
 
@@ -83,16 +84,16 @@ MinimumTimeBetweenRaids = 46
 
 [Debug]
 
-## If enabled, scans existing raid event data, and dumps to a file on disk.
+## If enabled, scans existing raid event data, and dumps to a file in the plugin folder.
 WriteDefaultEventDataToDisk = false
 
-## If enabled, dumps raid event data after applying configuration to a file on disk.
+## If enabled, dumps raid event data after applying configuration to a file in the plugin folder.
 WritePostChangeEventDataToDisk = false
 
-## If enabled, scans existing environment data, and dumps to a file on disk.
+## If enabled, scans existing environment data, and dumps to a file in the plugin folder.
 WriteEnvironmentDataToDisk = false
 
-## If enabled, scans existing global keys, and dumps to a file on disk.
+## If enabled, scans existing global keys, and dumps to a file in the plugin folder.
 WriteGlobalKeyDataToDisk = false
 
 ```
@@ -147,7 +148,7 @@ Enable only your own change, and use console commands "randomevent" and "stopeve
 
 Spawning during also seems to be very inconsistent, meaning with the same interval setting, you will sometimes have a bunch of wave triggers inside a short span, and sometimes it takes ages.
 
-It is also important to understand how raids are started and run. 
+It is also important to understand how raids are started and run.
 
 A pretty comprehensive guide for prefabs can be found [here](https://gist.github.com/Sonata26/e2b85d53e125fb40081b18e2aee6d584)
 
@@ -170,11 +171,11 @@ THIS is what usually makes most raids stumble. If the raid starts, but nothing s
 | Setting | Type | Example Value | Description |
 | ------- | ----- | ---- | ---- |
 | Name | String | DeerArmy | Name of event. Can be used to override existing configurations with same name (I am looking at you, foresttrolls...) |
-| Enabled | bool | true | |
-| Duration | float | 90 | |
+| Enabled | bool | true | Enable/disable raid configuration from being used |
+| Duration | float | 90 | Duration of raid in seconds |
 | StartMessage | String | Raid started | Message shown on raid start |
 | EndMessage | String | Raid ended | Message shown on raid end |
-| NearBaseOnly | bool | true | Spawn raid near base only. |
+| NearBaseOnly | bool | true | Spawn raid near base only |
 | RequiredGlobalKeys | string | defeated_bonemass, defeated_dragon | Array (separate by ",") of required global keys. Leave empty for no requirement. |
 | NotRequiredGlobalKeys | string | defeated_bonemass, defeated_dragon | Array (separate by ",") of required global keys. Leave empty for no requirement. Not sure what it is used for. |
 | RequireOneOfGlobalKeys | string | defeated_bonemass, defeated_gdking | Array (separate by ",") of global keys of which one is required. Leave empty for no requirement.
@@ -186,7 +187,7 @@ THIS is what usually makes most raids stumble. If the raid starts, but nothing s
 | ConditionWorldAgeDaysMin | float | 10 | Minimum number of in-game days of the world, for this raid to be possible. | 
 | ConditionWorldAgeDaysMax | float | 100 | Maximum number of in-game days of the world, for this raid to be possible. 0 means no limit |
 | ConditionDistanceToCenterMin | float | 1000 | Minimum distance to center for this raid to activate. |
-| ConditionDistanceToCenterMax | float | 2000 | Maximum distance to center for this raid to activate.. 0 means limitless. |
+| ConditionDistanceToCenterMax | float | 2000 | Maximum distance to center for this raid to activate. 0 means limitless. |
 | CanStartDuringDay | bool | true | Enable/toggle this raid activating during day. |
 | CanStartDuringNight | bool | true | Enable/toggle this raid activating during night |
 | Faction | string | Boss | Assign a faction to all entities in raid. |
@@ -198,34 +199,34 @@ THIS is what usually makes most raids stumble. If the raid starts, but nothing s
 
 | Setting | Type | Example | Description |
 | --- | --- | --- | --- |
-| Name | string | Draugr Party Time | Name of spawn group. Seemingly not used for anything.
+| Name | string | Draugr Party Time | Spawn configuration name |
 | Enabled | bool | true | |
-| PrefabName | string | Draugr | Name of prefab to spawn. |
-| MaxSpawned | int | 5 | Maximum alive at a time. |
-| SpawnInterval | float | 1 | Interval (seconds) between wave checks. |
-| SpawnChancePerInterval | 100 | Chance (0 to 100) to spawn new wave per interval.
-| SpawnDistance | float | 0 | |
-| SpawnRadiusMin | float | 0 | |
-| SpawnRadiusMax | float | 1 | |
+| PrefabName | string | Draugr | Prefab name of entity to spawn. This can be any prefab |
+| MaxSpawned | int | 5 | Maximum entities of type spawned in area |
+| SpawnInterval | float | 1 | Interval (seconds) between wave checks |
+| SpawnChancePerInterval | 100 | Chance (0 to 100) to spawn new wave per interval |
+| SpawnDistance | float | 0 | Minimum distance to another entity. Highly volatile setting |
+| SpawnRadiusMin | float | 0 | Minimum spawn radius. Highly volatile setting |
+| SpawnRadiusMax | float | 1 | Maximum spawn radius. Highly volatile setting |
 | GroupSizeMin | int | 5 | Minimum number of spawns per wave |
 | GroupSizeMax | int | 5 | Maxium number of spawns per wave |
-| SpawnAtNight | bool | true | |
-| SpawnAtDay | bool | true | |
-| HuntPlayer | bool | true | Does what it says. Will not work for all mobs, Deer will ignore it. |
-| GroundOffset | float | 0.5 | Distance to ground on spawn |
-| MinLevel | int | 1 | Min level to spawn. Level 3 is two star mobs.
-| MaxLevel | int | 3 | Max level to spawn. Level 3 is two star mobs.
+| SpawnAtNight | bool | true | Can spawn at night |
+| SpawnAtDay | bool | true | Can spawn at day |
+| HuntPlayer | bool | true | Does what it says. Will not work for all mobs, Deer will ignore it |
+| GroundOffset | float | 0.5 | Offset above ground at which entity will be spawned |
+| MinLevel | int | 1 | Min level of spawn. (2 is one star) |
+| MaxLevel | int | 3 | Max level of spawn. (2 is one star) |
 | RequiredGlobalKey | string | defeated_bonemass | Global key required for spawning. Leave empty for no requirement. |
 | RequiredEnvironments | string | Array (separate by "," of required environments. Leave empty for no requirement. |
-| GroupRadius | float | 1 | |
-| AltitudeMin | float | -1000 | |
-| AltitudeMax | float | 1000 | |
-| TerrainTiltMin | float | 0 | |
-| TerrainTiltMax | float | 35 | |
-| InForest | bool | true | |
-| OutsideForest | bool | true | |
-| OceanDepthMin | float | 0 | |
-| OceanDepthMax | float | 0 | |
+| GroupRadius | float | 1 | Size of circle to spawn group inside. |
+| AltitudeMin | float | -1000 | Minimum required altitude (distance to water surface) to spawn in |
+| AltitudeMax | float | 1000 | Maximum required altitude (distance to water surface) to spawn in |
+| TerrainTiltMin | float | 0 | Minium required tilt of terrain to spawn in |
+| TerrainTiltMax | float | 35 | Maximum required tilt of terrain to spawn in |
+| InForest | bool | true | Toggles spawning in forest |
+| OutsideForest | bool | true | Toggles spawning outside of forest |
+| OceanDepthMin | float | 0 | Minimum required ocean depth to spawn in. Ignored if min == max |
+| OceanDepthMax | float | 0 | Maximum required ocean depth to spawn in. Ignored if min == max |
 | Faction | string | ForestMonsters | Set custom faction for mob. This overrules the raids faction setting if set. |
 
 ## Configuration Options
@@ -278,6 +279,8 @@ THIS is what usually makes most raids stumble. If the raid starts, but nothing s
 - SunkenCrypt
 
 # Changelog
+- v1.3.1: 
+	- Fixed issue with faction assignment being skipped in certain situations.
 - v1.3.0:
 	- Set raid faction. Defaults to boss now, for all spawned creatures.
 	- Conditions for day/night
