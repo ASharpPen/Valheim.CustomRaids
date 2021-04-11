@@ -279,6 +279,9 @@ THIS is what usually makes most raids stumble. If the raid starts, but nothing s
 - SunkenCrypt
 
 # Changelog
+- v1.3.2: 
+	- Raid debug files now follow config format.
+	- Fixed issue with faction assignment for raids with different factions for same mob type.
 - v1.3.1: 
 	- Fixed issue with faction assignment being skipped in certain situations.
 - v1.3.0:

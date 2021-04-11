@@ -98,7 +98,7 @@ namespace Valheim.CustomRaids.Multiplayer
 
 						Log.LogTrace("Successfully set raid event configs.");
 
-						RandEventSystemPatch.ApplyConfigurations();
+						RandEventSystemPatch.ApplyConfigurations(RandEventSystem.instance);
 					}
 					else
 					{
