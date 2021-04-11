@@ -80,6 +80,7 @@
     <Compile Include="ConfigurationTypes\GeneralConfiguration.cs" />
     <Compile Include="ConfigurationTypes\RaidEventConfiguration.cs" />
     <Compile Include="ConfigurationCore\Log.cs" />
+    <Compile Include="Debug\EventsWriter.cs" />
     <Compile Include="Multiplayer\ConfigMultiplayerPatch.cs" />
     <Compile Include="Multiplayer\ConfigurationPackage.cs" />
     <Compile Include="Patches\FixNearBaseOnlyPatch.cs" />
