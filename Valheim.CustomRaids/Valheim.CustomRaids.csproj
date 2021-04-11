@@ -90,6 +90,7 @@
     <Compile Include="Patches\RandEventSystemHaveGlobalKeyPatch.cs" />
     <Compile Include="Patches\RandEventSystemPatch.cs" />
     <Compile Include="CustomRaidPlugin.cs" />
+    <Compile Include="Patches\RandomEventOnClonePatch.cs" />
     <Compile Include="Patches\WorldStartPatch.cs" />
     <Compile Include="RaidFrequencyOverhaul\PossibleRaid.cs" />
     <Compile Include="RaidFrequencyOverhaul\RaidFrequencyOverhaul.cs" />

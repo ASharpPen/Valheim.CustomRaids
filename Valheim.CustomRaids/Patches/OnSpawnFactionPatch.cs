@@ -93,6 +93,17 @@ namespace Valheim.CustomRaids.Patches
                 return config;
             }
 
+            var randomEvent = RandEventSystem.instance.GetCurrentRandomEvent();
+            var raidConfig = RandomEventCache.GetConfig(randomEvent);
+
+            if (raidConfig is null)
+            {
+#if DEBUG
+                Log.LogDebug($"Found no config to use for factiona assignment, for spawner {spawner.m_name}");
+#endif
+                return null;
+            }
+
             var spawnerSectionName = spawner.m_name.Split(new[] { '.' }, StringSplitOptions.RemoveEmptyEntries);
 
             if(spawnerSectionName.Length != 2)
@@ -100,15 +111,12 @@ namespace Valheim.CustomRaids.Patches
                 return null;
             }
 
-            foreach (var raidConfig in ConfigurationManager.RaidConfig)
+            if (raidConfig.Sections.TryGetValue(spawnerSectionName[1], out SpawnConfiguration spawnConfig))
             {
-                if (raidConfig.Sections.TryGetValue(spawnerSectionName[1], out SpawnConfiguration spawnConfig))
-                {
-                    var cfg = new Tuple<RaidEventConfiguration, SpawnConfiguration>(raidConfig, spawnConfig);
+                var cfg = new Tuple<RaidEventConfiguration, SpawnConfiguration>(raidConfig, spawnConfig);
 
-                    configCache.Add(spawner, cfg);
-                    return cfg;
-                }
+                configCache.Add(spawner, cfg);
+                return cfg;
             }
 
             return null;
