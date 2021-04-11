@@ -1,9 +1,7 @@
 ﻿using BepInEx;
 using HarmonyLib;
-using System;
 using System.Collections.Generic;
 using System.IO;
-using UnityEngine;
 using Valheim.CustomRaids.ConfigurationTypes;
 
 namespace Valheim.CustomRaids
@@ -16,7 +14,7 @@ namespace Valheim.CustomRaids
 			if (ConfigurationManager.GeneralConfig.WriteEnvironmentDataToDisk.Value)
 			{
 				string filePath = Path.Combine(Paths.PluginPath, "env_man_environments.txt");
-				Debug.Log($"Writing global keys to {filePath}");
+				Log.LogInfo($"Writing global keys to {filePath}");
 
 				var fields = typeof(EnvSetup).GetFields();
 				List<string> lines = new List<string>(__instance.m_environments.Count * fields.Length);
@@ -41,7 +39,7 @@ namespace Valheim.CustomRaids
 			if (ConfigurationManager.GeneralConfig.WriteGlobalKeyDataToDisk.Value)
 			{
 				string filePath = Path.Combine(Paths.PluginPath, "ZoneSystem.txt");
-				Debug.Log($"Writing global keys to {filePath}");
+				Log.LogInfo($"Writing global keys to {filePath}");
 				File.WriteAllLines(filePath, __instance.GetGlobalKeys());
 			}
 		}

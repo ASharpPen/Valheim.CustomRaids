@@ -2,10 +2,12 @@
 using HarmonyLib;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using UnityEngine;
 using Valheim.CustomRaids.ConfigurationTypes;
+using Valheim.CustomRaids.Debug;
 using Valheim.CustomRaids.Patches;
 
 namespace Valheim.CustomRaids
@@ -17,38 +19,39 @@ namespace Valheim.CustomRaids
         {
             Log.LogDebug("Starting RandEventSystem");
 
+            if (ConfigurationManager.GeneralConfig.WriteDefaultEventDataToDisk.Value)
+            {
+                EventsWriter.WriteToFile(__instance.m_events);
+            }
+
             //If singleplayer, ZNet will not be initialized here.
             if (ZNet.instance == null)
             {
                 Log.LogDebug("Loading configurations.");
                 ConfigurationManager.LoadAllConfigurations();
 
-                ApplyConfigurations();
+                ApplyConfigurations(__instance);
             }
             else if (ZNet.instance.IsServer())
             {
                 Log.LogDebug("Loading configurations.");
                 ConfigurationManager.LoadAllConfigurations();
 
-                ApplyConfigurations();
+                ApplyConfigurations(__instance);
+            }
+
+            if (ConfigurationManager.GeneralConfig.WritePostChangeEventDataToDisk.Value)
+            {
+                EventsWriter.WriteToFile(__instance.m_events, "custom_random_events.txt");
             }
         }
 
-        public static void ApplyConfigurations()
+        public static void ApplyConfigurations(RandEventSystem __instance)
         {
             Log.LogDebug("Applying configurations to RandEventSystem.");
 
-            var __instance = RandEventSystem.instance;
-
-            var events = __instance.m_events;
-
             __instance.m_eventIntervalMin = ConfigurationManager.GeneralConfig.EventCheckInterval.Value;
             __instance.m_eventChance = ConfigurationManager.GeneralConfig.EventTriggerChance.Value;
-
-            if (ConfigurationManager.GeneralConfig.WriteDefaultEventDataToDisk.Value)
-            {
-                WriteToFile(events, ConfigurationManager.DebugOn);
-            }
 
             if (ConfigurationManager.GeneralConfig.RemoveAllExistingRaids.Value)
             {
@@ -96,14 +99,7 @@ namespace Valheim.CustomRaids
                 catch (Exception e)
                 {
                     Log.LogWarning($"Failed to create possible raid {raid.Name}: " + e.Message);
-
-                    if (ConfigurationManager.DebugOn) Debug.LogException(e);
                 }
-            }
-
-            if (ConfigurationManager.GeneralConfig.WritePostChangeEventDataToDisk.Value)
-            {
-                WriteToFile(__instance.m_events, ConfigurationManager.DebugOn, "custom_random_events.txt");
             }
         }
 
@@ -214,60 +210,6 @@ namespace Valheim.CustomRaids
             };
 
             return newEvent;
-        }
-
-        public static void WriteToFile(List<RandomEvent> events, bool debug, string fileName = "default_random_events.txt")
-        {
-            string filePath = Path.Combine(Paths.PluginPath, fileName);
-            Log.LogDebug($"Writing default random events to '{filePath}'.");
-
-            List<string> lines = new List<string>(events.Count * 30);
-
-            foreach (var item in events)
-            {
-                lines.Add("");
-                lines.Add("[Event]");
-
-                Scan(item, lines);
-
-                lines.Add("");
-                foreach(var spawn in item.m_spawn)
-                {
-                    lines.Add("[Spawn]");
-
-                    Scan(spawn, lines);
-                }
-            }
-            File.WriteAllLines(filePath, lines);
-        }
-
-        private static void Scan(object obj, List<string> results, int depth = 1)
-        {
-            var fields = obj.GetType().GetFields();
-
-            string indent = "";
-            for (int i = 0; i < depth; ++i)
-            {
-                indent += "\t";
-            }
-
-            foreach (var field in fields)
-            {
-                if (typeof(List<string>).IsAssignableFrom(field.FieldType))
-                {
-                    results.Add($"{indent}{field.Name}:");
-
-                    var indent2 = indent + "\t";
-                    foreach(var str in field.GetValue(obj) as List<string>)
-                    {
-                        results.Add($"{indent2}{str}");
-                    }
-                }
-                else
-                {
-                    results.Add($"{indent}{field.Name}: {field.GetValue(obj)}");
-                }
-            }
         }
     }
 }
