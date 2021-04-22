@@ -279,6 +279,10 @@ THIS is what usually makes most raids stumble. If the raid starts, but nothing s
 - SunkenCrypt
 
 # Changelog
+- v1.3.3: 
+	- Improved compatibility with mods supplying prefabs.
+	- Fixed installation detection of Enhanced Progress Tracker.
+	- Changed global key check logic to reduce complexity and potential for errors.
 - v1.3.2: 
 	- Raid debug files now follow config format.
 	- Fixed issue with faction assignment for raids with different factions for same mob type.

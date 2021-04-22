@@ -12,36 +12,12 @@ namespace Valheim.CustomRaids.Compatibilities
     {
         public static string GetPlayerName(ZDO characterZDO)
         {
-            return ZNet.instance.GetPeer(characterZDO.m_owner)?.m_playerName;
+			return characterZDO.GetString("playerName");
         }
 
 		public static bool HaveGlobalKey(string playerName, string key)
         {
 			return ZoneSystem.instance.HasGlobalKey(playerName, key);
         }
-
-		public static bool HaveGlobalKeys(Player player, RandomEvent randomEvent)
-        {
-			return HaveGlobalKeys(player.GetHoverName(), randomEvent);
-        }
-
-		public static bool HaveGlobalKeys(string playerName, RandomEvent randomEvent)
-        {
-			foreach (string key in randomEvent.m_requiredGlobalKeys)
-			{
-				if (!ZoneSystem.instance.HasGlobalKey(playerName, key))
-				{
-					return false;
-				}
-			}
-			foreach (string key in randomEvent.m_notRequiredGlobalKeys)
-			{
-				if (ZoneSystem.instance.HasGlobalKey(playerName, key))
-				{
-					return false;
-				}
-			}
-			return true;
-		}
     }
 }
