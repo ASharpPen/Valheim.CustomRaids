@@ -1,17 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Valheim.CustomRaids.Compatibilities;
-using Valheim.CustomRaids.ConfigurationTypes;
 using Valheim.CustomRaids.Patches;
 
 namespace Valheim.CustomRaids.Conditions
 {
     internal static class ConditionRequireOneOfGlobalKeys
     {
-        public static bool ShouldFilter(RandomEvent randomEvent, string playerName = null)
+        public static bool ShouldFilter(RandomEvent randomEvent, string playerName)
         {
             var raidConfig = RandomEventCache.GetConfig(randomEvent);
 
