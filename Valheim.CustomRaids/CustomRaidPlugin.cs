@@ -26,6 +26,11 @@ namespace Valheim.CustomRaids
                 new DeathsquitoSeason().CreateConfigIfMissing();
             }
 
+            if(EnhancedProgressTrackerInstalled)
+            {
+                Log.LogDebug("Detected installation of Enhanced Progress Tracker.");
+            }
+
             var harmony = new Harmony("mod.custom_raids");
 
             harmony.PatchAll();
@@ -33,6 +38,6 @@ namespace Valheim.CustomRaids
             Log.Logger = Logger;
         }
 
-        public static bool EnhancedProgressTrackerInstalled { get; } = Type.GetType("Valheim.EnhancedProgressTracker.EnhancedProgressTracker") is not null;
+        public static bool EnhancedProgressTrackerInstalled { get; } = Type.GetType("Valheim.EnhancedProgressTracker.EnhancedProgressTracker, Valheim.EnhancedProgressTracker") is not null;
     }
 }

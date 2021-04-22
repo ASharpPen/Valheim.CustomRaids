@@ -70,7 +70,10 @@
   <ItemGroup>
     <Compile Include="Compatibilities\EnhancedProgressTrackerCompatibilities.cs" />
     <Compile Include="Conditions\ConditionChecker.cs" />
+    <Compile Include="Conditions\ConditionRequiredGlobalKeys.cs" />
+    <Compile Include="Conditions\ConditionRequiredNotGlobalKeys.cs" />
     <Compile Include="Conditions\ConditionRequireOneOfGlobalKeys.cs" />
+    <Compile Include="Conditions\GlobalKeyConditionChecker.cs" />
     <Compile Include="ConfigurationCore\ConfigurationEntry.cs" />
     <Compile Include="ConfigurationCore\ConfigurationGroup.cs" />
     <Compile Include="ConfigurationCore\ConfigurationSection.cs" />
@@ -81,6 +84,7 @@
     <Compile Include="ConfigurationTypes\RaidEventConfiguration.cs" />
     <Compile Include="ConfigurationCore\Log.cs" />
     <Compile Include="Debug\EventsWriter.cs" />
+    <Compile Include="Patches\ConfigLoadingPatch.cs" />
     <Compile Include="Multiplayer\ConfigMultiplayerPatch.cs" />
     <Compile Include="Multiplayer\ConfigurationPackage.cs" />
     <Compile Include="Patches\FixNearBaseOnlyPatch.cs" />
@@ -91,13 +95,15 @@
     <Compile Include="Patches\RandEventSystemPatch.cs" />
     <Compile Include="CustomRaidPlugin.cs" />
     <Compile Include="Patches\RandomEventOnClonePatch.cs" />
-    <Compile Include="Patches\WorldStartPatch.cs" />
+    <Compile Include="Patches\RandEventSystemWaitPatch.cs" />
     <Compile Include="RaidFrequencyOverhaul\PossibleRaid.cs" />
     <Compile Include="RaidFrequencyOverhaul\RaidFrequencyOverhaul.cs" />
     <Compile Include="RandomEventCache.cs" />
     <Compile Include="PreConfiguredRaids\DeathsquitoSeason.cs" />
     <Compile Include="PreConfiguredRaids\Ragnarok.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Resetter\StateResetter.cs" />
+    <Compile Include="Resetter\WorldStartupResetPatch.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Libs\Valheim.EnhancedProgressTracker.dll" />

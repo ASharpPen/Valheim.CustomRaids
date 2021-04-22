@@ -31,14 +31,13 @@ namespace Valheim.CustomRaids.Patches
 
         private static void ApplyFactionToRaidMobs(GameObject spawn, SpawnSystem.SpawnData spawner, bool isEventSpawner)
         {
-#if DEBUG
-            Log.LogDebug($"Attempting to apply faction for spawner {spawner.m_prefab.name}");
-#endif
-
             if (!isEventSpawner)
             {
                 return;
             }
+#if DEBUG
+            Log.LogDebug($"Attempting to apply faction for spawner {spawner.m_prefab.name}");
+#endif
 
             Character character = spawn.GetComponent<Character>();
 

@@ -15,40 +15,32 @@ namespace Valheim.CustomRaids
     [HarmonyPatch(typeof(RandEventSystem), "Start")]
     public static class RandEventSystemPatch
     {
-        private static void Postfix(RandEventSystem __instance)
+        [HarmonyPostfix]
+        private static void RandEventSystemStart(RandEventSystem __instance)
         {
             Log.LogDebug("Starting RandEventSystem");
-
-            if (ConfigurationManager.GeneralConfig.WriteDefaultEventDataToDisk.Value)
-            {
-                EventsWriter.WriteToFile(__instance.m_events);
-            }
 
             //If singleplayer, ZNet will not be initialized here.
             if (ZNet.instance == null)
             {
-                Log.LogDebug("Loading configurations.");
-                ConfigurationManager.LoadAllConfigurations();
-
                 ApplyConfigurations(__instance);
+                RandEventSystemWaitPatch.Wait = false;
             }
-            else if (ZNet.instance.IsServer())
+            else if(ZNet.instance.IsServer())
             {
-                Log.LogDebug("Loading configurations.");
-                ConfigurationManager.LoadAllConfigurations();
-
                 ApplyConfigurations(__instance);
-            }
-
-            if (ConfigurationManager.GeneralConfig.WritePostChangeEventDataToDisk.Value)
-            {
-                EventsWriter.WriteToFile(__instance.m_events, "custom_random_events.txt");
+                RandEventSystemWaitPatch.Wait = false;
             }
         }
 
         public static void ApplyConfigurations(RandEventSystem __instance)
         {
             Log.LogDebug("Applying configurations to RandEventSystem.");
+
+            if (ConfigurationManager.GeneralConfig.WriteDefaultEventDataToDisk.Value)
+            {
+                EventsWriter.WriteToFile(__instance.m_events);
+            }
 
             __instance.m_eventIntervalMin = ConfigurationManager.GeneralConfig.EventCheckInterval.Value;
             __instance.m_eventChance = ConfigurationManager.GeneralConfig.EventTriggerChance.Value;
@@ -100,6 +92,11 @@ namespace Valheim.CustomRaids
                 {
                     Log.LogWarning($"Failed to create possible raid {raid.Name}: " + e.Message);
                 }
+            }
+
+            if (ConfigurationManager.GeneralConfig.WritePostChangeEventDataToDisk.Value)
+            {
+                EventsWriter.WriteToFile(__instance.m_events, "custom_random_events.txt");
             }
         }
 
