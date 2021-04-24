@@ -26,10 +26,10 @@ namespace Valheim.CustomRaids.Patches
                 Log.LogTrace("Waiting for green light.");
 
                 __result = new List<SpawnSystem.SpawnData>();
-                return true;
+                return false;
             }
 
-            return false;
+            return true;
         }
 
         [HarmonyPatch("RPC_SetEvent")]
@@ -39,10 +39,10 @@ namespace Valheim.CustomRaids.Patches
             if(Wait)
             {
                 Log.LogTrace("Skipping raid message from server. Waiting for green light.");
-                return true;
+                return false;
             }
 
-            return false;
+            return true;
         }
     }
 }
