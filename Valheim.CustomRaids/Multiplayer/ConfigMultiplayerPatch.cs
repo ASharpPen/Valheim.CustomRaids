@@ -1,11 +1,8 @@
 ﻿using HarmonyLib;
 using System;
-using System.Collections;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
-using UnityEngine;
 using Valheim.CustomRaids.ConfigurationTypes;
-using Valheim.CustomRaids.Patches;
 
 namespace Valheim.CustomRaids.Multiplayer
 {
