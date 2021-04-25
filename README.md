@@ -278,7 +278,10 @@ THIS is what usually makes most raids stumble. If the raid starts, but nothing s
 - Crypt
 - SunkenCrypt
 
-# Changelog
+# Changelog 
+- v1.3.5: 
+	- Fixed issue with individual frequencies causing raids to not start.
+	- Fixed potential multiplayer issue with faction assignment.
 - v1.3.4: 
 	- Fixed a critical bug in the compatibility code of 1.3.3 causing raid creatures not to spawn.
 - v1.3.3: 
