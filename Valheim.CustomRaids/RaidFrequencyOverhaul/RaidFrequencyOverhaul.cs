@@ -88,9 +88,7 @@ namespace Valheim.CustomRaids.RaidFrequencyOverhaul
                 return false;
             }
 
-#if DEBUG
             Log.LogDebug($"Starting raid: {selectedRaid?.Raid?.m_name}");
-#endif
 
             //Start event.
             SetRandomEvent(instance, selectedRaid.Raid, selectedRaid.RaidCenter);
@@ -110,6 +108,7 @@ namespace Valheim.CustomRaids.RaidFrequencyOverhaul
                     //Check for default global key handling. Only check standard ValidGlobalKeys if enhanced keys are NOT installed.
                     if(!CustomRaidPlugin.EnhancedProgressTrackerInstalled && !ValidGlobalKeys(randomEventSystem, randomEvent))
                     {
+                        Log.LogTrace($"Skipping raid '{randomEvent.m_name}' due to not finding valid global keys.");
                         continue;
                     }
 
@@ -123,12 +122,14 @@ namespace Valheim.CustomRaids.RaidFrequencyOverhaul
                     if(delta < (eventData.Config?.RaidFrequency?.Value ?? 46) * 60) //Use default frequency of 46 minutes if something is wrong here.
                     {
 #if DEBUG
-                        Log.LogDebug($"Skipping raid {randomEvent.m_name} due not enough time having passed.");
+                        Log.LogTrace($"Skipping raid {randomEvent.m_name} due not enough time having passed.");
 #endif
                         continue;
                     }
 
-                    List<Vector3> possibleRaidCenterPositions = GetRaidCenters(randomEventSystem, randomEvent, allCharacterZDOS);
+
+                    List<Vector3> possibleRaidCenterPositions = GetRaidCenters(randomEventSystem, randomEvent, allCharacterZDOS.ToList());
+
                     if (possibleRaidCenterPositions.Count != 0)
                     {
                         Vector3 raidCenter = possibleRaidCenterPositions[UnityEngine.Random.Range(0, possibleRaidCenterPositions.Count)];
