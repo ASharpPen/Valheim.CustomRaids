@@ -80,6 +80,12 @@ namespace Valheim.CustomRaids.Patches
 #endif
 
             character.m_faction = creatureFaction;
+
+            var zdo = character.GetComponent<ZNetView>()?.GetZDO();
+            if(zdo is not null)
+            {
+                zdo.Set("faction", (int)creatureFaction);
+            }
         }
 
         private static ConditionalWeakTable<SpawnSystem.SpawnData, Tuple<RaidEventConfiguration, SpawnConfiguration>> configCache = 
