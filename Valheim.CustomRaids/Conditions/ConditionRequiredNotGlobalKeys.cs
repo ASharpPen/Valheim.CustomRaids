@@ -17,7 +17,7 @@ namespace Valheim.CustomRaids.Conditions
                 return randomEvent.m_notRequiredGlobalKeys.Any(x => EnhancedProgressTrackerCompatibilities.HaveGlobalKey(playerName, x.Trim()));
             }
 
-            return randomEvent.m_requiredGlobalKeys.Any(x => ZoneSystem.instance.GetGlobalKey(x.Trim()));
+            return randomEvent.m_notRequiredGlobalKeys.Any(x => ZoneSystem.instance.GetGlobalKey(x.Trim()));
         }
     }
 }
