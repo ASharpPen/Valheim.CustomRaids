@@ -279,6 +279,8 @@ THIS is what usually makes most raids stumble. If the raid starts, but nothing s
 - SunkenCrypt
 
 # Changelog 
+- v1.3.6: 
+	- Scanning all-subfolders for Custom Raids supplemental files.
 - v1.3.5: 
 	- Fixed issue with individual frequencies causing raids to not start.
 	- Fixed potential multiplayer issue with faction assignment.
