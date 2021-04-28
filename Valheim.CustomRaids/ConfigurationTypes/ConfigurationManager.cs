@@ -57,7 +57,7 @@ namespace Valheim.CustomRaids.ConfigurationTypes
 
         public static List<RaidEventConfiguration> LoadSupplemental()
         {
-            var supplementalFiles = Directory.GetFiles(Paths.ConfigPath, "custom_raids.supplemental.*");
+            var supplementalFiles = Directory.GetFiles(Paths.ConfigPath, "custom_raids.supplemental.*", SearchOption.AllDirectories);
             var supplementalConfigurations = new List<RaidEventConfiguration>(supplementalFiles.Length);
 
             Log.LogDebug($"Found {supplementalFiles.Length} supplemental files");
