@@ -1,9 +1,8 @@
 ﻿using HarmonyLib;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 using Valheim.CustomRaids.Conditions;
+using Valheim.CustomRaids.Core;
 
 namespace Valheim.CustomRaids.Patches
 {

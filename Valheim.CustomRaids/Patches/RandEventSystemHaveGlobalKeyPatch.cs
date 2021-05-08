@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Valheim.CustomRaids.Compatibilities;
 using Valheim.CustomRaids.Conditions;
+using Valheim.CustomRaids.Core;
 
 namespace Valheim.CustomRaids.Patches
 {
@@ -33,7 +34,6 @@ namespace Valheim.CustomRaids.Patches
 #endif
                     if(GlobalKeyConditionChecker.ShouldFilter(ev, playerName))
                     {
-                        Log.LogDebug($"Filtering raid {ev.m_name} for {playerName} due to global keys.");
                         toRemove.Add(i);
                     }
                 }

@@ -2,11 +2,12 @@
 using HarmonyLib;
 using System.Collections.Generic;
 using System.IO;
-using Valheim.CustomRaids.ConfigurationTypes;
+using Valheim.CustomRaids.Configuration;
+using Valheim.CustomRaids.Core;
 
 namespace Valheim.CustomRaids
 {
-	[HarmonyPatch(typeof(EnvMan), "Awake")]
+    [HarmonyPatch(typeof(EnvMan), "Awake")]
 	public static class EvnManTest
 	{
 		private static void Postfix(ref EnvMan __instance)

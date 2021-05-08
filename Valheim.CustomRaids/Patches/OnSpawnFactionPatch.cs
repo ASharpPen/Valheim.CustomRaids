@@ -6,7 +6,8 @@ using System.Reflection;
 using System.Reflection.Emit;
 using System.Runtime.CompilerServices;
 using UnityEngine;
-using Valheim.CustomRaids.ConfigurationTypes;
+using Valheim.CustomRaids.Configuration.ConfigTypes;
+using Valheim.CustomRaids.Core;
 
 namespace Valheim.CustomRaids.Patches
 {
@@ -116,7 +117,7 @@ namespace Valheim.CustomRaids.Patches
                 return null;
             }
 
-            if (raidConfig.Sections.TryGetValue(spawnerSectionName[1], out SpawnConfiguration spawnConfig))
+            if (raidConfig.Subsections.TryGetValue(spawnerSectionName[1], out SpawnConfiguration spawnConfig))
             {
                 var cfg = new Tuple<RaidEventConfiguration, SpawnConfiguration>(raidConfig, spawnConfig);
 

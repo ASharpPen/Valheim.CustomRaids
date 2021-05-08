@@ -1,12 +1,10 @@
-﻿using BepInEx;
-using HarmonyLib;
+﻿using HarmonyLib;
 using System;
 using System.Collections.Generic;
-using System.Globalization;
-using System.IO;
 using System.Linq;
-using UnityEngine;
-using Valheim.CustomRaids.ConfigurationTypes;
+using Valheim.CustomRaids.Configuration;
+using Valheim.CustomRaids.Configuration.ConfigTypes;
+using Valheim.CustomRaids.Core;
 using Valheim.CustomRaids.Debug;
 using Valheim.CustomRaids.Patches;
 
@@ -51,9 +49,9 @@ namespace Valheim.CustomRaids
                 __instance.m_events.Clear();
             }
 
-            Log.LogDebug($"Found {ConfigurationManager.RaidConfig.Count} raid configurations to apply.");
+            Log.LogDebug($"Found {ConfigurationManager.RaidConfig.Subsections.Count} raid configurations to apply.");
 
-            foreach (var raid in ConfigurationManager.RaidConfig)
+            foreach (var raid in ConfigurationManager.RaidConfig.Subsections.Values)
             {
                 if (ConfigurationManager.GeneralConfig.OverrideExisting.Value)
                 {
@@ -134,7 +132,7 @@ namespace Valheim.CustomRaids
         {
             var spawnList = new List<SpawnSystem.SpawnData>();
 
-            foreach(var spawnConfig in raidEvent.SpawnConfigurations)
+            foreach(var spawnConfig in raidEvent.Subsections.Values)
             {
                 var spawnObject = ZNetScene.instance.GetPrefab(spawnConfig.PrefabName.Value);
 
@@ -148,7 +146,7 @@ namespace Valheim.CustomRaids
 
                 SpawnSystem.SpawnData spawn = new SpawnSystem.SpawnData
                 {
-                    m_name = $"{raidEvent.GroupName}.{spawnConfig.SectionName}",
+                    m_name = $"{spawnConfig.SectionKey}",
                     m_enabled = spawnConfig.Enabled.Value,
                     m_prefab = spawnObject,
                     m_maxSpawned = spawnConfig.MaxSpawned.Value,

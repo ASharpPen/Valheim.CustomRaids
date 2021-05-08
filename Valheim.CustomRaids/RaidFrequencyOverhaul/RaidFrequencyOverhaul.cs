@@ -1,12 +1,11 @@
 ﻿using HarmonyLib;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using UnityEngine;
-using Valheim.CustomRaids.Compatibilities;
 using Valheim.CustomRaids.Conditions;
-using Valheim.CustomRaids.ConfigurationTypes;
+using Valheim.CustomRaids.Configuration;
+using Valheim.CustomRaids.Core;
 using Valheim.CustomRaids.Patches;
 
 namespace Valheim.CustomRaids.RaidFrequencyOverhaul
@@ -108,7 +107,7 @@ namespace Valheim.CustomRaids.RaidFrequencyOverhaul
                     //Check for default global key handling. Only check standard ValidGlobalKeys if enhanced keys are NOT installed.
                     if(!CustomRaidPlugin.EnhancedProgressTrackerInstalled && !ValidGlobalKeys(randomEventSystem, randomEvent))
                     {
-                        Log.LogTrace($"Skipping raid '{randomEvent.m_name}' due to not finding valid global keys.");
+                        Log.LogDebug($"Skipping raid '{randomEvent.m_name}' due to not finding valid global keys.");
                         continue;
                     }
 
@@ -121,9 +120,7 @@ namespace Valheim.CustomRaids.RaidFrequencyOverhaul
                     //Check if enough time has passed
                     if(delta < (eventData.Config?.RaidFrequency?.Value ?? 46) * 60) //Use default frequency of 46 minutes if something is wrong here.
                     {
-#if DEBUG
                         Log.LogTrace($"Skipping raid {randomEvent.m_name} due not enough time having passed.");
-#endif
                         continue;
                     }
 

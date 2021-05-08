@@ -1,6 +1,6 @@
 ﻿using BepInEx;
 using System.IO;
-using UnityEngine;
+using Valheim.CustomRaids.Core;
 
 namespace Valheim.CustomRaids.PreConfiguredRaids
 {

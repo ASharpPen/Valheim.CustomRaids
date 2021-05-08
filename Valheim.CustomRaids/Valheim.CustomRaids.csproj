@@ -68,25 +68,27 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Configuration\ConfigTypes\RaidEventConfigurationFile.cs" />
+    <Compile Include="Configuration\ConfigurationManager.cs" />
+    <Compile Include="Configuration\ConfigurationMerger.cs" />
+    <Compile Include="Configuration\Multiplayer\ConfigPackage.cs" />
+    <Compile Include="Core\Configuration\ConfigurationEntry.cs" />
+    <Compile Include="Core\Configuration\ConfigurationLoader.cs" />
+    <Compile Include="Core\Configuration\ConfigWithSubsections.cs" />
+    <Compile Include="Core\Configuration\IConfigFile.cs" />
+    <Compile Include="Core\Configuration\IHaveSubsections.cs" />
+    <Compile Include="Core\Log.cs" />
+    <Compile Include="Configuration\ConfigTypes\GeneralConfiguration.cs" />
+    <Compile Include="Configuration\Multiplayer\ConfigMultiplayerPatch.cs" />
+    <Compile Include="Core\Configuration\Config.cs" />
     <Compile Include="Compatibilities\EnhancedProgressTrackerCompatibilities.cs" />
     <Compile Include="Conditions\ConditionChecker.cs" />
     <Compile Include="Conditions\ConditionRequiredGlobalKeys.cs" />
     <Compile Include="Conditions\ConditionRequiredNotGlobalKeys.cs" />
     <Compile Include="Conditions\ConditionRequireOneOfGlobalKeys.cs" />
     <Compile Include="Conditions\GlobalKeyConditionChecker.cs" />
-    <Compile Include="ConfigurationCore\ConfigurationEntry.cs" />
-    <Compile Include="ConfigurationCore\ConfigurationGroup.cs" />
-    <Compile Include="ConfigurationCore\ConfigurationSection.cs" />
-    <Compile Include="ConfigurationCore\ConfigurationLoader.cs" />
-    <Compile Include="ConfigurationCore\IHaveEntries.cs" />
-    <Compile Include="ConfigurationTypes\ConfigurationManager.cs" />
-    <Compile Include="ConfigurationTypes\GeneralConfiguration.cs" />
-    <Compile Include="ConfigurationTypes\RaidEventConfiguration.cs" />
-    <Compile Include="ConfigurationCore\Log.cs" />
     <Compile Include="Debug\EventsWriter.cs" />
     <Compile Include="Patches\ConfigLoadingPatch.cs" />
-    <Compile Include="Multiplayer\ConfigMultiplayerPatch.cs" />
-    <Compile Include="Multiplayer\ConfigurationPackage.cs" />
     <Compile Include="Patches\FixNearBaseOnlyPatch.cs" />
     <Compile Include="Patches\InvestigationPatch.cs" />
     <Compile Include="Patches\OnSpawnFactionPatch.cs" />
@@ -109,6 +111,9 @@
   <ItemGroup>
     <None Include="Libs\Valheim.EnhancedProgressTracker.dll" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Raids\" />
+    <Folder Include="Spawns\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

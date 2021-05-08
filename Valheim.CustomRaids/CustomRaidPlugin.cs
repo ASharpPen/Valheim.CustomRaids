@@ -1,9 +1,8 @@
 ﻿using BepInEx;
 using HarmonyLib;
 using System;
-using System.Linq;
-using System.Collections.Generic;
-using Valheim.CustomRaids.ConfigurationTypes;
+using Valheim.CustomRaids.Configuration;
+using Valheim.CustomRaids.Core;
 using Valheim.CustomRaids.PreConfiguredRaids;
 
 namespace Valheim.CustomRaids
@@ -18,7 +17,7 @@ namespace Valheim.CustomRaids
 
             Logger.LogInfo("Loading configurations...");
 
-            ConfigurationManager.LoadGeneralConfigurations();
+            ConfigurationManager.GeneralConfig =  ConfigurationManager.LoadGeneralConfigurations();
 
             if (ConfigurationManager.GeneralConfig.GeneratePresetRaids.Value)
             {
@@ -34,8 +33,6 @@ namespace Valheim.CustomRaids
             var harmony = new Harmony("mod.custom_raids");
 
             harmony.PatchAll();
-
-            Log.Logger = Logger;
         }
 
         public static bool EnhancedProgressTrackerInstalled { get; } = Type.GetType("Valheim.EnhancedProgressTracker.EnhancedProgressTracker, Valheim.EnhancedProgressTracker") is not null;

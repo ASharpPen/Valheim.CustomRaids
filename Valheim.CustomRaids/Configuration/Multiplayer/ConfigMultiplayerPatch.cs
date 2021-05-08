@@ -1,10 +1,8 @@
 ﻿using HarmonyLib;
 using System;
-using System.IO;
-using System.Runtime.Serialization.Formatters.Binary;
-using Valheim.CustomRaids.ConfigurationTypes;
+using Valheim.CustomRaids.Core;
 
-namespace Valheim.CustomRaids.Multiplayer
+namespace Valheim.CustomRaids.Configuration.Multiplayer
 {
 	[HarmonyPatch(typeof(ZNet))]
 	public class ConfigMultiplayerPatch
@@ -39,23 +37,8 @@ namespace Valheim.CustomRaids.Multiplayer
 
 				Log.LogInfo("Received request for configs.");
 
-				ZPackage configPackage = new ZPackage();
-
-				var package = new ConfigurationPackage(
-					ConfigurationManager.GeneralConfig, 
-					ConfigurationManager.RaidConfig);
-
-				Log.LogTrace("Serializing configs.");
-
-				using (MemoryStream memStream = new MemoryStream())
-				{
-					BinaryFormatter binaryFormatter = new BinaryFormatter();
-					binaryFormatter.Serialize(memStream, package);
-
-					byte[] serialized = memStream.ToArray();
-
-					configPackage.Write(serialized);
-				}
+				var configPackage = new ConfigPackage();
+				var zpack = configPackage.Pack();
 
 				Log.LogTrace("Sending config package.");
 
@@ -64,9 +47,9 @@ namespace Valheim.CustomRaids.Multiplayer
 				Log.LogTrace("Finished sending config package.");
 			}
 			catch (Exception e)
-            {
+			{
 				Log.LogError("Unexpected error while attempting to create and send config package from server to client.", e);
-            }
+			}
 		}
 
 		private static void RPC_ReceiveConfigsCustomRaids(ZRpc rpc, ZPackage pkg)
@@ -74,40 +57,12 @@ namespace Valheim.CustomRaids.Multiplayer
 			Log.LogTrace("Received package.");
 			try
 			{
-				var serialized = pkg.ReadByteArray();
-
-				Log.LogTrace("Deserializing package.");
-
-				using (MemoryStream memStream = new MemoryStream(serialized))
-				{
-					BinaryFormatter binaryFormatter = new BinaryFormatter();
-					var responseObject = binaryFormatter.Deserialize(memStream);
-
-					if (responseObject is ConfigurationPackage configPackage)
-					{
-						Log.LogDebug("Received and deserialized config package");
-
-						Log.LogTrace("Unpackaging general config.");
-
-						ConfigurationManager.GeneralConfig = configPackage.GeneralConfig;
-
-						Log.LogTrace("Successfully set general config.");
-						Log.LogTrace("Unpackaging raid event configs.");
-
-						ConfigurationManager.RaidConfig = configPackage.RaidConfigs;
-
-						Log.LogTrace("Successfully set raid event configs.");
-					}
-					else
-					{
-						Log.LogWarning("Received bad config package. Unable to load.");
-					}
-				}
+				ConfigPackage.Unpack(pkg);
 			}
-			catch(Exception e)
-            {
+			catch (Exception e)
+			{
 				Log.LogError("Error while attempting to read received config package.", e);
-            }
+			}
 		}
 	}
 }

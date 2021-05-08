@@ -1,8 +1,8 @@
 ﻿using BepInEx.Configuration;
 using System;
-using Valheim.CustomRaids.ConfigurationCore;
+using Valheim.CustomRaids.Core.Configuration;
 
-namespace Valheim.CustomRaids.ConfigurationTypes
+namespace Valheim.CustomRaids.Configuration.ConfigTypes
 {
     [Serializable]
     public class GeneralConfiguration
