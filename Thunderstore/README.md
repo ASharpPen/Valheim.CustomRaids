@@ -61,7 +61,7 @@ GeneratePresetRaids = true
 
 [EventSystem]
 
-## If enabled, removes all existing raids and only allows configured.
+## If enabled, removes all existing raids and only allows configured. Will only remove non-random events, leaving boss events as is.
 RemoveAllExistingRaids = false
 
 ## Enable/disable override of existing events when event names match.
@@ -279,9 +279,10 @@ THIS is what usually makes most raids stumble. If the raid starts, but nothing s
 - SunkenCrypt
 
 # Changelog 
+- v1.3.7: 
+	- RemoveAllExistingRaids no longer removes non-random events. This should fix boss events being cleared as well.
 - v1.3.6: 
 	- Scanning all-subfolders for Custom Raids supplemental files.
-	- Fixed bug with NotRequiredGlobalKeys not being checked.
 - v1.3.5: 
 	- Fixed issue with individual frequencies causing raids to not start.
 	- Fixed potential multiplayer issue with faction assignment.
