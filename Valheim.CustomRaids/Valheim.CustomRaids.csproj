@@ -46,6 +46,9 @@
     <Reference Include="BepInEx">
       <HintPath>..\..\..\Games\Steam\steamapps\common\Valheim\BepInEx\core\BepInEx.dll</HintPath>
     </Reference>
+    <Reference Include="CreatureLevelControl">
+      <HintPath>LibsStripped\CreatureLevelControl.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -107,13 +110,40 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resetter\StateResetter.cs" />
     <Compile Include="Resetter\WorldStartupResetPatch.cs" />
+    <Compile Include="Spawns\Caches\SpawnCache.cs" />
+    <Compile Include="Spawns\Caches\SpawnDataCache.cs" />
+    <Compile Include="Spawns\Caches\ZdoCache.cs" />
+    <Compile Include="Spawns\Conditions\ConditionDistanceToCenter.cs" />
+    <Compile Include="Spawns\Conditions\ConditionNearbyPlayersCarryItem.cs" />
+    <Compile Include="Spawns\Conditions\ConditionNearbyPlayersCarryValue.cs" />
+    <Compile Include="Spawns\Conditions\ConditionNearbyPlayersNoise.cs" />
+    <Compile Include="Spawns\Conditions\ConditionNotGlobalKeys.cs" />
+    <Compile Include="Spawns\Conditions\ConditionWorldAge.cs" />
+    <Compile Include="Spawns\Conditions\ISpawnCondition.cs" />
+    <Compile Include="Spawns\Conditions\ModSpecific\CLLC\ConditionWorldLevel.cs" />
+    <Compile Include="Spawns\Conditions\ModSpecific\ConditionLoaderCLLC.cs" />
+    <Compile Include="Spawns\Modifiers\ISpawnModifier.cs" />
+    <Compile Include="Spawns\Modifiers\ModSpecific\CLLC\SpawnModifierBossAffix.cs" />
+    <Compile Include="Spawns\Modifiers\ModSpecific\CLLC\SpawnModifierExtraEffect.cs" />
+    <Compile Include="Spawns\Modifiers\ModSpecific\CLLC\SpawnModifierInfusion.cs" />
+    <Compile Include="Spawns\Modifiers\ModSpecific\CLLC\SpawnModifierSetLevel.cs" />
+    <Compile Include="Spawns\Modifiers\ModSpecific\SpawnModifierLoaderCLLC.cs" />
+    <Compile Include="Spawns\Modifiers\SpawnModifierSetFaction.cs" />
+    <Compile Include="Spawns\Patches\PreSpawnFilterPatch.cs" />
+    <Compile Include="Spawns\Patches\RandEventSystem_GetCurrentSpawners_Patch.cs" />
+    <Compile Include="Spawns\SpawnConditionManager.cs" />
+    <Compile Include="Spawns\SpawnContext.cs" />
+    <Compile Include="Spawns\SpawnModificationManager.cs" />
+    <Compile Include="Utilities\Extensions\CodeMatcherExtensions.cs" />
+    <Compile Include="Utilities\Extensions\StringExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Libs\Valheim.EnhancedProgressTracker.dll" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="LibsStripped\" />
     <Folder Include="Raids\" />
-    <Folder Include="Spawns\" />
+    <Folder Include="Spawns\Modifiers\ModSpecific\SpawnThat\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

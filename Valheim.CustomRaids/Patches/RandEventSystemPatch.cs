@@ -7,6 +7,7 @@ using Valheim.CustomRaids.Configuration.ConfigTypes;
 using Valheim.CustomRaids.Core;
 using Valheim.CustomRaids.Debug;
 using Valheim.CustomRaids.Patches;
+using Valheim.CustomRaids.Spawns.Caches;
 
 namespace Valheim.CustomRaids
 {
@@ -146,7 +147,7 @@ namespace Valheim.CustomRaids
 
                 SpawnSystem.SpawnData spawn = new SpawnSystem.SpawnData
                 {
-                    m_name = $"{spawnConfig.SectionKey}",
+                    m_name = spawnConfig.SectionKey,
                     m_enabled = spawnConfig.Enabled.Value,
                     m_prefab = spawnObject,
                     m_maxSpawned = spawnConfig.MaxSpawned.Value,
@@ -179,6 +180,10 @@ namespace Valheim.CustomRaids
                 };
 
                 Log.LogDebug($"Adding {spawnConfig.Name} to {raidEvent.Name}");
+
+                SpawnDataCache.GetOrCreate(spawn)
+                    .SetSpawnConfig(spawnConfig)
+                    .SetRaidConfig(raidEvent);
 
                 spawnList.Add(spawn);
             }

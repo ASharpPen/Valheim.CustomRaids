@@ -279,6 +279,8 @@ THIS is what usually makes most raids stumble. If the raid starts, but nothing s
 - SunkenCrypt
 
 # Changelog 
+- v1.4.0: 
+	- 
 - v1.3.6: 
 	- Scanning all-subfolders for Custom Raids supplemental files.
 - v1.3.5: 
