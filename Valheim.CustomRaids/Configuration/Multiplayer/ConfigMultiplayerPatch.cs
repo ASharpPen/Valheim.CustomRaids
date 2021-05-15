@@ -41,8 +41,9 @@ namespace Valheim.CustomRaids.Configuration.Multiplayer
 				var zpack = configPackage.Pack();
 
 				Log.LogTrace("Sending config package.");
+				Log.LogTrace("Package size in bytes: " + zpack.Size());
 
-				rpc.Invoke(nameof(RPC_ReceiveConfigsCustomRaids), new object[] { configPackage });
+				rpc.Invoke(nameof(RPC_ReceiveConfigsCustomRaids), new object[] { zpack });
 
 				Log.LogTrace("Finished sending config package.");
 			}

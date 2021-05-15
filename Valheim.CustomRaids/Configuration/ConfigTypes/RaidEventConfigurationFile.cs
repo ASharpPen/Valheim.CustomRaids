@@ -86,6 +86,7 @@ namespace Valheim.CustomRaids.Configuration.ConfigTypes
             return newModConfig;
         }
 
+        [NonSerialized]
         private int? index = null;
 
         public int Index

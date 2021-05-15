@@ -15,11 +15,14 @@ namespace Valheim.CustomRaids.Configuration.Multiplayer
     {
         public GeneralConfiguration GeneralConfig;
 
+        public RaidEventConfigurationFile RaidConfig;
+
         public ZPackage Pack()
         {
             ZPackage package = new ZPackage();
 
             GeneralConfig = ConfigurationManager.GeneralConfig;
+            RaidConfig = ConfigurationManager.RaidConfig;
 
             Log.LogTrace("Serializing configs.");
 
@@ -41,6 +44,7 @@ namespace Valheim.CustomRaids.Configuration.Multiplayer
             var serialized = package.ReadByteArray();
 
             Log.LogTrace("Deserializing package.");
+            Log.LogTrace("Package content size in bytes: " + package.Size());
 
             using (MemoryStream memStream = new MemoryStream(serialized))
             {
@@ -54,11 +58,12 @@ namespace Valheim.CustomRaids.Configuration.Multiplayer
                     Log.LogTrace("Unpackaging configs.");
 
                     ConfigurationManager.GeneralConfig = configPackage.GeneralConfig;
+                    ConfigurationManager.RaidConfig = configPackage.RaidConfig;
 
                     Log.LogTrace("Successfully unpacked configs.");
 
-                    Log.LogTrace($"Unpacked general config");
-                    //Log.LogTrace($"Unpacked {ConfigurationManager.CreatureSpawnerConfig?.Subsections?.Count ?? 0} creature spawner entries");
+                    Log.LogTrace($"Unpacked general configs");
+                    Log.LogTrace($"Unpacked {ConfigurationManager.RaidConfig?.Subsections?.Count ?? 0} raids");
                 }
                 else
                 {
