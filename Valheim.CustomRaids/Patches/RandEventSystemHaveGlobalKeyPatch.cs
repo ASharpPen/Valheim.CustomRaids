@@ -1,5 +1,6 @@
 ﻿using HarmonyLib;
 using System.Collections.Generic;
+using UnityEngine;
 using Valheim.CustomRaids.Compatibilities;
 using Valheim.CustomRaids.Conditions;
 using Valheim.CustomRaids.Core;
@@ -18,9 +19,9 @@ namespace Valheim.CustomRaids.Patches
 
         [HarmonyPatch("GetValidEventPoints")]
         [HarmonyPrefix]
-        private static void FilterCharactersWithInvalidGlobalKeys(RandomEvent ev, List<ZDO> characters)
+        private static void FilterCharactersWithInvalidGlobalKeys(RandomEvent ev, ref List<ZDO> characters)
         {
-            List<int> toRemove = new List<int>(characters.Count);
+            List<ZDO> filtered = new List<ZDO>();
 
             for(int i = 0; i < characters.Count; ++i)
             {
@@ -29,20 +30,20 @@ namespace Valheim.CustomRaids.Patches
 
                 if (playerName is not null)
                 {
-#if DEBUG
-                    Log.LogDebug($"Player: {playerName}");
-#endif
                     if(GlobalKeyConditionChecker.ShouldFilter(ev, playerName))
                     {
-                        toRemove.Add(i);
+#if DEBUG
+                        Log.LogDebug($"Filtering GetValidEventPoints for {ev.m_name}");
+#endif
+
+                        continue;
                     }
                 }
+
+                filtered.Add(characters[i]);
             }
 
-            for(int i = toRemove.Count - 1; i >= 0; --i)
-            {
-                characters.RemoveAt(toRemove[i]);
-            }
+            characters = filtered;
         }
     }
 }
