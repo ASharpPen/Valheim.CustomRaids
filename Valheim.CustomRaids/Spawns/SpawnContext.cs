@@ -10,5 +10,6 @@ namespace Valheim.CustomRaids.Spawns
         public GameObject Spawn { get; set; }
         public SpawnSystem.SpawnData Spawner { get; set; }
         public SpawnConfiguration Config { get; set; }
+        public RaidEventConfiguration RaidConfig { get; set; }
     }
 }

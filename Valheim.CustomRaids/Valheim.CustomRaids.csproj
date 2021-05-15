@@ -69,6 +69,9 @@
       <Private>False</Private>
       <EmbedInteropTypes>False</EmbedInteropTypes>
     </Reference>
+    <Reference Include="Valheim.SpawnThat">
+      <HintPath>Libs\Valheim.SpawnThat.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Configuration\ConfigTypes\RaidEventConfigurationFile.cs" />
@@ -94,7 +97,6 @@
     <Compile Include="Patches\ConfigLoadingPatch.cs" />
     <Compile Include="Patches\FixNearBaseOnlyPatch.cs" />
     <Compile Include="Patches\InvestigationPatch.cs" />
-    <Compile Include="Patches\OnSpawnFactionPatch.cs" />
     <Compile Include="Patches\RaidConditionsPatch.cs" />
     <Compile Include="Patches\RandEventSystemHaveGlobalKeyPatch.cs" />
     <Compile Include="Patches\RandEventSystemPatch.cs" />
@@ -128,9 +130,14 @@
     <Compile Include="Spawns\Modifiers\ModSpecific\CLLC\SpawnModifierInfusion.cs" />
     <Compile Include="Spawns\Modifiers\ModSpecific\CLLC\SpawnModifierSetLevel.cs" />
     <Compile Include="Spawns\Modifiers\ModSpecific\SpawnModifierLoaderCLLC.cs" />
-    <Compile Include="Spawns\Modifiers\SpawnModifierSetFaction.cs" />
+    <Compile Include="Spawns\Modifiers\General\SpawnModifierSetFaction.cs" />
+    <Compile Include="Spawns\Modifiers\ModSpecific\SpawnModifierLoaderSpawnThat.cs" />
+    <Compile Include="Spawns\Modifiers\ModSpecific\SpawnThat\SpawnModifierSetRelentless.cs" />
+    <Compile Include="Spawns\Modifiers\ModSpecific\SpawnThat\SpawnModifierSetTemplateId.cs" />
+    <Compile Include="Spawns\Modifiers\ModSpecific\SpawnThat\SpawnModifierSetTryDespawnOnAlert.cs" />
+    <Compile Include="Spawns\Patches\CharacterSetFactionPatch.cs" />
+    <Compile Include="Spawns\Patches\OnSpawnPatch.cs" />
     <Compile Include="Spawns\Patches\PreSpawnFilterPatch.cs" />
-    <Compile Include="Spawns\Patches\RandEventSystem_GetCurrentSpawners_Patch.cs" />
     <Compile Include="Spawns\SpawnConditionManager.cs" />
     <Compile Include="Spawns\SpawnContext.cs" />
     <Compile Include="Spawns\SpawnModificationManager.cs" />
@@ -143,7 +150,6 @@
   <ItemGroup>
     <Folder Include="LibsStripped\" />
     <Folder Include="Raids\" />
-    <Folder Include="Spawns\Modifiers\ModSpecific\SpawnThat\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

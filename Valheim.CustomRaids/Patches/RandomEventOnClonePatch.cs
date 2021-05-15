@@ -35,20 +35,20 @@ namespace Valheim.CustomRaids.Patches
 
         [HarmonyPatch("Clone")]
         [HarmonyPostfix]
-        private static void CarryConfigs(RandomEvent __instance, RandomEvent ___result)
+        private static void CarryConfigs(RandomEvent __instance, RandomEvent __result)
         {
             var extended = RandomEventCache.Get(__instance);
 
             if (extended is not null)
             {
-                RandomEventCache.Initialize(___result, extended.Config);
+                RandomEventCache.Initialize(__result, extended.Config);
 
-                if(__instance.m_spawn.Count == ___result.m_spawn.Count)
+                if(__instance.m_spawn.Count == __result.m_spawn.Count)
                 {
                     for(int i = 0; i < __instance.m_spawn.Count; ++i)
                     {
                         var source = __instance.m_spawn[i];
-                        var target = ___result.m_spawn[i];
+                        var target = __result.m_spawn[i];
 
                         var sourceCache = SpawnDataCache.Get(source);
 
@@ -65,7 +65,7 @@ namespace Valheim.CustomRaids.Patches
                 else
                 {
                     Log.LogError($"RandomEvent {__instance.m_name} was cloned incorrectly. Mismatching number spawns from original. Removing all cloned spawns to be safe.");
-                    ___result.m_spawn.Clear();
+                    __result.m_spawn.Clear();
                 }
             }
         }

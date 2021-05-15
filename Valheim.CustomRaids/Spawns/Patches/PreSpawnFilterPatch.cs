@@ -13,6 +13,7 @@ namespace Valheim.CustomRaids.Spawns.Patches
     [HarmonyPatch(typeof(SpawnSystem))]
     public static class PreSpawnFilterPatch
     {
+        /*
         private static FieldInfo FieldAnchor = AccessTools.Field(typeof(SpawnSystem.SpawnData), "m_enabled");
         private static MethodInfo FilterMethod = AccessTools.Method(typeof(PreSpawnFilterPatch), nameof(FilterSpawners), new[] { typeof(SpawnSystem), typeof(SpawnSystem.SpawnData), typeof(bool) });
 
@@ -36,22 +37,31 @@ namespace Valheim.CustomRaids.Spawns.Patches
                 .InsertAndAdvance(new CodeInstruction(OpCodes.Brtrue, escapeLoopLabel))
                 .InstructionEnumeration();
         }
+        */
 
-        private static bool FilterSpawners(SpawnSystem spawner, SpawnSystem.SpawnData spawn, bool eventSpawners)
+        [HarmonyPatch("UpdateSpawnList")]
+        [HarmonyPrefix]
+        private static void FilterSpawners(SpawnSystem __instance, List<SpawnSystem.SpawnData> spawners, bool eventSpawners)
         {
             if (!eventSpawners)
             {
-                return false;
+                return;
             }
 
-            try
+            for (int i = 0; i < spawners.Count; ++i)
             {
-                return SpawnConditionManager.Filter(spawner, spawn);
-            }
-            catch (Exception e)
-            {
-                Log.LogError($"Error while checking if spawn template {spawn?.m_prefab?.name} should be filtered.", e);
-                return false;
+                try
+                {
+                    if (SpawnConditionManager.Filter(__instance, spawners[i]))
+                    {
+                        spawners.RemoveAt(i);
+                        --i;
+                    }
+                }
+                catch (Exception e)
+                {
+                    Log.LogError($"Error while checking if spawn template {spawners[i]?.m_prefab?.name} should be filtered.", e);
+                }
             }
         }
     }
