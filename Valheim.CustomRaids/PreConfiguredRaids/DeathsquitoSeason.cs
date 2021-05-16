@@ -2,7 +2,7 @@
 using HarmonyLib;
 using System.IO;
 using UnityEngine;
-using Valheim.CustomRaids.ConfigurationTypes;
+using Valheim.CustomRaids.Core;
 
 namespace Valheim.CustomRaids.PreConfiguredRaids
 {

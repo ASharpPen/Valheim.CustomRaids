@@ -1,11 +1,10 @@
 ﻿using BepInEx.Logging;
 using System;
-using UnityEngine;
-using Valheim.CustomRaids.ConfigurationTypes;
+using Valheim.CustomRaids.Configuration;
 
-namespace Valheim.CustomRaids
+namespace Valheim.CustomRaids.Core
 {
-    public static class Log
+    internal class Log
     {
         internal static ManualLogSource Logger;
 

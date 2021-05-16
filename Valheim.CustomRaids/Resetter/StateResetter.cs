@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Valheim.CustomRaids.Core;
 
 namespace Valheim.CustomRaids.Resetter
 {
