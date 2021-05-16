@@ -37,7 +37,7 @@ namespace Valheim.CustomRaids.RaidFrequencyOverhaul
             {
                 Log.LogTrace("Checking for possible raids.");
 
-                if(CheckAndStartRaids(__instance, ___m_eventTimer))
+                if (CheckAndStartRaids(__instance, ___m_eventTimer))
                 {
                     ___m_eventTimer = 0;
                 }
@@ -59,6 +59,12 @@ namespace Valheim.CustomRaids.RaidFrequencyOverhaul
             //Check if we have passed the minimum time between raids.
             if (m_eventTimer < ConfigurationManager.GeneralConfig.MinimumTimeBetweenRaids.Value * 60) //EventTimer is in seconds.
             {
+                return false;
+            }
+
+            if (instance.GetActiveEvent() is not null || instance.GetCurrentRandomEvent() is not null)
+            {
+                Log.LogTrace("Skipping check of new raids due to already active event.");
                 return false;
             }
 

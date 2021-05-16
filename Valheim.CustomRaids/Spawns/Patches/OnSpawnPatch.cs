@@ -32,7 +32,7 @@ namespace Valheim.CustomRaids.Spawns.Patches
 
         private static void ModifySpawn(SpawnSystem spawnSystem, SpawnSystem.SpawnData spawner, GameObject spawn, bool isEventCreature)
         {
-            if (isEventCreature)
+            if (!isEventCreature)
             {
                 return;
             }

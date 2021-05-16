@@ -101,6 +101,7 @@
     <Compile Include="Patches\RandEventSystemHaveGlobalKeyPatch.cs" />
     <Compile Include="Patches\RandEventSystemPatch.cs" />
     <Compile Include="CustomRaidPlugin.cs" />
+    <Compile Include="Patches\RandEventSystem_StartRandomEvent_Patch.cs" />
     <Compile Include="Patches\RandomEventOnClonePatch.cs" />
     <Compile Include="Patches\RandEventSystemWaitPatch.cs" />
     <Compile Include="Patches\SpawnPatch.cs" />
