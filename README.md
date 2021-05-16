@@ -338,7 +338,7 @@ SetTryDespawnOnAlert=true
 - Meadows
 - Swamp
 - Mountain
-- Blackforest
+- BlackForest
 - Plains
 - AshLands
 - DeepNorth
