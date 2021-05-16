@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using Valheim.CustomRaids.Configuration.ConfigTypes;
+using Valheim.CustomRaids.Core;
 
 namespace Valheim.CustomRaids.Debug
 {

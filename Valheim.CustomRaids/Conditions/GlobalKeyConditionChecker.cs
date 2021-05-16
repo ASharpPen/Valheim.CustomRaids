@@ -1,4 +1,6 @@
 ﻿
+using Valheim.CustomRaids.Core;
+
 namespace Valheim.CustomRaids.Conditions
 {
     public static class GlobalKeyConditionChecker
@@ -7,25 +9,19 @@ namespace Valheim.CustomRaids.Conditions
         {
             if(ConditionRequiredGlobalKeys.ShouldFilter(randomEvent, playerName))
             {
-#if DEBUG
-                Log.LogTrace($"Filtering {randomEvent.m_name} for player {playerName} due to RequiredGlobalKeys");
-#endif
+                Log.LogDebug($"Raid {randomEvent.m_name} disabled for player {playerName} due to RequiredGlobalKeys");
                 return true;
             }
 
             if(ConditionRequiredNotGlobalKeys.ShouldFilter(randomEvent, playerName))
             {
-#if DEBUG
-                Log.LogTrace($"Filtering {randomEvent.m_name} for player {playerName} due to RequiredNotGlobalKeys");
-#endif
+                Log.LogDebug($"Raid {randomEvent.m_name} disabled for player {playerName} due to RequiredNotGlobalKeys");
                 return true;
             }
 
             if(ConditionRequireOneOfGlobalKeys.ShouldFilter(randomEvent, playerName))
             {
-#if DEBUG
-                Log.LogTrace($"Filtering {randomEvent.m_name} for player {playerName} due to RequiredOneOfGlobalKeys");
-#endif
+                Log.LogDebug($"Raid {randomEvent.m_name} disabled for player {playerName} due to RequiredOneOfGlobalKeys");
                 return true;
             }
 

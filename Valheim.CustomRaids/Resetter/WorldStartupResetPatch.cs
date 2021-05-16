@@ -1,5 +1,6 @@
 ﻿using HarmonyLib;
-using Valheim.CustomRaids.ConfigurationTypes;
+using Valheim.CustomRaids.Configuration;
+using Valheim.CustomRaids.Core;
 using Valheim.CustomRaids.Patches;
 
 namespace Valheim.CustomRaids.Resetter

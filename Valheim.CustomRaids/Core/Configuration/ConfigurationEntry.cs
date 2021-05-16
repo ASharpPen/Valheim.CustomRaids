@@ -1,9 +1,8 @@
 ﻿using BepInEx.Configuration;
 using System;
 using System.Runtime.Serialization;
-using UnityEngine;
 
-namespace Valheim.CustomRaids.ConfigurationCore
+namespace Valheim.CustomRaids.Core.Configuration
 {
     public interface IConfigurationEntry
     {
@@ -13,7 +12,7 @@ namespace Valheim.CustomRaids.ConfigurationCore
     [Serializable]
     public class ConfigurationEntry<TIn> : IConfigurationEntry
     {
-        public TIn DefaultValue;
+        public TIn DefaultValue { get; set; }
 
         [NonSerialized]
         public string Description;
@@ -24,7 +23,7 @@ namespace Valheim.CustomRaids.ConfigurationCore
         [OnSerializing]
         internal void OnSerialize()
         {
-            // We cheat, and don't actually use the bepinex bindings for synchronized configurations.
+            // We cheat, and don't actually use the bepinex bindings for syncronized configurations.
             // Due to Config not being set, this should result in DefaultValue always being used instead.
             if (Config != null)
             {
@@ -36,11 +35,11 @@ namespace Valheim.CustomRaids.ConfigurationCore
         {
             if (Description is null)
             {
-                Config = config.Bind<TIn>(section, key, DefaultValue);
+                Config = config.Bind(section, key, DefaultValue);
             }
             else
             {
-                Config = config.Bind<TIn>(section, key, DefaultValue, Description);
+                Config = config.Bind(section, key, DefaultValue, Description);
             }
         }
 
@@ -53,11 +52,11 @@ namespace Valheim.CustomRaids.ConfigurationCore
             return $"[{Config.Definition.Key}:{Config.Definition.Section}]: {Config.Value}";
         }
 
-        public TIn Value 
+        public TIn Value
         {
             get
             {
-                if(Config is null)
+                if (Config is null)
                 {
                     return DefaultValue;
                 }
@@ -73,8 +72,8 @@ namespace Valheim.CustomRaids.ConfigurationCore
 
         public ConfigurationEntry(TIn defaultValue, string description = null)
         {
-            DefaultValue = defaultValue;
             Description = description;
+            DefaultValue = defaultValue;
         }
     }
 }
