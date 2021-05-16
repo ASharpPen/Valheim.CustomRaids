@@ -47,7 +47,7 @@ namespace Valheim.CustomRaids
             if (ConfigurationManager.GeneralConfig.RemoveAllExistingRaids.Value)
             {
                 Log.LogDebug("Removing default raids.");
-                __instance.m_events.Clear();
+                __instance.m_events.RemoveAll(x => x.m_random);
             }
 
             Log.LogDebug($"Found {ConfigurationManager.RaidConfig.Subsections.Count} raid configurations to apply.");

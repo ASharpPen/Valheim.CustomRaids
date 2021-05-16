@@ -38,7 +38,7 @@ namespace Valheim.CustomRaids.Configuration.ConfigTypes
 
         #region EventSystem
 
-        public ConfigurationEntry<bool> RemoveAllExistingRaids = new ConfigurationEntry<bool>(false, "If enabled, removes all existing raids and only allows configured.");
+        public ConfigurationEntry<bool> RemoveAllExistingRaids = new ConfigurationEntry<bool>(false, "If enabled, removes all existing raids and only allows configured. Will only remove non-random events, leaving boss events as is.");
 
         public ConfigurationEntry<bool> OverrideExisting = new ConfigurationEntry<bool>(true, "Enable/disable override of existing events when event names match.");
 
