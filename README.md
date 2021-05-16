@@ -21,6 +21,7 @@ Enable those raids at own risk!
 - Potential for hours of frustration/fun as you figure out how to best configure these damn things to work as expected.
 - Server-side configurations
 - Fixed bug with raids only being able to spawn near player bases.
+- Support for [Creature Level and Loot Control](https://www.nexusmods.com/valheim/mods/495)
 
 # FAQ
 
@@ -217,6 +218,7 @@ THIS is what usually makes most raids stumble. If the raid starts, but nothing s
 | MinLevel | int | 1 | Min level of spawn. (2 is one star) |
 | MaxLevel | int | 3 | Max level of spawn. (2 is one star) |
 | RequiredGlobalKey | string | defeated_bonemass | Global key required for spawning. Leave empty for no requirement. |
+| RequiredNotGlobalKey | string | defeated_bonemass, KilledTroll | Array of global keys which disable the spawning of this entity if any are detected |
 | RequiredEnvironments | string | Array (separate by "," of required environments. Leave empty for no requirement. |
 | GroupRadius | float | 1 | Size of circle to spawn group inside. |
 | AltitudeMin | float | -1000 | Minimum required altitude (distance to water surface) to spawn in |
@@ -228,10 +230,111 @@ THIS is what usually makes most raids stumble. If the raid starts, but nothing s
 | OceanDepthMin | float | 0 | Minimum required ocean depth to spawn in. Ignored if min == max |
 | OceanDepthMax | float | 0 | Maximum required ocean depth to spawn in. Ignored if min == max |
 | Faction | string | ForestMonsters | Set custom faction for mob. This overrules the raids faction setting if set. |
+| ConditionDistanceToCenterMin| float | 1000 | Minimum distance to center for entity to spawn |
+| ConditionDistanceToCenterMax | float | 5000 | Maximum distance to center for entity to spawn. 0 means limitless |
+| ConditionWorldAgeDaysMin | float | 10 | Minimum world age in in-game days for this entity to spawn |
+| ConditionWorldAgeDaysMax | float | 50 | Maximum world age in in-game days for this entity to spawn. 0 means no max |
+| DistanceToTriggerPlayerConditions | int | 100 | Distance of player to spawner, for player to be included in player based checks such as ConditionNearbyPlayersCarryValue |
+| ConditionNearbyPlayersCarryValue | int | 25 | Checks if nearby players have a combined value in inventory above this condition. Eg. If set to 100, entry will only activate if nearby players have more than 100 worth of values combined |
+| ConditionNearbyPlayerCarriesItem | string | IronScrap, DragonEgg | Checks if nearby players have any of the listed item prefab names in inventory |
+| ConditionNearbyPlayersNoiseThreshold | float | 80 | Checks if any nearby players have accumulated noise at or above the threshold |
 
-## Configuration Options
+# Mod Specific Configuration
 
-### Biomes
+These are implemented soft-dependant, meaning if the mod is not present, the configuration will simply do nothing
+
+## Creature Level and Loot Control
+Additional options for [Creature Level and Loot Control](https://www.nexusmods.com/valheim/mods/495).
+See the mod nexus page for more in-depth documentation for the options.
+
+CLLC options can be set by adding another section to the raid creature desired changed as:
+
+```INI
+[YourRaidName.Index.CreatureLevelAndLootControl]
+```
+
+Eg.
+
+```INI
+[MyRaid]
+Name=MyRaid
+
+[MyRaid.0]
+PrefabName=Troll
+
+[MyRaid.0.CreatureLevelAndLootControl]
+SetInfusion=Fire
+```
+
+| Setting | Type | Example | Description |
+| --- | --- | --- | --- |
+| ConditionWorldLevelMin | int | -1 | Minimum CLLC world level for spawn to activate. Negative value disables this condition |
+| ConditionWorldLevelMax | int | 2 | Maximum CLLC world level for spawn to active. Negative value disables this condition |
+| SetInfusion | string | Fire | Assigns the specified infusion to creature spawned. Ignored if empty |
+| SetExtraEffect | string | Armored | Assigns the specified effect to creature spawned. Ignored if empty |
+| SetBossAffix | string | Mending | Assigns the specified boss affix to spawned boss. Ignored if empty |
+| UseDefaultLevels | bool | false | Use the default LevelMin and LevelMax for level assignment, ignoring the usual CLLC level control |
+
+### Boss Affixes
+- None
+- Reflective
+- Shielded
+- Mending
+- Summoner
+- Elementalist
+- Enraged
+- Twin
+
+### Extra Effects
+- None
+- Aggressive
+- Quick
+- Regenerating
+- Curious
+- Splitting
+- Armored
+
+### Infusions
+- None
+- Lightning
+- Fire
+- Frost
+- Poison
+- Chaos
+- Spirit
+
+## Spawn That!
+
+Additional options while using [Spawn That](https://valheim.thunderstore.io/package/ASharpPen/Spawn_That/).
+Spawn That options can be set by adding another section to the raid creature desired changed as:
+
+```INI
+[YourRaidName.Index.SpawnThat]
+```
+
+Eg.
+
+```INI
+[MyRaid]
+Name=MyRaid
+
+[MyRaid.0]
+PrefabName=Greyling
+
+[MyRaid.0.SpawnThat]
+SetTryDespawnOnAlert=true
+```
+
+| Setting | Type | Example | Description |
+| --- | --- | --- | --- |
+| TemplateId | string | 12345_MyId | Technical setting intended for cross-mod identification of mobs spawned by this config entry. Sets a custom identifier which will be assigned to the spawned mobs ZDO as 'ZDO.Set("spawn_template_id", TemplateIdentifier)' |
+| SetRelentless | bool | true | When true, forces mob AI to always be alerted |
+| SetTryDespawnOnAlert | bool | true | When true, mob will try to run away and despawn when alerted |
+
+# Configuration Options
+
+## Biomes
+
 - Meadows
 - Swamp
 - Mountain
@@ -242,7 +345,8 @@ THIS is what usually makes most raids stumble. If the raid starts, but nothing s
 - Ocean
 - Mistlands
 
-### Factions
+## Factions
+
 - Players
 - AnimalsVeg
 - ForestMonsters
@@ -253,7 +357,8 @@ THIS is what usually makes most raids stumble. If the raid starts, but nothing s
 - PlainsMonsters
 - Boss
 
-### ForcedEnvironment (defaults, it should be possible to mod in more, and refer to them by name):
+## ForcedEnvironment (defaults, it should be possible to mod in more, and refer to them by name)
+
 - Clear
 - Twilight_Clear
 - Misty
@@ -278,7 +383,44 @@ THIS is what usually makes most raids stumble. If the raid starts, but nothing s
 - Crypt
 - SunkenCrypt
 
+## Global Keys 
+
+- defeated_eikthyr
+- defeated_gdking
+- defeated_bonemass
+- defeated_dragon
+- defeated_goblinking
+- KilledTroll
+- killed_surtling
+
+Additional keys can be created manually through console commands, or by a mod like [Enhanced Progress Tracker](https://valheim.thunderstore.io/package/ASharpPen/Enhanced_Progress_Tracker/).
+
+## Noise
+Noise is set on each player based on certain activities they perform. It is set directly, and does not accumulate, meaning a player chopping trees will have the same noise of 100 for each chop and not increasingly higher.
+
+Certain creatures will treat the noise as a "sound range". This means if the noise is greater than their "hearing" setting, and "noise" is within range of the creature (100 noise is 100 meters), they will react.
+
+Noise constantly decays if no action is performed.
+Known causes of noise:
+- Dodge: 5
+- Punching: 5
+- Walking: 15
+- Running: 30
+- Jumping: 30
+- Chopping / Pickaxing: 40
+- Remove building piece: 50
+- Chopping trees: 100
+- Breaking rocks: 100
+
+Apart from that, every attack will have a hit-noise and swing noise. By default this is 30 and 10, but this could be different for each attack type.
+
 # Changelog 
+- v1.4.0: 
+	- Support for Creature Level and Loot Control.
+	- Support for most Spawn That modifiers.
+	- Ported over Spawn That spawning conditions.
+	- Stopped raids from starting a new raid, if another event is already active.
+	- Fixed bug causing a lot of raids to not run when not using IndividualRaids.
 - v1.3.7: 
 	- RemoveAllExistingRaids no longer removes non-random events. This should fix boss events being cleared as well.
 - v1.3.6: 
