@@ -1,0 +1,170 @@
+[size=6]Custom Raids[/size]
+
+This mod allows for customizing raids to your liking.
+
+Want to have armies besieging your fortress? A bit of extra environmental effects along your way? Or just disable trolls?
+
+This mod can help you do all of that!
+
+Comes preconfigured with two additional end-game raids (disabled by default), to show how and what can be done:
+- Ragnarok
+- Deathsquitoseason
+
+Enable those raids at own risk!
+
+[size=5]Features[/size]
+[list]
+[*][size=2]Can change frequency of raids[/size]
+[*][size=2]Add new raid events, with full configuration options, including spawns[/size]
+[*][size=2]Override existing raid (eg. disable trolls)[/size]
+[*][size=2]Supplemental raid configurations. Add your own file, and Custom Raids will scan and apply it[/size]
+[*][size=2]Potential for hours of frustration/fun as you figure out how to best configure these damn things to work as expected.[/size]
+[*][size=2]Server-side configurations[/size]
+[*][size=2]Fixed bug with raids only being able to spawn near player bases.[/size]
+[*}[size=2]Support for [url=https://www.nexusmods.com/valheim/mods/495]Creature Level and Loot Control[/url][/size]
+[/list]
+[size=5]Tips for configuring[/size]
+
+[size=2]Raid events are generally a bit "janky" to configure, so I suggest making use of the "RemoveAllExistingRaids" and console while testing.
+Enable only your own change, and use console commands "randomevent" and "stopevent" to test things out.
+
+Spawning during also seems to be very inconsistent, meaning with the same interval setting, you will sometimes have a bunch of wave triggers inside a short span, and sometimes it takes ages.
+
+It is also important to understand how raids are started and run.
+
+A pretty comprehensive guide for prefabs can be found [url=https://gist.github.com/Sonata26/e2b85d53e125fb40081b18e2aee6d584]here[/url]
+[/size][size=2]See the [url=https://github.com/Valheim-Modding/Wiki/wiki/Valheim-Event-System]Valheim Wiki - Event System[/url] for further details on raid configuration and how they work.[/size]
+
+[size=4]Raid Initialization:
+[/size]
+[size=2]Basically, the host/server will make a check every once in a while. When the check happens, it then rolls a die to check if it should start an event.
+A list of what it believes are "possible" raids is calculated, and a random one is picked.
+These raids are based off the host/server instances configurations, meaning it needs to know about a raid to even to any checks.
+Any clients are then notified that the raid should be started.[/size]
+
+[size=4]Raid Spawning:[/size]
+
+[size=2]When a client receives a start event message, and is in charge of the area, its world spawners (see [url=https://github.com/Valheim-Modding/Wiki/wiki/Spawning]Spawning[/url]) will then start attempting to spawn in mobs.
+It does this by finding the raid event it has loaded itself, based on the name received from the host.
+If the event is found, the world spawners will try to spawn in the mobs in the event. For each mob they will check if spawn conditions are right. 
+THIS is what usually makes most raids stumble. If the raid starts, but nothing spawns in, it is usually because the spawners can't get the conditions right.[/size]
+
+[size=5]FAQ:
+[/size][size=2]Is it server side only?
+[/size][list]
+[*][size=2]No. Both client and server needs the mod.[/size]
+[*][size=2]The way events work is that the host / dedicated server will run the logic for when to apply raids, and then send a message with the name of the raid to be assigned to all clients. The client in charge of zone (valheim multiplayer is weird) will then manage the actual spawning for the raid.[/size]
+[/list][size=2]Can I just have no raids?
+[/size][list]
+[*][size=2]Yes. Raid activation happens serverside, making this even simpler, you should only need this mod serverside if you just want no raids. (You can also use Event Enhancer for this)[/size]
+[*][size=2]Set configuration "EventTriggerChance=0" or[/size]
+[*][size=2]Set configuration "RemoveAllExistingRaids=true", as long you don't have something custom, this will remove the options, thereby removing raids.[/size]
+[/list]
+[size=5]Client / Server[/size]
+
+[size=2]Custom Raids needs to be installed on all clients (and server) to work.
+
+From v1.2.0 clients will request the configurations currently loaded by the server, and use those without affecting the clients config files.
+This means you should be able to have server-specific configurations, and the client can have its own setup for singleplayer.
+For this to work, the mod needs to be installed on the server, and have configs set up properly there. When players join with Custom Raids v1.2.0, their mod will use the servers configs.[/size]
+
+[size=5]Manual Installation:[/size]
+[list=1]
+[*][size=2]Install the [url=https://valheim.thunderstore.io/package/denikson/BepInExPack_Valheim/]BepInEx Valheim[/url][/size]
+[*][size=2]Download the latest zip[/size]
+[*][size=2]Extract it in the \<GameDirectory\>\Bepinex\plugins\ folder.[/size]
+[*][size=2]Launching the game and joining a world will generate a config file in the "<GameLocation>/BepInEx/config" folder.[/size]
+[/list]
+[size=6]Configuration[/size]
+All configurations are placed in the default BepInEx configuration folder, and generated upon starting the game.
+
+[size=5]General [/size]
+"custom_raids.cfg"
+General configuration includes general mod controls, overall event system changes, and debugging options.
+
+[code][General]
+
+## Loads raid configurations from supplemental files.
+## Eg. custom_raid.supplemental.my_raid.cfg will be included on load.
+LoadSupplementalRaids = true
+
+## Generates pre-defined supplemental raids. The generated raids are disabled by default.
+GeneratePresetRaids = true
+
+[EventSystem]
+
+## If enabled, removes all existing raids and only allows configured.
+RemoveAllExistingRaids = false
+
+## Enable/disable override of existing events when event names match.
+OverrideExisting = true
+
+## Frequency between checks for new raids. Value is in mintues.
+EventCheckInterval = 46
+
+## Chance of raid, per check interval. 100 is 100%.
+EventTriggerChance = 20
+
+[IndividualRaids]
+
+## If enabled, Custom Raids will overhaul the games way of checking for raids.
+## This allows for setting individual frequences and chances for each raid.
+UseIndividualRaidChecks = false
+
+## If overhaul is enhabled, ensures a minimum amount of minutes between each raid.
+MinimumTimeBetweenRaids = 46
+
+[Debug]
+
+## If enabled, scans existing raid event data, and dumps to a file on disk.
+WriteDefaultEventDataToDisk = false
+
+## If enabled, dumps raid event data after applying configuration to a file on disk.
+WritePostChangeEventDataToDisk = false
+
+## If enabled, scans existing environment data, and dumps to a file on disk.
+WriteEnvironmentDataToDisk = false
+
+## If enabled, scans existing global keys, and dumps to a file on disk.
+WriteGlobalKeyDataToDisk = false
+[/code]
+
+[size=5]Main raid file [/size]
+"custom_raids.raids.cfg"
+
+Main file for adding raid configuration.
+To add a raid you must:
+1. Add a raid section with general event configuration
+
+[code][YourRaidName]
+Enabled=true
+Name=MyRaid
+... additional configuration
+[/code]
+2. Add spawns to the raid event.
+
+[code][YourRaidName.Index]
+Enabled=true
+Name=Draugr Party Time
+PrefabName=Draugr
+MaxSpawned=500
+... additional configuration[/code]
+Repeat step 2, for additional spawns in the same raid event. Just make sure to increase the index every time.
+For multiple raids, repeat from step 1.
+
+[size=5]Supplemental raid file [/size]
+"custom_raids.supplemental.my_raid_name.cfg"
+
+Exactly as for the main raid file. This is simply to allow for easy splitting into multiple files, and for others to easily add new raids to Custom Raids.
+[size=5]
+Just disable the trolls please[/size]
+Just add the below to "custom_raids.raids.cfg". OverrideExisting is on by default.
+
+[code][foresttrolls]
+Name=foresttrolls
+Enabled=false
+[/code]
+
+[size=6]The Details[/size]
+
+See the README.md contained in the downloaded zip for a full description, or go to [url=https://github.com/ASharpPen/Valheim.CustomRaids]Custom Raids Github[/url].

@@ -1,15 +1,15 @@
 ﻿using System.Runtime.CompilerServices;
 using UnityEngine;
 
-namespace Valheim.CustomRaids.Spawns.Caches
+namespace Valheim.CustomRaids.Caches
 {
-    internal static class ZdoCache
+    public static class ZdoCache
     {
-        private static ConditionalWeakTable<GameObject, ZDO> SpawnZdoTable = new();
+        private static ConditionalWeakTable<GameObject, ZDO> ZdoTable = new();
 
         public static ZDO GetZDO(GameObject gameObject)
         {
-            if (SpawnZdoTable.TryGetValue(gameObject, out ZDO existing))
+            if (ZdoTable.TryGetValue(gameObject, out ZDO existing))
             {
                 return existing;
             }
@@ -21,7 +21,7 @@ namespace Valheim.CustomRaids.Spawns.Caches
             }
 
             var zdo = znetView.GetZDO();
-            SpawnZdoTable.Add(gameObject, zdo);
+            ZdoTable.Add(gameObject, zdo);
             return zdo;
         }
     }

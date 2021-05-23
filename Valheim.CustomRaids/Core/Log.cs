@@ -4,7 +4,7 @@ using Valheim.CustomRaids.Configuration;
 
 namespace Valheim.CustomRaids.Core
 {
-    internal class Log
+    internal static class Log
     {
         internal static ManualLogSource Logger;
 

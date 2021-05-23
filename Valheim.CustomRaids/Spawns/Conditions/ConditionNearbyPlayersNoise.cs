@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Valheim.CustomRaids.Caches;
 using Valheim.CustomRaids.Configuration.ConfigTypes;
 using Valheim.CustomRaids.Core;
-using Valheim.CustomRaids.Spawns.Caches;
 
 namespace Valheim.CustomRaids.Spawns.Conditions
 {
