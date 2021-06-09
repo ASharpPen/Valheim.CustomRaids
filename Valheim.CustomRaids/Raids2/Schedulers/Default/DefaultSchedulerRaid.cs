@@ -13,6 +13,5 @@ namespace Valheim.CustomRaids.Raids2.Schedulers.Default
     /// </summary>
     public class DefaultSchedulerRaid : BaseSchedulerRaid
     {
-
     }
 }

@@ -3,6 +3,7 @@ using System;
 using Valheim.CustomRaids.Configuration.ConfigTypes;
 using Valheim.CustomRaids.Core;
 using Valheim.CustomRaids.Core.Configuration;
+using Valheim.CustomRaids.Raids2.Configs.BepInEx;
 using Valheim.CustomRaids.Spawns.Caches;
 
 namespace Valheim.CustomRaids.Spawns.Modifiers.ModSpecific.CLLC

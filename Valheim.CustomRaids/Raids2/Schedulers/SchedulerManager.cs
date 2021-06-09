@@ -44,10 +44,5 @@ namespace Valheim.CustomRaids.Raids2.Schedulers
                 scheduler.Update(deltaTime);
             }
         }
-
-        public static void StartRaid(string raidId)
-        {
-
-        }
     }
 }

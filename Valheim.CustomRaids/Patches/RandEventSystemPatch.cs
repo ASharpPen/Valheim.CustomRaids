@@ -7,6 +7,7 @@ using Valheim.CustomRaids.Configuration.ConfigTypes;
 using Valheim.CustomRaids.Core;
 using Valheim.CustomRaids.Debug;
 using Valheim.CustomRaids.Patches;
+using Valheim.CustomRaids.Raids2.Configs.BepInEx;
 using Valheim.CustomRaids.Spawns.Caches;
 
 namespace Valheim.CustomRaids

@@ -3,7 +3,7 @@ using Valheim.CustomRaids.Raids2.RaidStartConditions;
 
 namespace Valheim.CustomRaids.Raids2.Schedulers
 {
-    public abstract class BaseSchedulerRaid
+    public abstract class BaseSchedulerRaid : ISchedulerRaid
     {
         public string RaidId { get; set; }
 

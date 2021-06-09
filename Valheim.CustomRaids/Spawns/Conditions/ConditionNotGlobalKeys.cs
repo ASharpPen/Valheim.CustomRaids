@@ -1,6 +1,8 @@
 ﻿using Valheim.CustomRaids.Configuration.ConfigTypes;
 using Valheim.CustomRaids.Core;
+using Valheim.CustomRaids.Raids2.Configs.BepInEx;
 using Valheim.CustomRaids.Utilities.Extensions;
+using SpawnConfiguration = Valheim.CustomRaids.Configuration.ConfigTypes.SpawnConfiguration;
 
 namespace Valheim.CustomRaids.Spawns.Conditions
 {
@@ -16,7 +18,7 @@ namespace Valheim.CustomRaids.Spawns.Conditions
             }
         }
 
-        public bool ShouldFilter(SpawnSystem spawner, SpawnSystem.SpawnData spawn, SpawnConfiguration config)
+        public bool ShouldFilter(SpawnSystem spawner, SpawnConfiguration config)
         {
             if (IsValid(config))
             {

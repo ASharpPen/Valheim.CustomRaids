@@ -7,7 +7,7 @@ using Valheim.CustomRaids.Raids.Schedulers;
 namespace Valheim.CustomRaids.Raids.Serverside.Schedulers.Default
 {
     [HarmonyPatch(typeof(RandEventSystem))]
-    internal static class Patch_RandEventSystem_GetPossibleRandomEvents
+    internal static class Patch_RandEventSystem_GetRandomEvents
     {
         private static FieldInfo EventsField = AccessTools.Field(typeof(RandEventSystem), nameof(RandEventSystem.m_events));
 

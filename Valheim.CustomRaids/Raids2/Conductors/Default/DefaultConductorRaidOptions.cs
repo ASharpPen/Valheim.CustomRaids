@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Valheim.CustomRaids.Spawns;
+using Valheim.CustomRaids.Raids2.Spawns;
 
 namespace Valheim.CustomRaids.Raids2.Conductors.Default
 {
-    public class DefaultConductorRaidOptions : BaseRaidOptions
+    public class DefaultConductorRaidOptions : BaseConductorRaid
     {
         public float Duration { get; set; }
 

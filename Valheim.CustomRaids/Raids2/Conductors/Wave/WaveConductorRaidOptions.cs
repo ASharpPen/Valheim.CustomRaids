@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Valheim.CustomRaids.Raids2.Conductors.Wave
 {
-    class WaveConductorRaidOptions : BaseRaidOptions
+    class WaveConductorRaidOptions : BaseConductorRaid
     {
     }
 }

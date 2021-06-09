@@ -1,5 +1,6 @@
 ﻿using System.Runtime.CompilerServices;
 using Valheim.CustomRaids.Configuration.ConfigTypes;
+using Valheim.CustomRaids.Raids2.Configs.BepInEx;
 
 namespace Valheim.CustomRaids.Spawns.Caches
 {

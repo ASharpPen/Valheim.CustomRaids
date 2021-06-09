@@ -307,16 +307,70 @@
     <Compile Include="Patches\SpawnPatch.cs" />
     <Compile Include="RaidFrequencyOverhaul\PossibleRaid.cs" />
     <Compile Include="RaidFrequencyOverhaul\RaidFrequencyOverhaul.cs" />
+    <Compile Include="Raids2\Conductors\BaseConductorRaid.cs" />
+    <Compile Include="Raids2\Conductors\ConductorManager.cs" />
+    <Compile Include="Raids2\Conductors\Default\DefaultConductor.cs" />
+    <Compile Include="Raids2\Conductors\Default\DefaultConductorOptions.cs" />
+    <Compile Include="Raids2\Conductors\Default\DefaultConductorRaidOptions.cs" />
+    <Compile Include="Raids2\Conductors\IConductorRaidOptions.cs" />
+    <Compile Include="Raids2\Conductors\IConductor.cs" />
+    <Compile Include="Raids2\Conductors\IConductorOptions.cs" />
+    <Compile Include="Raids2\Conductors\IRequireOptions.cs" />
+    <Compile Include="Raids2\Conductors\IRequireRaidOptions.cs" />
+    <Compile Include="Raids2\Conductors\Patch_ZNetScene_AddConductorPrefab.cs" />
+    <Compile Include="Raids2\Conductors\ConductorBehaviour.cs" />
+    <Compile Include="Raids2\Conductors\Wave\WaveConductor.cs" />
+    <Compile Include="Raids2\Conductors\Wave\WaveConductorOptions.cs" />
+    <Compile Include="Raids2\Conductors\Wave\WaveConductorRaidOptions.cs" />
+    <Compile Include="Raids2\Configs\BepInEx\RaidConfigFile.cs" />
+    <Compile Include="Raids2\Configs\Json\RaidConfigFile.cs" />
+    <Compile Include="Raids2\Raid.cs" />
+    <Compile Include="Raids2\RaidManager.cs" />
+    <Compile Include="Raids2\RaidStartConditions\IRaidStartPlayerCondition.cs" />
+    <Compile Include="Raids2\RaidStartConditions\IRaidStartCondition.cs" />
+    <Compile Include="Raids2\Schedulers\BaseSchedulerRaid.cs" />
+    <Compile Include="Raids2\Schedulers\Default\DefaultScheduler.cs" />
+    <Compile Include="Raids2\Schedulers\Default\DefaultSchedulerOptions.cs" />
+    <Compile Include="Raids2\Schedulers\Default\DefaultSchedulerRaid.cs" />
+    <Compile Include="Raids2\Schedulers\Default\Patch_RandEventSystem_GetRandomEvents.cs" />
+    <Compile Include="Raids2\Schedulers\Default\Patch_RandEventSystem_GlobalKeys.cs" />
+    <Compile Include="Raids2\Schedulers\IRaidScheduler.cs" />
+    <Compile Include="Raids2\Schedulers\ISchedulerRaid.cs" />
+    <Compile Include="Raids2\Schedulers\SchedulerManager.cs" />
+    <Compile Include="Raids2\Schedulers\StartConditionManager.cs" />
+    <Compile Include="Raids2\Spawns\Conditions\ConditionDistanceToCenter.cs" />
+    <Compile Include="Raids2\Spawns\Conditions\ConditionNearbyPlayersCarryValue.cs" />
+    <Compile Include="Raids2\Spawns\Conditions\ISpawnCondition.cs" />
+    <Compile Include="Raids2\Spawns\Modifiers\ISpawnModifier.cs" />
+    <Compile Include="Raids2\Spawns\SpawnDataSettings.cs" />
+    <Compile Include="Raids2\Spawns\SpawnTemplate.cs" />
     <Compile Include="Raids\Clientside\ConductorManager.cs" />
     <Compile Include="Raids\Clientside\Conductors\Default\DefaultConductor.cs" />
     <Compile Include="Raids\Clientside\Conductors\IRaidConductor.cs" />
     <Compile Include="Raids\Clientside\Conductors\Wave\WaveConductor.cs" />
+    <Compile Include="Raids\Extensions\RandEventSystemExtensions.cs" />
     <Compile Include="Raids\Raid.cs" />
+    <Compile Include="Raids\Serverside\SchedulerContext.cs" />
     <Compile Include="Raids\Serverside\SchedulerManager.cs" />
+    <Compile Include="Raids\Serverside\Schedulers\DefaultOverhauled\DefaultOverhauledScheduler.cs" />
     <Compile Include="Raids\Serverside\Schedulers\Default\DefaultScheduler.cs" />
+    <Compile Include="Raids\Serverside\Schedulers\Default\Patch_RandEventSystem_GetRandomEvents.cs" />
+    <Compile Include="Raids\Serverside\Schedulers\Default\Patch_RandEventSystem_GlobalKeys.cs" />
+    <Compile Include="Raids\Serverside\Schedulers\Default\RandomEventConverter.cs" />
     <Compile Include="Raids\Serverside\Schedulers\Individual\IndividualFrequencyScheduler.cs" />
     <Compile Include="Raids\Serverside\Schedulers\IRaidScheduler.cs" />
+    <Compile Include="Raids\Serverside\Schedulers\Patch_RandEventSystem_SaveLoad.cs" />
+    <Compile Include="Raids\Serverside\StartConditionManager.cs" />
+    <Compile Include="Raids\Serverside\StartConditions\ConditionAwayFromBase.cs" />
+    <Compile Include="Raids\Serverside\StartConditions\ConditionBiome.cs" />
+    <Compile Include="Raids\Serverside\StartConditions\ConditionEnabled.cs" />
+    <Compile Include="Raids\Serverside\StartConditions\ConditionGlobalKeys.cs" />
+    <Compile Include="Raids\Serverside\StartConditions\ConditionHeight.cs" />
+    <Compile Include="Raids\Serverside\StartConditions\ConditionNotGlobalKeys.cs" />
     <Compile Include="Raids\Serverside\StartConditions\IRaidStartCondition.cs" />
+    <Compile Include="Raids\Serverside\StartConditions\ConditionNearBase.cs" />
+    <Compile Include="Raids\Serverside\StartConditions\IRaidStartPlayerCondition.cs" />
+    <Compile Include="Raids\StartupInitializer.cs" />
     <Compile Include="RandomEventCache.cs" />
     <Compile Include="PreConfiguredRaids\DeathsquitoSeason.cs" />
     <Compile Include="PreConfiguredRaids\Ragnarok.cs" />
@@ -356,6 +410,7 @@
     <Compile Include="Spawns\SpawnModificationManager.cs" />
     <Compile Include="Utilities\Extensions\CodeMatcherExtensions.cs" />
     <Compile Include="Utilities\Extensions\StringExtensions.cs" />
+    <Compile Include="Utilities\Extensions\ZdoExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Libs\Valheim.EnhancedProgressTracker.dll" />
@@ -363,6 +418,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="LibsStripped\" />
+    <Folder Include="Raids2\Schedulers\Individual\" />
+    <Folder Include="Raids2\Schedulers\Weighted\" />
     <Folder Include="Raids\Patches\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

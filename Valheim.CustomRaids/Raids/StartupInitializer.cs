@@ -8,5 +8,6 @@ namespace Valheim.CustomRaids.Raids
 {
     public class StartupInitializer
     {
+
     }
 }

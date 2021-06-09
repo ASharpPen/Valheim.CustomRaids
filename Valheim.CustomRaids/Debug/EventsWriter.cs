@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using Valheim.CustomRaids.Configuration.ConfigTypes;
 using Valheim.CustomRaids.Core;
+using Valheim.CustomRaids.Raids2.Configs.BepInEx;
 
 namespace Valheim.CustomRaids.Debug
 {

@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Valheim.CustomRaids.Raids2.Conductors.Default
+namespace Valheim.CustomRaids.Raids2.Schedulers
 {
-    public class DefaultConductorOptions : IConductorOptions
+    public interface ISchedulerRaid
     {
     }
 }

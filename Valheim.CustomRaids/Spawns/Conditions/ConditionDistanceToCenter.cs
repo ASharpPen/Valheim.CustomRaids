@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using UnityEngine;
 using Valheim.CustomRaids.Configuration.ConfigTypes;
 using Valheim.CustomRaids.Core;
+using Valheim.CustomRaids.Raids2.Configs.BepInEx;
+using SpawnConfiguration = Valheim.CustomRaids.Configuration.ConfigTypes.SpawnConfiguration;
 
 namespace Valheim.CustomRaids.Spawns.Conditions
 {
@@ -21,9 +23,9 @@ namespace Valheim.CustomRaids.Spawns.Conditions
             }
         }
 
-        public bool ShouldFilter(SpawnSystem spawnSystem, SpawnSystem.SpawnData spawner, SpawnConfiguration spawnConfig)
+        public bool ShouldFilter(SpawnSystem spawnSystem, SpawnConfiguration spawnConfig)
         {
-            if (!spawnSystem || spawnSystem is null || spawner is null || spawnConfig is null)
+            if (!spawnSystem || spawnSystem is null || spawnConfig is null)
             {
                 return false;
             }

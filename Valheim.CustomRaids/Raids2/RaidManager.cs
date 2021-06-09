@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UnityEngine;
+using Valheim.CustomRaids.Core;
 
 namespace Valheim.CustomRaids.Raids2
 {
@@ -17,8 +19,18 @@ namespace Valheim.CustomRaids.Raids2
 
         }
 
-        public static void StartRaid(string raidId)
+        public static void StartRaid(Raid raid)
         {
+
+            if(RaidConductor.TryGetValue(raid.RaidId, out string conductorId))
+            {
+                //TODO: Run conductor through conductor manager.
+                //TODO: Consider RPC's here, or making conductor run server side? Potentially run spawners server-side too?
+            }
+            else
+            {
+                Log.LogWarning($"Attempting to start raid {raid.RaidId}, but unable to find registered conductor. Ignoring raid start.");
+            }
         }
 
         public static void StopRaid(string raidId)

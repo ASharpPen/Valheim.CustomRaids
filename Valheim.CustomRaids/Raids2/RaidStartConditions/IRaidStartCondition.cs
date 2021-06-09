@@ -9,6 +9,6 @@ namespace Valheim.CustomRaids.Raids2.RaidStartConditions
 {
     public interface IRaidStartCondition
     {
-        bool IsValid<T>(T raid) where T : BaseSchedulerRaid
+        bool IsValid<T>(T raid) where T : BaseSchedulerRaid;
     }
 }

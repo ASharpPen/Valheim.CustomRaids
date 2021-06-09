@@ -6,12 +6,8 @@ using System.Threading.Tasks;
 
 namespace Valheim.CustomRaids.Raids2.Conductors
 {
-    public interface IRaidConductor
+    public interface IRequireOptions<T> where T : IConductorOptions
     {
-        public void Update(float deltaTime);
-
-        public void Save();
-
-        public void Load();
+        void SetOptions(T options);
     }
 }

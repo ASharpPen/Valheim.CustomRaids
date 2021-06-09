@@ -72,7 +72,12 @@ namespace Valheim.CustomRaids.Raids2.Schedulers.Default
             // Select random raid
             var raidToStart = raids[UnityEngine.Random.Range(0, raids.Count)];
 
-
+            RaidManager.StartRaid(
+                new Raid
+                {
+                    RaidId = raidToStart.Raid.RaidId,
+                    RaidCenter = raidToStart.RaidCenter
+                });
         }
 
         public void Save()

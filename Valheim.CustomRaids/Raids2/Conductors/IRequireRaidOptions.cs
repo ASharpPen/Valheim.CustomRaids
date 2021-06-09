@@ -6,10 +6,8 @@ using System.Threading.Tasks;
 
 namespace Valheim.CustomRaids.Raids2.Conductors
 {
-    public abstract class BaseRaidOptions
+    public interface IRequireRaidOptions<T> where T : IConductorRaidOptions
     {
-        public string AnnouncementStart { get; set; }
-
-        public string AnnouncementEnd { get; set; }
+        void SetConductorRaid(T raid);
     }
 }
