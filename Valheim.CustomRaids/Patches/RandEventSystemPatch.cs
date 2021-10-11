@@ -8,6 +8,7 @@ using Valheim.CustomRaids.Core;
 using Valheim.CustomRaids.Debug;
 using Valheim.CustomRaids.Patches;
 using Valheim.CustomRaids.Spawns.Caches;
+using Valheim.CustomRaids.Utilities.Extensions;
 
 namespace Valheim.CustomRaids
 {
@@ -34,68 +35,103 @@ namespace Valheim.CustomRaids
 
         public static void ApplyConfigurations(RandEventSystem __instance)
         {
-            Log.LogDebug("Applying configurations to RandEventSystem.");
-
-            if (ConfigurationManager.GeneralConfig.WriteDefaultEventDataToDisk.Value)
+            try
             {
-                EventsWriter.WriteToFile(__instance.m_events);
-            }
+                Log.LogDebug("Applying configurations to RandEventSystem.");
 
-            __instance.m_eventIntervalMin = ConfigurationManager.GeneralConfig.EventCheckInterval.Value;
-            __instance.m_eventChance = ConfigurationManager.GeneralConfig.EventTriggerChance.Value;
-
-            if (ConfigurationManager.GeneralConfig.RemoveAllExistingRaids.Value)
-            {
-                Log.LogDebug("Removing default raids.");
-                __instance.m_events.RemoveAll(x => x.m_random);
-            }
-
-            Log.LogDebug($"Found {ConfigurationManager.RaidConfig.Subsections.Count} raid configurations to apply.");
-
-            foreach (var raid in ConfigurationManager.RaidConfig.Subsections.Values)
-            {
-                if (ConfigurationManager.GeneralConfig.OverrideExisting.Value)
+                if (ConfigurationManager.GeneralConfig is null)
                 {
-                    //Check for overrides
-                    if (__instance.m_events.Count > 0)
+                    Log.LogWarning("No configuration loaded yet. Skipping application of raid changes.");
+                    return;
+                }
+
+                if (ConfigurationManager.GeneralConfig?.WriteDefaultEventDataToDisk?.Value == true)
+                {
+                    EventsWriter.WriteToFile(__instance.m_events);
+                }
+
+                if (ConfigurationManager.GeneralConfig?.EventCheckInterval is not null)
+                {
+                    __instance.m_eventIntervalMin = ConfigurationManager.GeneralConfig.EventCheckInterval.Value;
+                }
+
+                if (ConfigurationManager.GeneralConfig?.EventTriggerChance is not null)
+                {
+                    __instance.m_eventChance = ConfigurationManager.GeneralConfig.EventTriggerChance.Value;
+                }
+
+                if (ConfigurationManager.GeneralConfig?.RemoveAllExistingRaids?.Value == true)
+                {
+                    Log.LogDebug("Removing default raids.");
+                    __instance.m_events?.RemoveAll(x => x.m_random);
+                }
+
+                if (ConfigurationManager.RaidConfig?.Subsections is null)
+                {
+                    return;
+                }
+
+                Log.LogDebug($"Found {ConfigurationManager.RaidConfig.Subsections.Count} raid configurations to apply.");
+
+                foreach (var raid in ConfigurationManager.RaidConfig.Subsections.Values)
+                {
+                    if (ConfigurationManager.GeneralConfig?.OverrideExisting?.Value == true)
                     {
-                        for (int i = 0; i < __instance.m_events.Count; ++i)
+                        //Check for overrides
+                        if ((__instance.m_events?.Count ?? 0) > 0)
                         {
-                            string cleanedEventName = __instance.m_events[i].m_name.ToUpperInvariant().Trim();
-                            string cleanedRaidName = raid.Name.Value.ToUpperInvariant().Trim();
-                            if (cleanedEventName == cleanedRaidName)
+                            for (int i = 0; i < __instance.m_events.Count; ++i)
                             {
-                                Log.LogDebug($"Overriding existing event {__instance.m_events[i].m_name} with configured");
-                                __instance.m_events.RemoveAt(i);
-                                break;
+                                string cleanedEventName = __instance.m_events[i].m_name.ToUpperInvariant().Trim();
+                                string cleanedRaidName = raid.Name.Value.ToUpperInvariant().Trim();
+                                if (cleanedEventName == cleanedRaidName)
+                                {
+                                    Log.LogDebug($"Overriding existing event {__instance.m_events[i].m_name} with configured");
+                                    __instance.m_events.RemoveAt(i);
+                                    break;
+                                }
                             }
                         }
                     }
+
+                    if ((raid.Enabled?.Value ?? false) == false)
+                    {
+                        continue;
+                    }
+
+                    Log.LogDebug($"Adding raid '{raid.Name}' to possible raids");
+
+                    try
+                    {
+                        if (__instance.m_events is null)
+                        {
+                            __instance.m_events = new List<RandomEvent>();
+                        }
+
+                        if ((raid?.Subsections?.Count ?? 0) == 0)
+                        {
+                            continue;
+                        }
+
+                        var randomEvent = CreateEvent(raid);
+                        RandomEventCache.Initialize(randomEvent, raid);
+
+                        __instance.m_events.Add(randomEvent);
+                    }
+                    catch (Exception e)
+                    {
+                        Log.LogWarning($"Failed to create possible raid {raid.Name}: " + e.Message);
+                    }
                 }
 
-                if (!raid.Enabled.Value)
+                if (ConfigurationManager.GeneralConfig.WritePostChangeEventDataToDisk.Value)
                 {
-                    continue;
-                }
-
-                Log.LogDebug($"Adding raid '{raid.Name}' to possible raids");
-
-                try
-                {
-                    var randomEvent = CreateEvent(raid);
-                    RandomEventCache.Initialize(randomEvent, raid);
-
-                    __instance.m_events.Add(randomEvent);
-                }
-                catch (Exception e)
-                {
-                    Log.LogWarning($"Failed to create possible raid {raid.Name}: " + e.Message);
+                    EventsWriter.WriteToFile(__instance.m_events, "custom_random_events.txt");
                 }
             }
-
-            if (ConfigurationManager.GeneralConfig.WritePostChangeEventDataToDisk.Value)
+            catch (Exception e)
             {
-                EventsWriter.WriteToFile(__instance.m_events, "custom_random_events.txt");
+                Log.LogError("Error during application of raid configurations.", e);
             }
         }
 
@@ -112,7 +148,7 @@ namespace Valheim.CustomRaids
 
             var biomeRequest = Heightmap.Biome.None;
 
-            foreach (var biome in biomeString.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+            foreach (var biome in biomeString.SplitByComma())
             {
                 if(Enum.TryParse(biome.Trim(), true, out Heightmap.Biome biomeFlag))
                 {
@@ -143,7 +179,7 @@ namespace Valheim.CustomRaids
                     continue;
                 }
 
-                var requiredEnvironments = spawnConfig.RequiredEnvironments?.Value?.Split(new[] {','}, StringSplitOptions.RemoveEmptyEntries);
+                var requiredEnvironments = spawnConfig.RequiredEnvironments?.Value?.SplitByComma();
 
                 SpawnSystem.SpawnData spawn = new SpawnSystem.SpawnData
                 {
@@ -174,7 +210,7 @@ namespace Valheim.CustomRaids
                     m_spawnAtDay = spawnConfig.SpawnAtDay.Value,
                     m_spawnAtNight = spawnConfig.SpawnAtNight.Value,
                     m_requiredGlobalKey = spawnConfig.RequiredGlobalKey.Value,
-                    m_requiredEnvironments = requiredEnvironments?.ToList() ?? new List<string>(),
+                    m_requiredEnvironments = requiredEnvironments,
                     m_biome = (Heightmap.Biome)1023,
                     m_biomeArea = (Heightmap.BiomeArea)7,
                 };
@@ -188,8 +224,8 @@ namespace Valheim.CustomRaids
                 spawnList.Add(spawn);
             }
 
-            var notRequiredGlobalKeys = raidEvent.NotRequiredGlobalKeys?.Value?.Split(new []{','}, StringSplitOptions.RemoveEmptyEntries);
-            var requiredGlobalKeys = raidEvent.RequiredGlobalKeys?.Value?.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+            var notRequiredGlobalKeys = raidEvent.NotRequiredGlobalKeys?.Value?.SplitByComma();
+            var requiredGlobalKeys = raidEvent.RequiredGlobalKeys?.Value?.SplitByComma();
 
             RandomEvent newEvent = new RandomEvent
             {
@@ -204,8 +240,8 @@ namespace Valheim.CustomRaids
                 m_random = raidEvent.Random.Value,
                 m_spawn = spawnList,
                 m_biome = GetBiome(raidEvent),
-                m_notRequiredGlobalKeys = notRequiredGlobalKeys?.ToList() ?? new List<string>(),
-                m_requiredGlobalKeys = requiredGlobalKeys?.ToList() ?? new List<string>(),
+                m_notRequiredGlobalKeys = notRequiredGlobalKeys,
+                m_requiredGlobalKeys = requiredGlobalKeys,
                 m_pauseIfNoPlayerInArea = raidEvent.PauseIfNoPlayerInArea.Value,                
             };
 
