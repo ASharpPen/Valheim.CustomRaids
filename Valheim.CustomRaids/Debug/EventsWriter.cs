@@ -30,8 +30,8 @@ namespace Valheim.CustomRaids.Debug
                 lines.Add($"{nameof(RaidEventConfiguration.StartMessage)}={entry.m_startMessage}");
                 lines.Add($"{nameof(RaidEventConfiguration.EndMessage)}={entry.m_endMessage}");
                 lines.Add($"{nameof(RaidEventConfiguration.NearBaseOnly)}={entry.m_nearBaseOnly}");
-                lines.Add($"{nameof(RaidEventConfiguration.RequiredGlobalKeys)}={entry.m_requiredGlobalKeys.Join()}");
-                lines.Add($"{nameof(RaidEventConfiguration.NotRequiredGlobalKeys)}={entry.m_notRequiredGlobalKeys.Join()}");
+                lines.Add($"{nameof(RaidEventConfiguration.RequiredGlobalKeys)}={entry.m_requiredGlobalKeys?.Join() ?? ""}");
+                lines.Add($"{nameof(RaidEventConfiguration.NotRequiredGlobalKeys)}={entry.m_notRequiredGlobalKeys?.Join() ?? ""}");
                 lines.Add($"{nameof(RaidEventConfiguration.PauseIfNoPlayerInArea)}={entry.m_pauseIfNoPlayerInArea}");
                 lines.Add($"{nameof(RaidEventConfiguration.ForceEnvironment)}={entry.m_forceEnvironment}");
                 lines.Add($"{nameof(RaidEventConfiguration.ForceMusic)}={entry.m_forceMusic}");

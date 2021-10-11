@@ -10,11 +10,16 @@ namespace Valheim.CustomRaids.Utilities.Extensions
 
         public static List<string> SplitByComma(this string value, bool toUpper = false)
         {
+            if (string.IsNullOrEmpty(value))
+            {
+                return new List<string>(0);
+            }
+
             var split = value.Split(Comma, StringSplitOptions.RemoveEmptyEntries);
 
             if ((split?.Length ?? 0) == 0)
             {
-                return new List<string>();
+                return new List<string>(0);
             }
 
             return split.Select(Clean).ToList();
