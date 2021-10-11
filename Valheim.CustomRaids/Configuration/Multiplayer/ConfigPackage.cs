@@ -1,74 +1,42 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.Serialization.Formatters.Binary;
-using System.Text;
-using System.Threading.Tasks;
 using Valheim.CustomRaids.Configuration.ConfigTypes;
 using Valheim.CustomRaids.Core;
+using Valheim.CustomRaids.Core.Network;
 
 namespace Valheim.CustomRaids.Configuration.Multiplayer
 {
     [Serializable]
-    internal class ConfigPackage
+    internal class ConfigPackage : CompressedPackage
     {
         public GeneralConfiguration GeneralConfig;
-
         public RaidEventConfigurationFile RaidConfig;
 
-        public ZPackage Pack()
+        protected override void BeforePack()
         {
-            ZPackage package = new ZPackage();
-
             GeneralConfig = ConfigurationManager.GeneralConfig;
             RaidConfig = ConfigurationManager.RaidConfig;
 
-            Log.LogTrace("Serializing configs.");
-
-            using (MemoryStream memStream = new MemoryStream())
-            {
-                BinaryFormatter binaryFormatter = new BinaryFormatter();
-                binaryFormatter.Serialize(memStream, this);
-
-                byte[] serialized = memStream.ToArray();
-
-                package.Write(serialized);
-            }
-
-            return package;
+            Log.LogDebug($"Packaged general configuration.");
+            Log.LogDebug($"Packaged raid configurations: {RaidConfig?.Subsections?.Count ?? 0}");
         }
 
-        public static void Unpack(ZPackage package)
+        protected override void AfterUnpack(object obj)
         {
-            var serialized = package.ReadByteArray();
-
-            Log.LogTrace("Deserializing package.");
-            Log.LogTrace("Package content size in bytes: " + package.Size());
-
-            using (MemoryStream memStream = new MemoryStream(serialized))
+            if (obj is ConfigPackage configPackage)
             {
-                BinaryFormatter binaryFormatter = new BinaryFormatter();
-                var responseObject = binaryFormatter.Deserialize(memStream);
+                Log.LogDebug("Received and deserialized config package");
 
-                if (responseObject is ConfigPackage configPackage)
-                {
-                    Log.LogDebug("Received and deserialized config package");
+                ConfigurationManager.GeneralConfig = configPackage.GeneralConfig;
+                ConfigurationManager.RaidConfig = configPackage.RaidConfig;
 
-                    Log.LogTrace("Unpackaging configs.");
+                Log.LogDebug($"Unpacked general configuration.");
+                Log.LogDebug($"Unpacked raid configurations: {ConfigurationManager.RaidConfig?.Subsections?.Count ?? 0}");
 
-                    ConfigurationManager.GeneralConfig = configPackage.GeneralConfig;
-                    ConfigurationManager.RaidConfig = configPackage.RaidConfig;
-
-                    Log.LogTrace("Successfully unpacked configs.");
-
-                    Log.LogTrace($"Unpacked general configs");
-                    Log.LogTrace($"Unpacked {ConfigurationManager.RaidConfig?.Subsections?.Count ?? 0} raids");
-                }
-                else
-                {
-                    Log.LogWarning("Received bad config package. Unable to load.");
-                }
+                Log.LogInfo("Successfully unpacked configs.");
+            }
+            else
+            {
+                Log.LogWarning("Received bad config package. Unable to load.");
             }
         }
     }

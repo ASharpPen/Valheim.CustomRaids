@@ -1,6 +1,7 @@
 ﻿using HarmonyLib;
 using System;
 using Valheim.CustomRaids.Core;
+using Valheim.CustomRaids.Core.Network;
 
 namespace Valheim.CustomRaids.Configuration.Multiplayer
 {
@@ -37,15 +38,9 @@ namespace Valheim.CustomRaids.Configuration.Multiplayer
 
 				Log.LogInfo("Received request for configs.");
 
-				var configPackage = new ConfigPackage();
-				var zpack = configPackage.Pack();
+				DataTransferService.Service.AddToQueue(new ConfigPackage().Pack(), nameof(RPC_ReceiveConfigsCustomRaids), rpc);
 
-				Log.LogTrace("Sending config package.");
-				Log.LogTrace("Package size in bytes: " + zpack.Size());
-
-				rpc.Invoke(nameof(RPC_ReceiveConfigsCustomRaids), new object[] { zpack });
-
-				Log.LogTrace("Finished sending config package.");
+				Log.LogTrace("Sending config packages.");
 			}
 			catch (Exception e)
 			{
@@ -55,10 +50,10 @@ namespace Valheim.CustomRaids.Configuration.Multiplayer
 
 		private static void RPC_ReceiveConfigsCustomRaids(ZRpc rpc, ZPackage pkg)
 		{
-			Log.LogTrace("Received package.");
+			Log.LogInfo("Received package.");
 			try
 			{
-				ConfigPackage.Unpack(pkg);
+				CompressedPackage.Unpack(pkg);
 			}
 			catch (Exception e)
 			{
