@@ -7,7 +7,6 @@ using Valheim.CustomRaids.Configuration;
 using Valheim.CustomRaids.Configuration.ConfigTypes;
 using Valheim.CustomRaids.Core;
 using Valheim.CustomRaids.Debug;
-using Valheim.CustomRaids.Patches;
 using Valheim.CustomRaids.Raids.Conditions;
 using Valheim.CustomRaids.Spawns.Caches;
 using Valheim.CustomRaids.Utilities.Extensions;
@@ -236,10 +235,7 @@ namespace Valheim.CustomRaids.Raids.Managers
 
         private static void StoreRaid(RandomEvent randomEvent, RaidEventConfiguration config)
         {
-            var raid = new Raid()
-            {
-                Name = randomEvent.m_name
-            };
+            var raid = new Raid(randomEvent.m_name);
 
             // Set raid conditions.
             List<IRaidCondition> conditions = new List<IRaidCondition>();
