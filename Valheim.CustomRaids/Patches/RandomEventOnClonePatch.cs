@@ -6,7 +6,7 @@ using Valheim.CustomRaids.Spawns.Caches;
 namespace Valheim.CustomRaids.Patches
 {
     [HarmonyPatch(typeof(RandomEvent))]
-    public static class RandomEventOnClonePatch
+    internal static class RandomEventOnClonePatch
     {
         [HarmonyPatch("Clone")]
         [HarmonyPostfix]

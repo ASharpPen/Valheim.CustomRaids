@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Valheim.CustomRaids.Configuration;
 using Valheim.CustomRaids.Configuration.ConfigTypes;
 using Valheim.CustomRaids.Core;

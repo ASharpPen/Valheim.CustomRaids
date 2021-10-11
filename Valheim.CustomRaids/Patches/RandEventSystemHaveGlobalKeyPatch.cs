@@ -8,7 +8,7 @@ using Valheim.CustomRaids.Core;
 namespace Valheim.CustomRaids.Patches
 {
     [HarmonyPatch(typeof(RandEventSystem))]
-    public static class RandEventSystemHaveGlobalKeyPatch
+    internal static class RandEventSystemHaveGlobalKeyPatch
     {
         [HarmonyPatch("HaveGlobalKeys")]
         [HarmonyPostfix]

@@ -1,14 +1,9 @@
 ﻿using HarmonyLib;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Valheim.CustomRaids.Patches
 {
     [HarmonyPatch(typeof(Character))]
-    public static class CharacterSetFactionPatch
+    internal static class CharacterSetFactionPatch
     {
         [HarmonyPatch("Start")]
         [HarmonyPostfix]

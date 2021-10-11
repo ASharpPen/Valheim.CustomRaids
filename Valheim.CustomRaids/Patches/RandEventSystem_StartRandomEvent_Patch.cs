@@ -4,7 +4,7 @@ using Valheim.CustomRaids.Core;
 namespace Valheim.CustomRaids.Patches
 {
     [HarmonyPatch(typeof(RandEventSystem))]
-    public static class RandEventSystem_StartRandomEvent_Patch
+    internal static class RandEventSystem_StartRandomEvent_Patch
     {
         /// <summary>
         /// Stop new raids from initializing when another event is currently active.

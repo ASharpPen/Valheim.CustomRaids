@@ -7,7 +7,7 @@ using Valheim.CustomRaids.Raids.Managers;
 namespace Valheim.CustomRaids.Patches
 {
     [HarmonyPatch(typeof(RandEventSystem))]
-    public static class RaidConditionsPatch
+    internal static class RaidConditionsPatch
     {
         [HarmonyPatch("GetPossibleRandomEvents")]
         [HarmonyPostfix]

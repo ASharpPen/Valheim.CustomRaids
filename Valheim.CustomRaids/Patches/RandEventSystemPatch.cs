@@ -6,7 +6,7 @@ using Valheim.CustomRaids.Raids.Managers;
 namespace Valheim.CustomRaids
 {
     [HarmonyPatch(typeof(RandEventSystem), "Start")]
-    public static class RandEventSystemPatch
+    internal static class RandEventSystemPatch
     {
         [HarmonyPostfix]
         private static void RandEventSystemStart(RandEventSystem __instance)

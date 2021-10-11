@@ -6,9 +6,9 @@ using Valheim.CustomRaids.Resetter;
 namespace Valheim.CustomRaids.Patches
 {
     [HarmonyPatch(typeof(RandEventSystem))]
-    public static class RandEventSystemWaitPatch
+    internal static class RandEventSystemWaitPatch
     {
-        internal static bool Wait = true;
+        internal static bool Wait { get; set; } = true;
 
         static RandEventSystemWaitPatch()
         {

@@ -9,7 +9,7 @@ namespace Valheim.CustomRaids.Patches
 {
 
     [HarmonyPatch(typeof(Game))]
-    public static class ConfigLoadingPatch
+    internal static class ConfigLoadingPatch
     {
         private static bool FirstTime = true;
 
