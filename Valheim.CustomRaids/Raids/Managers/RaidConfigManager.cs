@@ -270,6 +270,24 @@ namespace Valheim.CustomRaids.Raids.Managers
                 DuringNight = config.CanStartDuringNight?.Value,
             });
 
+            if (config.ConditionMinPlayersNearby?.Value > 0 || config.ConditionMaxPlayersNearby?.Value > 0)
+            {
+                conditions.Add(new ConditionPlayersNearby
+                {
+                    MinPlayers = config.ConditionMinPlayersNearby?.Value,
+                    MaxPlayers = config.ConditionMaxPlayersNearby?.Value
+                });
+            }
+
+            if (config.ConditionMinPlayersOnline?.Value > 0 || config.ConditionMaxPlayersOnline?.Value > 0)
+            {
+                conditions.Add(new ConditionPlayersOnline
+                {
+                    MinPlayersOnline = config.ConditionMinPlayersOnline?.Value,
+                    MaxPlayersOnline = config.ConditionMaxPlayersOnline?.Value
+                });
+            }
+
             RaidManager.RegisterRaid(randomEvent, raid);
         }
     }

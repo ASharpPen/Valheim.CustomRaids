@@ -68,7 +68,15 @@ namespace Valheim.CustomRaids.Configuration.ConfigTypes
 
         public ConfigurationEntry<float> ConditionAltitudeMin = new(-10000, "Minimum altitude for raid to activate.");
 
-        public ConfigurationEntry<float> ConditionAltitudeMax = new(10000, "Maximum altitude for raid to active.");
+        public ConfigurationEntry<float> ConditionAltitudeMax = new(10000, "Maximum altitude for raid to activate.");
+
+        public ConfigurationEntry<int> ConditionMinPlayersNearby = new(0, "Minimum players in area for raid to activate.");
+
+        public ConfigurationEntry<int> ConditionMaxPlayersNearby = new(0, "Maximum players in area for raid to activate. 0 means no limit.");
+
+        public ConfigurationEntry<int> ConditionMinPlayersOnline = new(0, "Minimum players online for raid to activate.");
+
+        public ConfigurationEntry<int> ConditionMaxPlayersOnline = new(0, "Maximum players online for raid to activate. 0 means no limit.");
     }
 
     [Serializable]
