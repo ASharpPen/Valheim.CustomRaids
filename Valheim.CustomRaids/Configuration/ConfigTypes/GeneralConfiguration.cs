@@ -50,7 +50,7 @@ namespace Valheim.CustomRaids.Configuration.ConfigTypes
 
         #region IndividualRaids
 
-        public ConfigurationEntry<bool> UseIndividualRaidChecks = new ConfigurationEntry<bool>(false, "If enabled, Custom Raids will overhaul the games way of checking for raids.\nThis allows for setting individual frequences and chances for each raid.");
+        public ConfigurationEntry<bool> UseIndividualRaidChecks = new ConfigurationEntry<bool>(false, "If enabled, Custom Raids will overhaul the games way of checking for raids.\nThis allows for setting individual frequences and chances for each raid.\nThis overhaul gives each raid it's own timer, independent of each other and can therefore cause a LOT of raids. MinTimeBetweenRaids can be used to ensure they don't happen too often.");
 
         public ConfigurationEntry<float> MinimumTimeBetweenRaids = new ConfigurationEntry<float>(46, "If overhaul is enhabled, ensures a minimum amount of minutes between each raid.");
 

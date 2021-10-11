@@ -2,6 +2,7 @@
 using System.Collections;
 using UnityEngine;
 using Valheim.CustomRaids.Core;
+using Valheim.CustomRaids.Raids.Managers;
 using Valheim.CustomRaids.Resetter;
 
 namespace Valheim.CustomRaids.Patches
@@ -38,7 +39,7 @@ namespace Valheim.CustomRaids.Patches
             yield return new WaitForSeconds(2);
 
             Log.LogDebug("Finished early delay for config application.");
-            RandEventSystemPatch.ApplyConfigurations(RandEventSystem.instance);
+            RaidConfigManager.ApplyConfigs();
             RandEventSystemWaitPatch.Wait = false;
         }
     }

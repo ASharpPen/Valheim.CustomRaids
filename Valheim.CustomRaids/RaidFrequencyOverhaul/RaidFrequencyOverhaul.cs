@@ -7,6 +7,7 @@ using Valheim.CustomRaids.Conditions;
 using Valheim.CustomRaids.Configuration;
 using Valheim.CustomRaids.Core;
 using Valheim.CustomRaids.Patches;
+using Valheim.CustomRaids.Raids.Managers;
 
 namespace Valheim.CustomRaids.RaidFrequencyOverhaul
 {
@@ -137,7 +138,7 @@ namespace Valheim.CustomRaids.RaidFrequencyOverhaul
                     {
                         Vector3 raidCenter = possibleRaidCenterPositions[UnityEngine.Random.Range(0, possibleRaidCenterPositions.Count)];
 
-                        if(ConditionChecker.ShouldFilter(randomEvent, raidCenter))
+                        if (!RaidConditionManager.HasValidConditions(randomEvent, raidCenter))
                         {
                             continue;
                         }

@@ -65,6 +65,10 @@ namespace Valheim.CustomRaids.Configuration.ConfigTypes
         public ConfigurationEntry<float> ConditionDistanceToCenterMin = new ConfigurationEntry<float>(0, "Minimum distance to center for this raid to activate.");
 
         public ConfigurationEntry<float> ConditionDistanceToCenterMax = new ConfigurationEntry<float>(0, "Maximum distance to center for this raid to activate. 0 means limitless.");
+
+        public ConfigurationEntry<float> ConditionAltitudeMin = new(-10000, "Minimum altitude for raid to activate.");
+
+        public ConfigurationEntry<float> ConditionAltitudeMax = new(10000, "Maximum altitude for raid to active.");
     }
 
     [Serializable]

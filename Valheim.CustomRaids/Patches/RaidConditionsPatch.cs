@@ -1,8 +1,8 @@
 ﻿using HarmonyLib;
 using System.Collections.Generic;
 using UnityEngine;
-using Valheim.CustomRaids.Conditions;
 using Valheim.CustomRaids.Core;
+using Valheim.CustomRaids.Raids.Managers;
 
 namespace Valheim.CustomRaids.Patches
 {
@@ -22,7 +22,7 @@ namespace Valheim.CustomRaids.Patches
                 var randomEvent = __result[i].Key;
                 var raidPosition = __result[i].Value;
 
-                if(ConditionChecker.ShouldFilter(randomEvent, raidPosition))
+                if (!RaidConditionManager.HasValidConditions(randomEvent, raidPosition))
                 {
                     continue;
                 }
