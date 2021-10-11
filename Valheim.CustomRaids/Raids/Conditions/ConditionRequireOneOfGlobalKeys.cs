@@ -1,7 +1,7 @@
 ﻿using System;
 using Valheim.CustomRaids.Compatibilities;
 using Valheim.CustomRaids.Core;
-using Valheim.CustomRaids.Patches;
+using Valheim.CustomRaids.Raids;
 
 namespace Valheim.CustomRaids.Conditions
 {

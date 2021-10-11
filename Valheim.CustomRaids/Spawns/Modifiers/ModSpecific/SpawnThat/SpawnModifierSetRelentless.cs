@@ -1,7 +1,7 @@
 ﻿using Valheim.CustomRaids.Configuration.ConfigTypes;
 using Valheim.CustomRaids.Core;
+using Valheim.CustomRaids.Core.Cache;
 using Valheim.CustomRaids.Core.Configuration;
-using Valheim.CustomRaids.Spawns.Caches;
 using Valheim.SpawnThat.Spawners.SpawnerSpawnSystem.SpawnModifiers.General;
 
 namespace Valheim.CustomRaids.Spawns.Modifiers.ModSpecific.SpawnThat
@@ -31,7 +31,7 @@ namespace Valheim.CustomRaids.Spawns.Modifiers.ModSpecific.SpawnThat
                 {
                     Log.LogTrace("Setting relentless");
 
-                    var zdo = SpawnCache.GetZDO(context.Spawn);
+                    var zdo = ZdoCache.GetZdo(context.Spawn);
 
                     if (zdo is null)
                     {

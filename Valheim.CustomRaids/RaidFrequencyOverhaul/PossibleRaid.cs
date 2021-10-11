@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-using Valheim.CustomRaids.Patches;
+using Valheim.CustomRaids.Raids;
 
 namespace Valheim.CustomRaids.RaidFrequencyOverhaul
 {

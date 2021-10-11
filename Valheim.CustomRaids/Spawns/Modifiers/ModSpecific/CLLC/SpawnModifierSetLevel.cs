@@ -1,6 +1,6 @@
 ﻿using Valheim.CustomRaids.Configuration.ConfigTypes;
+using Valheim.CustomRaids.Core.Cache;
 using Valheim.CustomRaids.Core.Configuration;
-using Valheim.CustomRaids.Spawns.Caches;
 
 namespace Valheim.CustomRaids.Spawns.Modifiers.ModSpecific.CLLC
 {
@@ -27,7 +27,7 @@ namespace Valheim.CustomRaids.Spawns.Modifiers.ModSpecific.CLLC
             {
                 if (modConfig is SpawnConfigCLLC config && config.UseDefaultLevels.Value)
                 {
-                    var character = SpawnCache.GetCharacter(context.Spawn);
+                    var character = ComponentCache.GetComponent<Character>(context.Spawn);
 
                     if (character is null)
                     {

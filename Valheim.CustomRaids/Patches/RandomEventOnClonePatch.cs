@@ -1,7 +1,6 @@
 ﻿using HarmonyLib;
-using System.Collections.Generic;
-using System.Reflection.Emit;
 using Valheim.CustomRaids.Core;
+using Valheim.CustomRaids.Raids;
 using Valheim.CustomRaids.Spawns.Caches;
 
 namespace Valheim.CustomRaids.Patches

@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using Valheim.CustomRaids.Core;
-using Valheim.CustomRaids.Patches;
+using Valheim.CustomRaids.Raids;
 
 namespace Valheim.CustomRaids.Conditions
 {

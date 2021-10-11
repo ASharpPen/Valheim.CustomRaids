@@ -2,7 +2,7 @@
 using System.Runtime.CompilerServices;
 using Valheim.CustomRaids.Configuration.ConfigTypes;
 
-namespace Valheim.CustomRaids.Patches
+namespace Valheim.CustomRaids.Raids
 {
     public static class RandomEventCache
     {
@@ -22,7 +22,7 @@ namespace Valheim.CustomRaids.Patches
 
         public static RaidEventConfiguration GetConfig(RandomEvent randomEvent)
         {
-            if(EventTable.TryGetValue(randomEvent, out RandomEventData data))
+            if (EventTable.TryGetValue(randomEvent, out RandomEventData data))
             {
                 return data.Config;
             }

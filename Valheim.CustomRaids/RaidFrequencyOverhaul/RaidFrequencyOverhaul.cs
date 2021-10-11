@@ -6,7 +6,7 @@ using UnityEngine;
 using Valheim.CustomRaids.Conditions;
 using Valheim.CustomRaids.Configuration;
 using Valheim.CustomRaids.Core;
-using Valheim.CustomRaids.Patches;
+using Valheim.CustomRaids.Raids;
 using Valheim.CustomRaids.Raids.Managers;
 
 namespace Valheim.CustomRaids.RaidFrequencyOverhaul

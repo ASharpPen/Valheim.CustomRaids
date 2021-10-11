@@ -277,6 +277,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Core\Cache\CacheCleaner.cs" />
+    <Compile Include="Core\Cache\ComponentCache.cs" />
+    <Compile Include="Core\Cache\IManagedCache.cs" />
+    <Compile Include="Core\Cache\ManagedCache.cs" />
     <Compile Include="Raids\Conditions\ConditionAltitude.cs" />
     <Compile Include="Raids\Conditions\IRaidCondition.cs" />
     <Compile Include="Configuration\ConfigTypes\RaidEventConfigurationFile.cs" />

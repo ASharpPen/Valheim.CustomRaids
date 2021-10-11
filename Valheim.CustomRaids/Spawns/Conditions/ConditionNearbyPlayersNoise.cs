@@ -2,7 +2,7 @@
 using System.Linq;
 using Valheim.CustomRaids.Configuration.ConfigTypes;
 using Valheim.CustomRaids.Core;
-using Valheim.CustomRaids.Spawns.Caches;
+using Valheim.CustomRaids.Core.Cache;
 
 namespace Valheim.CustomRaids.Spawns.Conditions
 {
@@ -42,7 +42,7 @@ namespace Valheim.CustomRaids.Spawns.Conditions
             {
                 Log.LogTrace($"Checking noise of player {player.GetPlayerName()}");
 
-                var zdo = ZdoCache.GetZDO(player.gameObject);
+                var zdo = ZdoCache.GetZdo(player.gameObject);
                 if (zdo is not null)
                 {
                     var noise = zdo.GetFloat("noise", 0);

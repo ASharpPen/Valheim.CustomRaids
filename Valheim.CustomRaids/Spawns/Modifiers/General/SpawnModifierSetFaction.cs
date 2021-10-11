@@ -1,6 +1,6 @@
 ﻿using System;
 using Valheim.CustomRaids.Core;
-using Valheim.CustomRaids.Spawns.Caches;
+using Valheim.CustomRaids.Core.Cache;
 
 namespace Valheim.CustomRaids.Spawns.Modifiers.General
 {
@@ -23,7 +23,7 @@ namespace Valheim.CustomRaids.Spawns.Modifiers.General
                 return;
             }
 
-            var character = SpawnCache.GetCharacter(context.Spawn);
+            var character = ComponentCache.GetComponent<Character>(context.Spawn);
 
             if (character is null)
             {
@@ -55,7 +55,7 @@ namespace Valheim.CustomRaids.Spawns.Modifiers.General
             Log.LogDebug($"Setting faction {creatureFaction}");
 #endif
             character.m_faction = creatureFaction;
-            SpawnCache.GetZDO(context.Spawn).Set("faction", (int)creatureFaction);
+            ZdoCache.GetZdo(context.Spawn).Set("faction", (int)creatureFaction);
         }
     }
 }
