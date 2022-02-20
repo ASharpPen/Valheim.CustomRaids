@@ -1,9 +1,8 @@
 ﻿using Valheim.CustomRaids.Configuration.ConfigTypes;
 using Valheim.CustomRaids.Core.Cache;
 using Valheim.CustomRaids.Core.Configuration;
-using Valheim.SpawnThat.Spawners.SpawnerSpawnSystem.SpawnModifiers.General;
 
-namespace Valheim.CustomRaids.Spawns.Modifiers.ModSpecific.SpawnThat
+namespace Valheim.CustomRaids.Spawns.Modifiers.ModSpecific.ST
 {
     public class SpawnModifierSetTryDespawnOnAlert : ISpawnModifier
     {
@@ -38,7 +37,7 @@ namespace Valheim.CustomRaids.Spawns.Modifiers.ModSpecific.SpawnThat
                     return;
                 }
 
-                zdo.Set(SpawnModifierDespawnOnAlert.ZdoFeature, true);
+                zdo.Set(SpawnThat.Options.Modifiers.ModifierDespawnOnAlert.ZdoFeature, true);
             }
         }
     }

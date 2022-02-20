@@ -1,6 +1,6 @@
 ﻿using System;
 using Valheim.CustomRaids.Core;
-using Valheim.CustomRaids.Spawns.Modifiers.ModSpecific.SpawnThat;
+using Valheim.CustomRaids.Spawns.Modifiers.ModSpecific.ST;
 
 namespace Valheim.CustomRaids.Spawns.Modifiers.ModSpecific
 {

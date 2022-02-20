@@ -3,7 +3,7 @@ using Valheim.CustomRaids.Core;
 using Valheim.CustomRaids.Core.Cache;
 using Valheim.CustomRaids.Core.Configuration;
 
-namespace Valheim.CustomRaids.Spawns.Modifiers.ModSpecific.SpawnThat
+namespace Valheim.CustomRaids.Spawns.Modifiers.ModSpecific.ST
 {
     public class SpawnModifierSetTemplateId : ISpawnModifier
     {
@@ -39,7 +39,7 @@ namespace Valheim.CustomRaids.Spawns.Modifiers.ModSpecific.SpawnThat
                 }
 
                 Log.LogTrace($"Setting template id {config.TemplateId.Value}");
-                zdo.Set(Valheim.SpawnThat.Spawners.SpawnerSpawnSystem.SpawnModifiers.General.SpawnModifierSetTemplateId.ZdoFeature, config.TemplateId.Value);
+                zdo.Set(SpawnThat.Options.Modifiers.ModifierSetTemplateId.ZdoFeature, config.TemplateId.Value);
             }
         }
     }
