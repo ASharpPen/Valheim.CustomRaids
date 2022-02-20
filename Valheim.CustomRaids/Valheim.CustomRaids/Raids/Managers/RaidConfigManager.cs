@@ -5,6 +5,7 @@ using Valheim.CustomRaids.Configuration.ConfigTypes;
 using Valheim.CustomRaids.Core;
 using Valheim.CustomRaids.Debug;
 using Valheim.CustomRaids.Raids.Conditions;
+using Valheim.CustomRaids.Resetter;
 using Valheim.CustomRaids.Spawns.Caches;
 using Valheim.CustomRaids.Utilities.Extensions;
 
@@ -12,8 +13,23 @@ namespace Valheim.CustomRaids.Raids.Managers
 {
     public static class RaidConfigManager
     {
+        private static bool _isConfigured = false;
+
+        static RaidConfigManager()
+        {
+            StateResetter.Subscribe(() =>
+            {
+                _isConfigured = false;
+            });
+        }
+
         public static void ApplyConfigs()
         {
+            if (_isConfigured)
+            {
+                return;
+            }
+
             try
             {
                 var eventSystem = RandEventSystem.instance;
@@ -115,6 +131,8 @@ namespace Valheim.CustomRaids.Raids.Managers
             {
                 Log.LogError("Error during application of raid configurations.", e);
             }
+
+            _isConfigured = true;
         }
 
         private static Heightmap.Biome GetBiome(RaidEventConfiguration config)
