@@ -12,7 +12,7 @@ namespace Valheim.CustomRaids.Configuration
     {
         private const string DefaultRaidFile = "custom_raids.raids.cfg";
         private const string DefaultConfigFile = "custom_raids.cfg";
-        private const string ConfigSupplemental = "custom_raids.supplemental.*";
+        private const string ConfigSupplemental = "custom_raids.supplemental.*.cfg";
 
         public static bool DebugOn => GeneralConfig?.DebugOn?.Value ?? false;
 
