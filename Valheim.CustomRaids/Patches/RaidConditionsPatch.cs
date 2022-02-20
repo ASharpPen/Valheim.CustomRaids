@@ -22,6 +22,14 @@ namespace Valheim.CustomRaids.Patches
                 var randomEvent = __result[i].Key;
                 var raidPosition = __result[i].Value;
 
+                if (randomEvent is null)
+                {
+#if DEBUG
+                    Log.LogWarning($"RandEventSystem.GetPossibleRandomEvents had a null event at index '{i}'");
+#endif
+                    continue;
+                }
+
                 if (!RaidConditionManager.HasValidConditions(randomEvent, raidPosition))
                 {
                     continue;
