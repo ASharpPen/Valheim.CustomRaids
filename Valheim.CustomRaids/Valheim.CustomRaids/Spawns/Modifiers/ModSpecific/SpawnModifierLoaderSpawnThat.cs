@@ -6,7 +6,7 @@ namespace Valheim.CustomRaids.Spawns.Modifiers.ModSpecific
 {
     public static class SpawnModifierLoaderSpawnThat
     {
-        public static bool InstalledSpawnThat { get; } = Type.GetType("Valheim.SpawnThat.SpawnThatPlugin, Valheim.SpawnThat") is not null;
+        public static bool InstalledSpawnThat { get; } = Type.GetType("SpawnThat.SpawnThatPlugin, SpawnThat") is not null;
 
         public static SpawnModifierSetRelentless SetRelentless
         {
