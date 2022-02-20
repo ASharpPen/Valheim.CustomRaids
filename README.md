@@ -97,6 +97,8 @@ WriteEnvironmentDataToDisk = false
 ## If enabled, scans existing global keys, and dumps to a file in the plugin folder.
 WriteGlobalKeyDataToDisk = false
 
+# Folder path to write to. Root folder is BepInEx.
+DebugFileFolder = Debug
 ```
 
 ## Main raid file "custom_raids.raids.cfg"
@@ -194,7 +196,10 @@ THIS is what usually makes most raids stumble. If the raid starts, but nothing s
 | Faction | string | Boss | Assign a faction to all entities in raid. |
 | RaidFrequency | float | 46 | Minutes between checks for this raid to run. 0 uses game default (46 minutes). This is only used if UseIndividualRaidChecks is set in general config. |
 | RaidChance | float | 20 | Chance at each check for this raid to run. 0 uses game default (20%). This is only used if UseIndividualRaidChecks is set in general config. |
-
+| ConditionAltitudeMin | int | 0 | Minimum altitude for raid to activate. Ignored if both min and max are 0 |
+| ConditionAltitudeMax | int | 0 | Maximum altitude for raid to activate. Ignored if both min and max are 0 |
+| ConditionEnvironment | string | | Environment enabling raid (only a single can be set). Leave empty for no requirement |
+| UseLocalSpawners | bool | false | Set if raid should try to use local spawners as spawnpoints. Intended for caves and dungeons |
 
 # The Details - Raid Spawns
 
@@ -238,6 +243,7 @@ THIS is what usually makes most raids stumble. If the raid starts, but nothing s
 | ConditionNearbyPlayersCarryValue | int | 25 | Checks if nearby players have a combined value in inventory above this condition. Eg. If set to 100, entry will only activate if nearby players have more than 100 worth of values combined |
 | ConditionNearbyPlayerCarriesItem | string | IronScrap, DragonEgg | Checks if nearby players have any of the listed item prefab names in inventory |
 | ConditionNearbyPlayersNoiseThreshold | float | 80 | Checks if any nearby players have accumulated noise at or above the threshold |
+
 
 # Mod Specific Configuration
 
@@ -392,6 +398,7 @@ SetTryDespawnOnAlert=true
 - defeated_goblinking
 - KilledTroll
 - killed_surtling
+- KilledBat
 
 Additional keys can be created manually through console commands, or by a mod like [Enhanced Progress Tracker](https://valheim.thunderstore.io/package/ASharpPen/Enhanced_Progress_Tracker/).
 
@@ -415,6 +422,15 @@ Known causes of noise:
 Apart from that, every attack will have a hit-noise and swing noise. By default this is 30 and 10, but this could be different for each attack type.
 
 # Changelog 
+- v1.5.0:
+	- Temporarily added fixes for raids being broken by v0.207.15
+	- Added support for new vanilla raid setting UseLocalSpawners, causing raids to spawn from nearby local spawners, instead of randomly selected.
+	- Added support for new vanilla raid conditions; altitude, environment.
+	- Additional error handling.
+	- Debug files are now printed to path BepInEx/Debug. Can be configured.
+	- Fixed detection of Spawn That installation.
+	- Fixed supplemental file detection not being restricted to cfg's.
+	- Lots internal fixes and updates.
 - v1.4.0: 
 	- Support for Creature Level and Loot Control.
 	- Support for most Spawn That modifiers.

@@ -1,0 +1,36 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net48</TargetFramework>
+    <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
+    <AssemblyName>Valheim.CustomRaids</AssemblyName>
+    <RootNamespace>Valheim.CustomRaids</RootNamespace>
+    <Authors>A Sharp Pen</Authors>
+    <Version>1.5.0</Version>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="BepInEx.Core" Version="5.4.17" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="assembly_utils">
+      <HintPath>..\..\Libs\Valheim\assembly_utils.dll</HintPath>
+    </Reference>
+    <Reference Include="assembly_valheim">
+      <HintPath>..\..\Libs\Valheim\assembly_valheim.dll</HintPath>
+    </Reference>
+    <Reference Include="CreatureLevelControl">
+      <HintPath>..\..\Libs\Smoothbrain-CreatureLevelAndLootControl\CreatureLevelControl.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine">
+      <HintPath>..\..\Libs\Unity\UnityEngine.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.CoreModule">
+      <HintPath>..\..\Libs\Unity\UnityEngine.CoreModule.dll</HintPath>
+    </Reference>
+    <Reference Include="Valheim.EnhancedProgressTracker">
+      <HintPath>..\..\Libs\ASharpPen-Enhanced_Progress_Tracker\Valheim.EnhancedProgressTracker.dll</HintPath>
+    </Reference>
+    <Reference Include="Valheim.SpawnThat">
+      <HintPath>..\..\Libs\ASharpPen-Spawn_That\Valheim.SpawnThat.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+</Project>
