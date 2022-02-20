@@ -34,6 +34,8 @@ namespace Valheim.CustomRaids.Configuration.ConfigTypes
 
         public ConfigurationEntry<bool> WriteGlobalKeyDataToDisk = new ConfigurationEntry<bool>(false, "If enabled, scans existing global keys, and dumps to a file in the plugin folder.");
 
+        public ConfigurationEntry<string> DebugFileFolder = new("Debug", "Folder path to write to. Root folder is BepInEx.");
+
         #endregion
 
         #region EventSystem
@@ -78,6 +80,7 @@ namespace Valheim.CustomRaids.Configuration.ConfigTypes
             WritePostChangeEventDataToDisk.Bind(Config, "Debug", nameof(WritePostChangeEventDataToDisk));
             WriteEnvironmentDataToDisk.Bind(Config, "Debug", nameof(WriteEnvironmentDataToDisk));
             WriteGlobalKeyDataToDisk.Bind(Config, "Debug", nameof(WriteGlobalKeyDataToDisk));
+            DebugFileFolder.Bind(Config, "Debug", nameof(DebugFileFolder));
         }
     }
 }

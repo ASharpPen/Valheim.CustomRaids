@@ -108,7 +108,7 @@ namespace Valheim.CustomRaids.Raids.Managers
 
                 if (ConfigurationManager.GeneralConfig.WritePostChangeEventDataToDisk.Value)
                 {
-                    EventsWriter.WriteToFile(eventSystem.m_events, "custom_random_events.txt");
+                    EventsWriter.WriteToFile(eventSystem.m_events, "custom_random_events.txt", "random events (raids) after configuration");
                 }
             }
             catch (Exception e)

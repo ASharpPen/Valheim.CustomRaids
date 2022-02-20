@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.IO;
 using Valheim.CustomRaids.Configuration;
 using Valheim.CustomRaids.Core;
+using Valheim.CustomRaids.Utilities;
 
 namespace Valheim.CustomRaids
 {
@@ -17,8 +18,7 @@ namespace Valheim.CustomRaids
 			{
 				if (ConfigurationManager.GeneralConfig?.WriteEnvironmentDataToDisk?.Value == true)
 				{
-					string filePath = Path.Combine(Paths.PluginPath, "environments.txt");
-					Log.LogInfo($"Writing environments to {filePath}");
+                    string filePath = FileUtils.PrepareWriteDebugFile("environments.txt", "environments (aka. weather)");
 
 					var fields = typeof(EnvSetup).GetFields();
 					List<string> lines = new List<string>(__instance.m_environments.Count * fields.Length);
@@ -49,8 +49,7 @@ namespace Valheim.CustomRaids
 			{
 				if (ConfigurationManager.GeneralConfig?.WriteGlobalKeyDataToDisk?.Value == true)
 				{
-					string filePath = Path.Combine(Paths.PluginPath, "global_keys.txt");
-					Log.LogInfo($"Writing global keys to {filePath}");
+                    string filePath = FileUtils.PrepareWriteDebugFile("global_keys.txt", "global keys");
 					File.WriteAllLines(filePath, __instance.GetGlobalKeys());
 				}
 			}
