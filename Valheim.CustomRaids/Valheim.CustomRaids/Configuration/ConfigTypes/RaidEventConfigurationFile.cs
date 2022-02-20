@@ -66,19 +66,19 @@ namespace Valheim.CustomRaids.Configuration.ConfigTypes
 
         public ConfigurationEntry<float> ConditionDistanceToCenterMax = new(0, "Maximum distance to center for this raid to activate. 0 means limitless.");
 
-        public ConfigurationEntry<int> ConditionAltitudeMin = new(0, "Minimum altitude for raid to activate.");
+        public ConfigurationEntry<int> ConditionPlayersNearbyMin = new(0, "Minimum players in area for raid to activate.");
 
-        public ConfigurationEntry<int> ConditionAltitudeMax = new(0, "Maximum altitude for raid to activate.");
+        public ConfigurationEntry<int> ConditionPlayersNearbyMax = new(0, "Maximum players in area for raid to activate. 0 means no limit.");
 
-        public ConfigurationEntry<int> ConditionMinPlayersNearby = new(0, "Minimum players in area for raid to activate.");
+        public ConfigurationEntry<int> ConditionPlayersOnlineMin = new(0, "Minimum players online for raid to activate.");
 
-        public ConfigurationEntry<int> ConditionMaxPlayersNearby = new(0, "Maximum players in area for raid to activate. 0 means no limit.");
+        public ConfigurationEntry<int> ConditionPlayersOnlineMax = new(0, "Maximum players online for raid to activate. 0 means no limit.");
 
-        public ConfigurationEntry<int> ConditionMinPlayersOnline = new(0, "Minimum players online for raid to activate.");
+        public ConfigurationEntry<int> ConditionAltitudeMin = new(0, "Minimum altitude for raid to activate. Ignored if both min and max are 0.");
 
-        public ConfigurationEntry<int> ConditionMaxPlayersOnline = new(0, "Maximum players online for raid to activate. 0 means no limit.");
+        public ConfigurationEntry<int> ConditionAltitudeMax = new(0, "Maximum altitude for raid to activate. Ignored if both min and max are 0.");
 
-        public ConfigurationEntry<string> ConditionEnvironment = new("", "Environments enabling raid.");
+        public ConfigurationEntry<string> ConditionEnvironment = new("", "Environment enabling raid (only a single can be set). Leave empty for no requirement.");
 
         public ConfigurationEntry<bool> UseLocalSpawners = new(false, "Set if raid should try to use local spawners as spawnpoints. Intended for caves and dungeons.");
     }
