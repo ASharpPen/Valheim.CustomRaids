@@ -191,7 +191,7 @@ namespace Valheim.CustomRaids.Raids.Managers
                     m_outsideForest = spawnConfig.OutsideForest.Value,
                     m_spawnAtDay = spawnConfig.SpawnAtDay.Value,
                     m_spawnAtNight = spawnConfig.SpawnAtNight.Value,
-                    m_requiredGlobalKey = spawnConfig.RequiredGlobalKey.Value,
+                    m_requiredGlobalKey = spawnConfig.RequiredGlobalKey.Value,                    
                     m_requiredEnvironments = requiredEnvironments,
                     m_biome = (Heightmap.Biome)1023,
                     m_biomeArea = (Heightmap.BiomeArea)7,
@@ -225,6 +225,10 @@ namespace Valheim.CustomRaids.Raids.Managers
                 m_notRequiredGlobalKeys = notRequiredGlobalKeys,
                 m_requiredGlobalKeys = requiredGlobalKeys,
                 m_pauseIfNoPlayerInArea = raidEvent.PauseIfNoPlayerInArea.Value,
+                m_requireEnvironment = raidEvent.ConditionEnvironment.Value,
+                m_useStaticSpawners = raidEvent.UseLocalSpawners.Value,
+                m_minAltitude = raidEvent.ConditionAltitudeMin.Value,
+                m_maxAltitude = raidEvent.ConditionAltitudeMax.Value,
             };
 
             return newEvent;
@@ -245,12 +249,6 @@ namespace Valheim.CustomRaids.Raids.Managers
                     MaxDays = config.ConditionWorldAgeDaysMax?.Value,
                 });
             }
-
-            conditions.Add(new ConditionAltitude
-            {
-                MinAltitude = config.ConditionAltitudeMin?.Value,
-                MaxAltitude = config.ConditionAltitudeMax?.Value
-            });
 
             if (config.ConditionDistanceToCenterMin?.Value > 0 || config.ConditionDistanceToCenterMax?.Value > 0)
             {

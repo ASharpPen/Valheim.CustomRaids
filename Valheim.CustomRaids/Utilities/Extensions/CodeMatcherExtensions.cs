@@ -5,22 +5,41 @@ using System.Linq;
 using System.Reflection.Emit;
 using System.Text;
 using System.Threading.Tasks;
+using Valheim.CustomRaids.Core;
 
-namespace Valheim.CustomRaids.Utilities.Extensions
+namespace Valheim.CustomRaids.Utilities.Extensions;
+
+internal static class CodeMatcherExtensions
 {
-    internal static class CodeMatcherExtensions
+    internal static CodeMatcher Print(this CodeMatcher codeMatcher, int before, int after)
     {
-        public static CodeMatcher GetPosition(this CodeMatcher codeMatcher, out int position)
+#if DEBUG
+        for (int i = -before; i <= after; ++i)
         {
-            position = codeMatcher.Pos;
-            return codeMatcher;
-        }
+            int currentOffset = i;
+            int index = codeMatcher.Pos + currentOffset;
 
-        public static CodeMatcher AddLabel(this CodeMatcher codeMatcher, out Label label)
-        {
-            label = new Label();
-            codeMatcher.AddLabels(new[] { label });
-            return codeMatcher;
+            if (index <= 0)
+            {
+                continue;
+            }
+
+            if (index >= codeMatcher.Length)
+            {
+                break;
+            }
+
+            try
+            {
+                var line = codeMatcher.InstructionAt(currentOffset);
+                Log.LogTrace($"[{currentOffset}] " + line.ToString());
+            }
+            catch (Exception e)
+            {
+                Log.LogError(e.Message);
+            }
         }
+#endif
+        return codeMatcher;
     }
 }

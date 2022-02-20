@@ -20,55 +20,55 @@ namespace Valheim.CustomRaids.Configuration.ConfigTypes
             return new SpawnConfiguration();
         }
 
-        public ConfigurationEntry<bool> Enabled = new ConfigurationEntry<bool>(true, "Enable/disable raid configuration from being used.");
+        public ConfigurationEntry<string> Name = new("Deer Army", "Name of event. Can be used to override existing raid with same name.");
 
-        public ConfigurationEntry<bool> Random = new ConfigurationEntry<bool>(true, "Sets whether event is random or not. Eg. boss fights are events, but not random.");
+        public ConfigurationEntry<bool> Enabled = new(true, "Enable/disable raid.");
 
-        public ConfigurationEntry<string> Biomes = new ConfigurationEntry<string>("", "Array (separate by \",\") of biomes required to allow spawn.\nLeave empty for all");
+        public ConfigurationEntry<bool> Random = new(true, "Sets whether event is random or not. Eg. boss fights are events, but not random.");
 
-        public ConfigurationEntry<float> Duration = new ConfigurationEntry<float>(60, "Duration of raid in seconds.");
+        public ConfigurationEntry<string> Biomes = new("", "List of biomes required to allow spawn.\nLeave empty for all");
 
-        public ConfigurationEntry<string> StartMessage = new ConfigurationEntry<string>("Raid start", "Raid start message");
+        public ConfigurationEntry<float> Duration = new(60, "Duration of raid in seconds.");
 
-        public ConfigurationEntry<string> EndMessage = new ConfigurationEntry<string>("Raid done", "Raid end message");
+        public ConfigurationEntry<string> StartMessage = new("Raid start", "Message shown on raid start.");
 
-        public ConfigurationEntry<string> Name = new ConfigurationEntry<string>("Deer Army", "Raid name. Does not seem to hold any significant importance apart from being a unique identifier.");
+        public ConfigurationEntry<string> EndMessage = new("Raid done", "Message shown on raid end");
 
-        public ConfigurationEntry<bool> NearBaseOnly = new ConfigurationEntry<bool>(true, "Spawn raid near base only. Looks like this one might need to always be true due to the games valid spawn logic.");
+        public ConfigurationEntry<bool> NearBaseOnly = new(true, "Spawn raid near base only.");
 
-        public ConfigurationEntry<string> NotRequiredGlobalKeys = new ConfigurationEntry<string>("", "Array (separate by \",\") of required global keys. Leave empty for no requirement.");
+        public ConfigurationEntry<string> NotRequiredGlobalKeys = new("", "List of global keys disabling raid");
 
-        public ConfigurationEntry<string> RequiredGlobalKeys = new ConfigurationEntry<string>("", "Array (separate by \",\") of required global keys. Leave empty for no requirement.");
+        public ConfigurationEntry<string> RequiredGlobalKeys = new("", "List of required global keys. Leave empty for no requirement");
 
-        public ConfigurationEntry<string> RequireOneOfGlobalKeys = new ConfigurationEntry<string>("", "Array (separate by \",\") of global keys of which one is required. Leave empty for no requirement.");
+        public ConfigurationEntry<string> RequireOneOfGlobalKeys = new("", "List of global keys of which one is required. Leave empty for no requirement.");
 
-        public ConfigurationEntry<bool> PauseIfNoPlayerInArea = new ConfigurationEntry<bool>(true);
+        public ConfigurationEntry<bool> PauseIfNoPlayerInArea = new(true, "Raid timer freezes when no players are nearby.");
 
-        public ConfigurationEntry<string> ForceEnvironment = new ConfigurationEntry<string>("", "Environmental effect to set for raid.");
+        public ConfigurationEntry<string> ForceEnvironment = new("", "Name of weather/environment to set during raid.");
 
-        public ConfigurationEntry<string> ForceMusic = new ConfigurationEntry<string>("CombatEventL1", "Music to play for raid.");
+        public ConfigurationEntry<string> ForceMusic = new("CombatEventL1", "Name of music to play during raid.");
 
-        public ConfigurationEntry<float> ConditionWorldAgeDaysMin = new ConfigurationEntry<float>(0, "Minimum number of in-game days of the world, for this raid to be possible.");
+        public ConfigurationEntry<float> ConditionWorldAgeDaysMin = new(0, "Minimum number of in-game days of the world, for this raid to be possible.");
 
-        public ConfigurationEntry<float> ConditionWorldAgeDaysMax = new ConfigurationEntry<float>(0, "Maximum number of in-game days of the world, for this raid to be possible. 0 means no limit");
+        public ConfigurationEntry<float> ConditionWorldAgeDaysMax = new(0, "Maximum number of in-game days of the world, for this raid to be possible. 0 means no limit");
 
-        public ConfigurationEntry<bool> CanStartDuringDay = new ConfigurationEntry<bool>(true, "Enable/toggle this raid activating during day.");
+        public ConfigurationEntry<bool> CanStartDuringDay = new (true, "Raid can start during daytime.");
 
-        public ConfigurationEntry<bool> CanStartDuringNight = new ConfigurationEntry<bool>(true, "Enable/toggle this raid activating during night.");
+        public ConfigurationEntry<bool> CanStartDuringNight = new(true, "Raid can start during nighttime.");
 
-        public ConfigurationEntry<string> Faction = new ConfigurationEntry<string>("Boss", "Assign a faction to all entities in raid. See readme for faction options.");
+        public ConfigurationEntry<string> Faction = new("Boss", "Assign a single faction to all entities in raid. See readme for faction options.");
 
-        public ConfigurationEntry<float> RaidFrequency = new ConfigurationEntry<float>(0, "Minutes between checks for this raid to run. 0 uses game default (46 minutes). This is only used if UseIndividualRaidChecks is set in general config.");
+        public ConfigurationEntry<float> RaidFrequency = new (0, "Minutes between checks for this raid to run. 0 uses game default (46 minutes). This is only used if UseIndividualRaidChecks is set in general config.");
 
-        public ConfigurationEntry<float> RaidChance = new ConfigurationEntry<float>(0, "Chance at each check for this raid to run. 0 uses game default (20%). This is only used if UseIndividualRaidChecks is set in general config.");
+        public ConfigurationEntry<float> RaidChance = new(0, "Chance at each check for this raid to run. 0 uses game default (20%). This is only used if UseIndividualRaidChecks is set in general config.");
 
-        public ConfigurationEntry<float> ConditionDistanceToCenterMin = new ConfigurationEntry<float>(0, "Minimum distance to center for this raid to activate.");
+        public ConfigurationEntry<float> ConditionDistanceToCenterMin = new(0, "Minimum distance to center for this raid to activate.");
 
-        public ConfigurationEntry<float> ConditionDistanceToCenterMax = new ConfigurationEntry<float>(0, "Maximum distance to center for this raid to activate. 0 means limitless.");
+        public ConfigurationEntry<float> ConditionDistanceToCenterMax = new(0, "Maximum distance to center for this raid to activate. 0 means limitless.");
 
-        public ConfigurationEntry<float> ConditionAltitudeMin = new(-10000, "Minimum altitude for raid to activate.");
+        public ConfigurationEntry<int> ConditionAltitudeMin = new(0, "Minimum altitude for raid to activate.");
 
-        public ConfigurationEntry<float> ConditionAltitudeMax = new(10000, "Maximum altitude for raid to activate.");
+        public ConfigurationEntry<int> ConditionAltitudeMax = new(0, "Maximum altitude for raid to activate.");
 
         public ConfigurationEntry<int> ConditionMinPlayersNearby = new(0, "Minimum players in area for raid to activate.");
 
@@ -77,6 +77,10 @@ namespace Valheim.CustomRaids.Configuration.ConfigTypes
         public ConfigurationEntry<int> ConditionMinPlayersOnline = new(0, "Minimum players online for raid to activate.");
 
         public ConfigurationEntry<int> ConditionMaxPlayersOnline = new(0, "Maximum players online for raid to activate. 0 means no limit.");
+
+        public ConfigurationEntry<string> ConditionEnvironment = new("", "Environments enabling raid.");
+
+        public ConfigurationEntry<bool> UseLocalSpawners = new(false, "Set if raid should try to use local spawners as spawnpoints. Intended for caves and dungeons.");
     }
 
     [Serializable]
@@ -123,92 +127,92 @@ namespace Valheim.CustomRaids.Configuration.ConfigTypes
             }
         }
 
-        public ConfigurationEntry<string> Name = new ConfigurationEntry<string>("DeerALot", "Just a field for naming the configuration entry.");
+        public ConfigurationEntry<string> Name = new("DeerALot", "Spawn configuration name");
 
-        public ConfigurationEntry<bool> Enabled = new ConfigurationEntry<bool>(true, "Enable/disable this entry.");
+        public ConfigurationEntry<bool> Enabled = new(true, "Enable/disable this entry.");
 
-        public ConfigurationEntry<string> Biomes = new ConfigurationEntry<string>("", "Biomes in which entity can spawn. Leave empty for all.");
+        public ConfigurationEntry<string> Biomes = new("", "Biomes in which entity can spawn. Leave empty for all.");
 
         //public ConfigurationEntry<bool> DriveInward = new ConfigurationEntry<bool>(false, "Mobs always spawn towards the world edge from player.");
 
         //Bound to the spawner itself. Need to transpile in a change for this to work.
         //public ConfigurationEntry<float> LevelUpChance = new ConfigurationEntry<float>(10, "Chance to increase level above min. This is run multiple times. 100 is 100%.\nEg. if Chance is 10, LevelMin is 1 and LevelMax is 3, the game will have a 10% to become level 2. The game will then run an additional 10% check for increasing to level 3.");
 
-        public ConfigurationEntry<float> ConditionDistanceToCenterMin = new ConfigurationEntry<float>(0, "Minimum distance to center for entity to spawn.");
+        public ConfigurationEntry<float> ConditionDistanceToCenterMin = new(0, "Minimum distance to center of map for entity to spawn.");
 
-        public ConfigurationEntry<float> ConditionDistanceToCenterMax = new ConfigurationEntry<float>(0, "Maximum distance to center for entity to spawn. 0 means limitless.");
+        public ConfigurationEntry<float> ConditionDistanceToCenterMax = new(0, "Maximum distance to center of map for entity to spawn. 0 means limitless.");
 
-        public ConfigurationEntry<float> ConditionWorldAgeDaysMin = new ConfigurationEntry<float>(0, "Minimum world age in in-game days for this entity to spawn.");
+        public ConfigurationEntry<float> ConditionWorldAgeDaysMin = new(0, "Minimum world age in in-game days for this entity to spawn.");
 
-        public ConfigurationEntry<float> ConditionWorldAgeDaysMax = new ConfigurationEntry<float>(0, "Maximum world age in in-game days for this entity to spawn. 0 means no max.");
+        public ConfigurationEntry<float> ConditionWorldAgeDaysMax = new(0, "Maximum world age in in-game days for this entity to spawn. 0 means no max.");
 
-        public ConfigurationEntry<float> DistanceToTriggerPlayerConditions = new ConfigurationEntry<float>(100, "Distance of player to spawner, for player to be included in player based checks such as ConditionNearbyPlayersCarryValue.");
+        public ConfigurationEntry<float> DistanceToTriggerPlayerConditions = new(100, "Distance of player to spawner, for player to be included in player based checks such as ConditionNearbyPlayersCarryValue.");
 
-        public ConfigurationEntry<int> ConditionNearbyPlayersCarryValue = new ConfigurationEntry<int>(0, "Checks if nearby players have a combined value in inventory above this condition.\nEg. If set to 100, entry will only activate if nearby players have more than 100 worth of values combined.");
+        public ConfigurationEntry<int> ConditionNearbyPlayersCarryValue = new(0, "Checks if nearby players have a combined value in inventory above this condition.\nEg. If set to 100, entry will only activate if nearby players have more than 100 worth of values combined.");
 
-        public ConfigurationEntry<string> ConditionNearbyPlayerCarriesItem = new ConfigurationEntry<string>("", "Checks if nearby players have any of the listed item prefab names in inventory.\nEg. IronScrap, DragonEgg");
+        public ConfigurationEntry<string> ConditionNearbyPlayerCarriesItem = new("", "Checks if nearby players have any of the listed item prefab names in inventory.\nEg. IronScrap, DragonEgg");
 
-        public ConfigurationEntry<float> ConditionNearbyPlayersNoiseThreshold = new ConfigurationEntry<float>(0, "Checks if any nearby players have accumulated noise at or above the threshold.");
+        public ConfigurationEntry<float> ConditionNearbyPlayersNoiseThreshold = new(0, "Checks if any nearby players are emitting noise at or above the threshold.");
 
-        public ConfigurationEntry<string> RequiredNotGlobalKey = new ConfigurationEntry<string>("", "Array of global keys which disable the spawning of this entity if any are detected.\nEg. defeated_bonemass,KilledTroll");
+        public ConfigurationEntry<string> RequiredNotGlobalKey = new("", "Global keys which disable spawning.\nEg. defeated_bonemass,KilledTroll");
 
-        public ConfigurationEntry<string> Faction = new ConfigurationEntry<string>("", "Set custom faction for mob. This overrules the raids faction setting if set.");
+        public ConfigurationEntry<string> Faction = new("", "Set a single custom faction for mob. This overrules the raids faction setting if set.");
 
         #region Default Configuration Options
 
-        public ConfigurationEntry<string> PrefabName = new ConfigurationEntry<string>("Deer", "Prefab name of the entity to spawn.");
+        public ConfigurationEntry<string> PrefabName = new("Deer", "Prefab name of the entity to spawn.");
 
         public ConfigurationEntry<bool> HuntPlayer = new ConfigurationEntry<bool>(false, "Sets AI to hunt a player target.");
 
-        public ConfigurationEntry<int> MaxSpawned = new ConfigurationEntry<int>(1, "Maximum entities of type spawned in area.");
+        public ConfigurationEntry<int> MaxSpawned = new(1, "Maximum number of prefab spawned in local surroundings.");
 
-        public ConfigurationEntry<float> SpawnInterval = new ConfigurationEntry<float>(1, "Interval (seconds) between wave checks.");
+        public ConfigurationEntry<float> SpawnInterval = new(1, "Seconds between new spawn checks.");
 
-        public ConfigurationEntry<float> SpawnChancePerInterval = new ConfigurationEntry<float>(100, "Chance (0 to 100) to spawn new wave per check.");
+        public ConfigurationEntry<float> SpawnChancePerInterval = new(100, "Chance (0 to 100) to spawn new wave per check.");
 
-        public ConfigurationEntry<int> MinLevel = new ConfigurationEntry<int>(1, "Minimum level to spawn.");
+        public ConfigurationEntry<int> MinLevel = new(1, "Minimum level to spawn (2 is one star).");
 
-        public ConfigurationEntry<int> MaxLevel = new ConfigurationEntry<int>(1, "Maximum level to spawn.");
+        public ConfigurationEntry<int> MaxLevel = new(1, "Maximum level to spawn (2 is one star).");
 
         public ConfigurationEntry<float> LevelUpMinCenterDistance = new ConfigurationEntry<float>(0, "Minimum distance from world center, to allow higher than min level.");
 
-        public ConfigurationEntry<float> SpawnDistance = new ConfigurationEntry<float>(0, "Minimum distance to another entity.");
+        public ConfigurationEntry<float> SpawnDistance = new(0, "Must not have another spawn of same prefab within this distance for this template to spawn.");
 
-        public ConfigurationEntry<float> SpawnRadiusMin = new ConfigurationEntry<float>(0, "Minimum spawn radius.");
+        public ConfigurationEntry<float> SpawnRadiusMin = new(40, "Minimum spawn distance from player. 0 defaults to 40");
 
-        public ConfigurationEntry<float> SpawnRadiusMax = new ConfigurationEntry<float>(0, "Maximum spawn radius.");
+        public ConfigurationEntry<float> SpawnRadiusMax = new(80, "Maximum spawn distance from player. 0 defaults to 80");
 
-        public ConfigurationEntry<string> RequiredGlobalKey = new ConfigurationEntry<string>("", "Required global key to spawn.\nEg. defeated_bonemass");
+        public ConfigurationEntry<string> RequiredGlobalKey = new("", "Required global key to spawn.\nEg. defeated_bonemass");
 
-        public ConfigurationEntry<string> RequiredEnvironments = new ConfigurationEntry<string>("", "Array (separate by comma) of environments required to spawn in.\tEg. Misty, Thunderstorm. Leave empty to allow all.");
+        public ConfigurationEntry<string> RequiredEnvironments = new("", "List of environments enabling spawn in.\tEg. Misty, Thunderstorm. Leave empty to allow all.");
 
-        public ConfigurationEntry<int> GroupSizeMin = new ConfigurationEntry<int>(1, "Minimum count to spawn at per check.");
+        public ConfigurationEntry<int> GroupSizeMin = new(1, "Minimum count to spawn at a time. Group spawning.");
 
-        public ConfigurationEntry<int> GroupSizeMax = new ConfigurationEntry<int>(1, "Maximum count to spawn at per check.");
+        public ConfigurationEntry<int> GroupSizeMax = new(1, "Maximum count to spawn at a time. Group spawning.");
 
-        public ConfigurationEntry<float> GroupRadius = new ConfigurationEntry<float>(3, "Size of circle to spawn group inside.");
+        public ConfigurationEntry<float> GroupRadius = new(3, "Size of circle to spawn group inside. A spot within SpawnRadiusMin and SpawnRadiusMax will be picked as center of this circle.");
 
-        public ConfigurationEntry<float> GroundOffset = new ConfigurationEntry<float>(0.5f, "Offset to ground to spawn at.");
+        public ConfigurationEntry<float> GroundOffset = new(0.5f, "Offset to ground to spawn at. Negative means below ground, the higher the further into the sky.");
 
-        public ConfigurationEntry<bool> SpawnAtDay = new ConfigurationEntry<bool>(true, "Can spawn at day.");
+        public ConfigurationEntry<bool> SpawnAtDay = new(true, "Toggles spawning at day. Will also cause despawning for creatures at day if false.");
 
-        public ConfigurationEntry<bool> SpawnAtNight = new ConfigurationEntry<bool>(true, "Can spawn at night.");
+        public ConfigurationEntry<bool> SpawnAtNight = new(true, "Can spawn at night.");
 
-        public ConfigurationEntry<float> AltitudeMin = new ConfigurationEntry<float>(-1000, "Minimum altitude (distance to water surface) to spawn in.");
+        public ConfigurationEntry<float> AltitudeMin = new(-1000, "Minimum altitude (distance to water surface) to spawn in.");
 
-        public ConfigurationEntry<float> AltitudeMax = new ConfigurationEntry<float>(1000, "Maximum altitude (distance to water surface) to spawn in.");
+        public ConfigurationEntry<float> AltitudeMax = new(1000, "Maximum altitude (distance to water surface) to spawn in.");
 
-        public ConfigurationEntry<float> TerrainTiltMin = new ConfigurationEntry<float>(0, "Minium tilt of terrain to spawn in.");
+        public ConfigurationEntry<float> TerrainTiltMin = new(0, "Minimum tilt of terrain to spawn in.");
 
-        public ConfigurationEntry<float> TerrainTiltMax = new ConfigurationEntry<float>(35, "Maximum tilt of terrain to spawn in.");
+        public ConfigurationEntry<float> TerrainTiltMax = new(35, "Maximum tilt of terrain to spawn in.");
 
-        public ConfigurationEntry<bool> InForest = new ConfigurationEntry<bool>(true, "Toggles spawning in forest.");
+        public ConfigurationEntry<bool> InForest = new(true, "Toggles spawning in forest.");
 
-        public ConfigurationEntry<bool> OutsideForest = new ConfigurationEntry<bool>(true, "Toggles spawning outside of forest.");
+        public ConfigurationEntry<bool> OutsideForest = new(true, "Toggles spawning outside of forest.");
 
-        public ConfigurationEntry<float> OceanDepthMin = new ConfigurationEntry<float>(0, "Minimum ocean depth to spawn in. Ignored if min == max.");
+        public ConfigurationEntry<float> OceanDepthMin = new(0, "Minimum ocean depth to spawn in. Ignored if min == max.");
 
-        public ConfigurationEntry<float> OceanDepthMax = new ConfigurationEntry<float>(0, "Maximum ocean depth to spawn in. Ignored if min == max.");
+        public ConfigurationEntry<float> OceanDepthMax = new(0, "Maximum ocean depth to spawn in. Ignored if min == max.");
 
         #endregion
     }
