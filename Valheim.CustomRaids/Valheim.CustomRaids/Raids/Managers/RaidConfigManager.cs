@@ -243,10 +243,6 @@ namespace Valheim.CustomRaids.Raids.Managers
                 m_notRequiredGlobalKeys = notRequiredGlobalKeys,
                 m_requiredGlobalKeys = requiredGlobalKeys,
                 m_pauseIfNoPlayerInArea = raidEvent.PauseIfNoPlayerInArea.Value,
-                m_requireEnvironment = raidEvent.ConditionEnvironment.Value,
-                m_useStaticSpawners = raidEvent.UseLocalSpawners.Value,
-                m_minAltitude = raidEvent.ConditionAltitudeMin.Value,
-                m_maxAltitude = raidEvent.ConditionAltitudeMax.Value,
             };
 
             return newEvent;

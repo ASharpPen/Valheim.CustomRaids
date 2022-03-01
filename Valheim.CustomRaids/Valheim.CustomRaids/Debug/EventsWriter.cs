@@ -45,11 +45,6 @@ public static class EventsWriter
                 lines.Add($"{nameof(RaidEventConfiguration.PauseIfNoPlayerInArea)}={entry.m_pauseIfNoPlayerInArea}");
                 lines.Add($"{nameof(RaidEventConfiguration.ForceEnvironment)}={entry.m_forceEnvironment}");
                 lines.Add($"{nameof(RaidEventConfiguration.ForceMusic)}={entry.m_forceMusic}");
-                lines.Add($"{nameof(RaidEventConfiguration.ConditionAltitudeMin)}={entry.m_minAltitude}");
-                lines.Add($"{nameof(RaidEventConfiguration.ConditionAltitudeMax)}={entry.m_maxAltitude}");
-                lines.Add($"{nameof(RaidEventConfiguration.ConditionEnvironment)}={entry.m_requireEnvironment}");
-                lines.Add($"{nameof(RaidEventConfiguration.UseLocalSpawners)}={entry.m_useStaticSpawners}");
-
 
                 lines.Add("");
                 for (int i = 0; i < entry.m_spawn.Count; ++i)

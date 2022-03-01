@@ -79,8 +79,6 @@ namespace Valheim.CustomRaids.Configuration.ConfigTypes
         public ConfigurationEntry<int> ConditionAltitudeMax = new(0, "Maximum altitude for raid to activate. Ignored if both min and max are 0.");
 
         public ConfigurationEntry<string> ConditionEnvironment = new("", "Environment enabling raid (only a single can be set). Leave empty for no requirement.");
-
-        public ConfigurationEntry<bool> UseLocalSpawners = new(false, "Set if raid should try to use local spawners as spawnpoints. Intended for caves and dungeons.");
     }
 
     [Serializable]

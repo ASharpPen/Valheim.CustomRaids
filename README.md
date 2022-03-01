@@ -199,7 +199,6 @@ THIS is what usually makes most raids stumble. If the raid starts, but nothing s
 | ConditionAltitudeMin | int | 0 | Minimum altitude for raid to activate. Ignored if both min and max are 0 |
 | ConditionAltitudeMax | int | 0 | Maximum altitude for raid to activate. Ignored if both min and max are 0 |
 | ConditionEnvironment | string | | Environment enabling raid (only a single can be set). Leave empty for no requirement |
-| UseLocalSpawners | bool | false | Set if raid should try to use local spawners as spawnpoints. Intended for caves and dungeons |
 
 # The Details - Raid Spawns
 
