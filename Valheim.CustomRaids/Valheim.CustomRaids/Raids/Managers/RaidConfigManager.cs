@@ -243,10 +243,6 @@ namespace Valheim.CustomRaids.Raids.Managers
                 m_notRequiredGlobalKeys = notRequiredGlobalKeys,
                 m_requiredGlobalKeys = requiredGlobalKeys,
                 m_pauseIfNoPlayerInArea = raidEvent.PauseIfNoPlayerInArea.Value,
-                m_requireEnvironment = raidEvent.ConditionEnvironment.Value,
-                m_useStaticSpawners = raidEvent.UseLocalSpawners.Value,
-                m_minAltitude = raidEvent.ConditionAltitudeMin.Value,
-                m_maxAltitude = raidEvent.ConditionAltitudeMax.Value,
             };
 
             return newEvent;
@@ -300,6 +296,19 @@ namespace Valheim.CustomRaids.Raids.Managers
                     MaxPlayersOnline = config.ConditionPlayersOnlineMax?.Value
                 });
             }
+
+            conditions.Add(new ConditionAltitude()
+            {
+                Min = config.ConditionAltitudeMin?.Value,
+                Max = config.ConditionAltitudeMax?.Value,
+            });
+
+            if (!string.IsNullOrWhiteSpace(config.ConditionEnvironment?.Value))
+            {
+                conditions.Add(new ConditionEnvironment(config.ConditionEnvironment.Value.SplitByComma()));
+            }
+
+            raid.Conditions = conditions;
 
             RaidManager.RegisterRaid(randomEvent, raid);
         }

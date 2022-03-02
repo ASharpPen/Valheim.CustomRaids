@@ -26,6 +26,9 @@
     <Reference Include="UnityEngine.CoreModule">
       <HintPath>..\..\Libs\Unity\UnityEngine.CoreModule.dll</HintPath>
     </Reference>
+    <Reference Include="UnityEngine.PhysicsModule">
+      <HintPath>..\..\Libs\Unity\UnityEngine.PhysicsModule.dll</HintPath>
+    </Reference>
     <Reference Include="Valheim.EnhancedProgressTracker">
       <HintPath>..\..\Libs\ASharpPen-Enhanced_Progress_Tracker\Valheim.EnhancedProgressTracker.dll</HintPath>
     </Reference>

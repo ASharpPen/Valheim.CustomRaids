@@ -131,7 +131,6 @@ namespace Valheim.CustomRaids.RaidFrequencyOverhaul
                         continue;
                     }
 
-
                     List<Vector3> possibleRaidCenterPositions = GetRaidCenters(randomEventSystem, randomEvent, allCharacterZDOS.ToList());
 
                     if (possibleRaidCenterPositions.Count != 0)

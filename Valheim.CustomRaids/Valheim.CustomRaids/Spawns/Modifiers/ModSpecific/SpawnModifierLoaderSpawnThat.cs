@@ -6,7 +6,7 @@ namespace Valheim.CustomRaids.Spawns.Modifiers.ModSpecific
 {
     public static class SpawnModifierLoaderSpawnThat
     {
-        public static bool InstalledSpawnThat { get; } = Type.GetType("SpawnThat.SpawnThatPlugin, SpawnThat") is not null;
+        public static bool InstalledSpawnThat { get; } = BepInEx.Bootstrap.Chainloader.PluginInfos.ContainsKey("asharppen.valheim.spawn_that");
 
         public static SpawnModifierSetRelentless SetRelentless
         {
