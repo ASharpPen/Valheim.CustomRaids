@@ -7,7 +7,7 @@ namespace Valheim.CustomRaids.Spawns.Modifiers.ModSpecific
     internal static class SpawnModifierLoaderCLLC
     {
         public static bool InstalledCLLC { get; } = Type.GetType("CreatureLevelControl.API, CreatureLevelControl") is not null;
-
+       
         public static SpawnModifierBossAffix BossAffix
         {
             get

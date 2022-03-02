@@ -297,6 +297,19 @@ namespace Valheim.CustomRaids.Raids.Managers
                 });
             }
 
+            conditions.Add(new ConditionAltitude()
+            {
+                Min = config.ConditionAltitudeMin?.Value,
+                Max = config.ConditionAltitudeMax?.Value,
+            });
+
+            if (!string.IsNullOrWhiteSpace(config.ConditionEnvironment?.Value))
+            {
+                conditions.Add(new ConditionEnvironment(config.ConditionEnvironment.Value.SplitByComma()));
+            }
+
+            raid.Conditions = conditions;
+
             RaidManager.RegisterRaid(randomEvent, raid);
         }
     }
