@@ -71,6 +71,8 @@ If you feel like it
 <a href="https://www.buymeacoffee.com/asharppen"><img src="https://img.buymeacoffee.com/button-api/?text=Buy me a coffee&emoji=&slug=asharppen&button_colour=FFDD00&font_colour=000000&font_family=Cookie&outline_colour=000000&coffee_colour=ffffff" /></a>
 
 # Changelog 
+- v1.5.1:
+	- Fixed an unintentional reference to SpawnThat, causing an error when not installed.
 - v1.5.0:
 	- Added new raid conditions; altitude and environment.
 	- Additional error handling.
