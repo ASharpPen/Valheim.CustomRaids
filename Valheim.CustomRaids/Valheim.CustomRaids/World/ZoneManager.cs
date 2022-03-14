@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using HarmonyLib;
-using SpawnThat.Lifecycle;
+using Valheim.CustomRaids.Resetter;
 using Valheim.CustomRaids.Utilities.Extensions;
 
 namespace Valheim.CustomRaids.World;
@@ -12,9 +12,10 @@ internal class ZoneManager
 
     static ZoneManager()
     {
-        LifecycleManager.SubscribeToWorldInit(() =>
+        StateResetter.Subscribe(() =>
         {
             SimulatedCache = new();
+
         });
     }
 
