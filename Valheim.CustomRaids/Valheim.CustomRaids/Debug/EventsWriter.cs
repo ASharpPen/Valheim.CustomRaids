@@ -18,7 +18,14 @@ public static class EventsWriter
     [HarmonyPrefix]
     public static void WriteLocationEvents()
     {
-        WriteToFile(LocationList.GetAllLocationLists().SelectMany(x => x.m_events).ToList(), "default_location_random_events.txt", "random events (raids) for specific locations, eg. caves,");
+        try
+        {
+            WriteToFile(LocationList.GetAllLocationLists().SelectMany(x => x.m_events).ToList(), "default_location_random_events.txt", "random events (raids) for specific locations, eg. caves,");
+        }
+        catch(Exception e)
+        {
+            Log.LogWarning("Error during attempt at writing default location specific random events to file.", e);
+        }
     }
 
     public static void WriteToFile(List<RandomEvent> events, string fileName = "default_random_events.txt", string logDescription = "random events (raids)")
