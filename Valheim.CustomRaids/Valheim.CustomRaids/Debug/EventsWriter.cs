@@ -43,7 +43,7 @@ public static class EventsWriter
                 lines.Add($"{nameof(RaidEventConfiguration.Enabled)}={entry.m_enabled}");
                 lines.Add($"{nameof(RaidEventConfiguration.Random)}={entry.m_random}");
                 lines.Add($"{nameof(RaidEventConfiguration.Biomes)}={BiomeArray(entry.m_biome)}");
-                lines.Add($"{nameof(RaidEventConfiguration.Duration)}={entry.m_duration}");
+                lines.Add($"{nameof(RaidEventConfiguration.Duration)}={entry.m_duration.ToString(CultureInfo.InvariantCulture)}");
                 lines.Add($"{nameof(RaidEventConfiguration.StartMessage)}={entry.m_startMessage}");
                 lines.Add($"{nameof(RaidEventConfiguration.EndMessage)}={entry.m_endMessage}");
                 lines.Add($"{nameof(RaidEventConfiguration.NearBaseOnly)}={entry.m_nearBaseOnly}");

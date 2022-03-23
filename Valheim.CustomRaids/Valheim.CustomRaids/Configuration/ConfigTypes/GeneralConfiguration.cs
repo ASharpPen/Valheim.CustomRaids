@@ -22,17 +22,17 @@ namespace Valheim.CustomRaids.Configuration.ConfigTypes
 
         #region Debug
 
-        public ConfigurationEntry<bool> DebugOn = new ConfigurationEntry<bool>(false, "Enables debug logging.");
+        public ConfigurationEntry<bool> DebugOn = new(false, "Enables debug logging.");
 
-        public ConfigurationEntry<bool> TraceLogging = new ConfigurationEntry<bool>(false, "Enables trace logging. Note, this will generate a LOT of log entries.");
+        public ConfigurationEntry<bool> TraceLogging = new(false, "Enables trace logging. Note, this will generate a LOT of log entries.");
 
-        public ConfigurationEntry<bool> WriteDefaultEventDataToDisk = new ConfigurationEntry<bool>(false, "If enabled, scans existing raid event data, and dumps to a file.");
+        public ConfigurationEntry<bool> WriteDefaultEventDataToDisk = new(false, "If enabled, scans existing raid event data, and dumps to a file.");
 
-        public ConfigurationEntry<bool> WritePostChangeEventDataToDisk = new ConfigurationEntry<bool>(false, "If enabled, dumps raid event data after applying configuration to a file.");
+        public ConfigurationEntry<bool> WritePostChangeEventDataToDisk = new(false, "If enabled, dumps raid event data after applying configuration to a file.");
 
-        public ConfigurationEntry<bool> WriteEnvironmentDataToDisk = new ConfigurationEntry<bool>(false, "If enabled, scans existing environment (weather) data, and dumps to a file.");
+        public ConfigurationEntry<bool> WriteEnvironmentDataToDisk = new(false, "If enabled, scans existing environment (weather) data, and dumps to a file.");
 
-        public ConfigurationEntry<bool> WriteGlobalKeyDataToDisk = new ConfigurationEntry<bool>(false, "If enabled, scans existing global keys, and dumps to a file.");
+        public ConfigurationEntry<bool> WriteGlobalKeyDataToDisk = new(false, "If enabled, scans existing global keys, and dumps to a file.");
 
         public ConfigurationEntry<string> DebugFileFolder = new("Debug", "Folder path to write to. Root folder is BepInEx.");
 
@@ -40,21 +40,21 @@ namespace Valheim.CustomRaids.Configuration.ConfigTypes
 
         #region EventSystem
 
-        public ConfigurationEntry<bool> RemoveAllExistingRaids = new ConfigurationEntry<bool>(false, "If enabled, removes all existing raids and only allows configured. Will only remove non-random events, leaving boss events as is.");
+        public ConfigurationEntry<bool> RemoveAllExistingRaids = new(false, "If enabled, removes all existing raids and only allows configured. Will only remove non-random events, leaving boss events as is.");
 
-        public ConfigurationEntry<bool> OverrideExisting = new ConfigurationEntry<bool>(true, "Enable/disable override of existing events when event names match.");
+        public ConfigurationEntry<bool> OverrideExisting = new(true, "Enable/disable override of existing events when event names match.");
 
-        public ConfigurationEntry<float> EventCheckInterval = new ConfigurationEntry<float>(46f, "Frequency between checks for new raids. Value is in minutes");
+        public ConfigurationEntry<float> EventCheckInterval = new(46f, "Frequency between checks for new raids. Value is in minutes");
 
-        public ConfigurationEntry<float> EventTriggerChance = new ConfigurationEntry<float>(20f, "Chance of raid, per check interval. 100 is 100%.");
+        public ConfigurationEntry<float> EventTriggerChance = new(20f, "Chance of raid, per check interval. 100 is 100%.");
 
         #endregion
 
         #region IndividualRaids
 
-        public ConfigurationEntry<bool> UseIndividualRaidChecks = new ConfigurationEntry<bool>(false, "If enabled, Custom Raids will overhaul the games way of checking for raids.\nThis allows for setting individual frequences and chances for each raid.\nThis overhaul gives each raid it's own timer, independent of each other and can therefore cause a LOT of raids. MinTimeBetweenRaids can be used to ensure they don't happen too often.");
+        public ConfigurationEntry<bool> UseIndividualRaidChecks = new(false, "If enabled, Custom Raids will overhaul the games way of checking for raids.\nThis allows for setting individual frequences and chances for each raid.\nThis overhaul gives each raid it's own timer, independent of each other and can therefore cause a LOT of raids. MinTimeBetweenRaids can be used to ensure they don't happen too often.");
 
-        public ConfigurationEntry<float> MinimumTimeBetweenRaids = new ConfigurationEntry<float>(46, "If overhaul is enabled, ensures a minimum amount of minutes between each raid.");
+        public ConfigurationEntry<float> MinimumTimeBetweenRaids = new(46, "If overhaul is enabled, ensures a minimum amount of minutes between each raid.");
 
         #endregion
 
