@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Valheim.CustomRaids.Compatibilities;
 using Valheim.CustomRaids.Conditions;
+using Valheim.CustomRaids.Core;
 
 namespace Valheim.CustomRaids.Patches;
 
