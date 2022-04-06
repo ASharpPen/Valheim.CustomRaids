@@ -1,82 +1,88 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 using Valheim.CustomRaids.Configuration.ConfigTypes;
 using Valheim.CustomRaids.Core;
 using Valheim.CustomRaids.Utilities.Extensions;
+using Valheim.CustomRaids.Utilities;
 
-namespace Valheim.CustomRaids.Spawns.Conditions
+namespace Valheim.CustomRaids.Spawns.Conditions;
+
+public class ConditionNearbyPlayersCarryItem : ISpawnCondition
 {
-    public class ConditionNearbyPlayersCarryItem : ISpawnCondition
-    {
-        private static ConditionNearbyPlayersCarryItem _instance;
+    private static ConditionNearbyPlayersCarryItem _instance;
 
-        public static ConditionNearbyPlayersCarryItem Instance
+    public static ConditionNearbyPlayersCarryItem Instance => _instance ??= new ConditionNearbyPlayersCarryItem();
+
+    public bool ShouldFilter(SpawnSystem spawner, SpawnSystem.SpawnData spawn, SpawnConfiguration config)
+    {
+        if (!spawner || !spawner.transform || spawner is null || config is null || spawner.transform?.position is null)
         {
-            get
-            {
-                return _instance ??= new ConditionNearbyPlayersCarryItem();
-            }
+            return false;
         }
 
-        public bool ShouldFilter(SpawnSystem spawner, SpawnSystem.SpawnData spawn, SpawnConfiguration config)
+        if (IsValid(spawner.transform.position, config))
         {
-            if (!spawner || !spawner.transform || spawner is null || config is null || spawner.transform?.position is null)
+            return false;
+        }
+
+        Log.LogTrace($"Filtering spawn [{config.SectionKey}] due to not finding any required items on nearby players.");
+        return true;
+    }
+
+    public bool IsValid(Vector3 pos, SpawnConfiguration config)
+    {
+        if ((config.DistanceToTriggerPlayerConditions?.Value ?? 0) <= 0)
+        {
+            return true;
+        }
+
+        if (string.IsNullOrWhiteSpace(config.ConditionNearbyPlayerCarriesItem?.Value))
+        {
+            return true;
+        }
+
+        List<Player> players = PlayerUtils.GetPlayersInRadius(pos, config.DistanceToTriggerPlayerConditions.Value);
+
+        var itemsSearchedFor = config.ConditionNearbyPlayerCarriesItem?.Value?.SplitByComma(true)?.ToHashSet();
+
+        if (itemsSearchedFor?.Any() != true)
+        {
+            return true;
+        }
+
+        foreach (var player in players)
+        {
+            if (player.IsNull())
             {
-                return false;
+                continue;
             }
 
-            if ((config.DistanceToTriggerPlayerConditions?.Value ?? 0) <= 0)
+            var items = player.GetInventory()?.GetAllItems() ?? new(0);
+
+            foreach (var item in items)
             {
-                return false;
-            }
+                var itemPrefab = item?.m_dropPrefab;
 
-            if (string.IsNullOrWhiteSpace(config.ConditionNearbyPlayerCarriesItem?.Value))
-            {
-                return false;
-            }
-
-            List<Player> players = new List<Player>();
-            Player.GetPlayersInRange(spawner.transform.position, config.DistanceToTriggerPlayerConditions.Value, players);
-
-            var itemsLookedFor = config.ConditionNearbyPlayerCarriesItem?.Value?.SplitByComma(true)?.ToHashSet();
-
-            if (itemsLookedFor is null)
-            {
-                return false;
-            }
-
-            foreach (var player in players.Where(x => x is not null && x))
-            {
-                var items = player.GetInventory()?.GetAllItems();
-
-                if (items is null)
+                if (itemPrefab.IsNull())
                 {
                     continue;
                 }
 
-                foreach (var item in items)
+                string itemName = itemPrefab.name.Trim().ToUpperInvariant();
+
+                if (string.IsNullOrWhiteSpace(itemName))
                 {
-                    if (item is null)
-                    {
-                        continue;
-                    }
+                    continue;
+                }
 
-                    string itemName = item.m_dropPrefab?.name?.Trim()?.ToUpperInvariant();
-
-                    if (string.IsNullOrWhiteSpace(itemName))
-                    {
-                        continue;
-                    }
-
-                    if (itemsLookedFor.Contains(itemName))
-                    {
-                        return false;
-                    }
+                if (itemsSearchedFor.Contains(itemName))
+                {
+                    return true;
                 }
             }
-
-            Log.LogTrace($"Filtering spawn {spawn.m_name} due to not finding any required items on nearby players.");
-            return true;
         }
+
+        return false;
     }
 }

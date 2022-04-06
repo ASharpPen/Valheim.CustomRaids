@@ -1,65 +1,60 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
+using UnityEngine;
 using Valheim.CustomRaids.Configuration.ConfigTypes;
 using Valheim.CustomRaids.Core;
-using Valheim.CustomRaids.Core.Cache;
+using Valheim.CustomRaids.Utilities;
 
-namespace Valheim.CustomRaids.Spawns.Conditions
+namespace Valheim.CustomRaids.Spawns.Conditions;
+
+public class ConditionNearbyPlayersNoise : ISpawnCondition
 {
-    public class ConditionNearbyPlayersNoise : ISpawnCondition
-    {
-        private static ConditionNearbyPlayersNoise _instance;
+    private static ConditionNearbyPlayersNoise _instance;
 
-        public static ConditionNearbyPlayersNoise Instance
+    public static ConditionNearbyPlayersNoise Instance => _instance ??= new ConditionNearbyPlayersNoise();
+
+    public bool ShouldFilter(SpawnSystem spawner, SpawnSystem.SpawnData spawn, SpawnConfiguration config)
+    {
+        if (!spawner || !spawner.transform || spawner is null || config is null || spawner.transform?.position is null)
         {
-            get
-            {
-                return _instance ??= new ConditionNearbyPlayersNoise();
-            }
+            return false;
         }
 
-        public bool ShouldFilter(SpawnSystem spawner, SpawnSystem.SpawnData spawn, SpawnConfiguration config)
+        if (IsValid(spawner.transform.position, config))
         {
-            if (!spawner || !spawner.transform || spawner is null || config is null || spawner.transform?.position is null)
-            {
-                return false;
-            }
+            return false;
+        }
 
-            if ((config.DistanceToTriggerPlayerConditions?.Value ?? 0) <= 0)
-            {
-                return false;
-            }
+        Log.LogTrace($"Filtering spawn [{config.SectionKey}] due to not having any nearby players emitting noise of {config.ConditionNearbyPlayersNoiseThreshold.Value} or higher.");
+        return true;
+    }
 
-            if (config.ConditionNearbyPlayersNoiseThreshold.Value == 0)
-            {
-                return false;
-            }
-
-            List<Player> players = new List<Player>();
-            Player.GetPlayersInRange(spawner.transform.position, config.DistanceToTriggerPlayerConditions.Value, players);
-
-            foreach (var player in players.Where(x => x && x is not null))
-            {
-                Log.LogTrace($"Checking noise of player {player.GetPlayerName()}");
-
-                var zdo = ZdoCache.GetZdo(player.gameObject);
-                if (zdo is not null)
-                {
-                    var noise = zdo.GetFloat("noise", 0);
-
-                    if (noise >= config.ConditionNearbyPlayersNoiseThreshold.Value)
-                    {
-                        return false;
-                    }
-                    else
-                    {
-                        Log.LogTrace($"Player {player.GetPlayerName()} have accumulated noise of {noise}");
-                    }
-                }
-            }
-
-            Log.LogTrace($"Ignoring spawn {config.Name} due to not having any nearby noisy players.");
+    public bool IsValid(Vector3 pos, SpawnConfiguration config)
+    {
+        if ((config.DistanceToTriggerPlayerConditions?.Value ?? 0) <= 0)
+        {
             return true;
         }
+
+        if ((config.ConditionNearbyPlayersNoiseThreshold?.Value ?? 0) == 0)
+        {
+            return true;
+        }
+
+        List<ZDO> players = PlayerUtils.GetPlayerZdosInRadius(pos, config.DistanceToTriggerPlayerConditions.Value);
+
+        foreach (var player in players)
+        {
+            if (player is null)
+            {
+                continue;
+            }
+
+            if (player.GetFloat("noise", 0) >= config.ConditionNearbyPlayersNoiseThreshold.Value)
+            {
+                return true;
+            }
+        }
+
+        return false;
     }
 }
