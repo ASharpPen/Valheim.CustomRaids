@@ -2,60 +2,59 @@
 using Valheim.CustomRaids.Core;
 using Valheim.CustomRaids.Core.Cache;
 
-namespace Valheim.CustomRaids.Spawns.Modifiers.General
-{
-    class SpawnModifierSetFaction : ISpawnModifier
-    {
-        private static SpawnModifierSetFaction _instance;
+namespace Valheim.CustomRaids.Spawns.Modifiers.General;
 
-        public static SpawnModifierSetFaction Instance
+public class SpawnModifierSetFaction : ISpawnModifier
+{
+    private static SpawnModifierSetFaction _instance;
+
+    public static SpawnModifierSetFaction Instance
+    {
+        get
         {
-            get
-            {
-                return _instance ??= new SpawnModifierSetFaction();
-            }
+            return _instance ??= new SpawnModifierSetFaction();
+        }
+    }
+
+    public void Modify(SpawnContext context)
+    {
+        if (context.Spawn is null)
+        {
+            return;
         }
 
-        public void Modify(SpawnContext context)
+        var character = ComponentCache.GetComponent<Character>(context.Spawn);
+
+        if (character is null)
         {
-            if (context.Spawn is null)
+            return;
+        }
+
+        string factionName = null;
+
+        if (!string.IsNullOrWhiteSpace(context.Config.Faction.Value))
+        {
+            factionName = context.Config.Faction.Value;
+        }
+        else if (!string.IsNullOrWhiteSpace(context.RaidConfig.Faction.Value))
+        {
+            factionName = context.RaidConfig.Faction.Value;
+        }
+
+        Character.Faction creatureFaction = Character.Faction.Boss;
+
+        if (!string.IsNullOrWhiteSpace(factionName))
+        {
+            if (!Enum.TryParse(factionName.Trim(), true, out creatureFaction))
             {
-                return;
+                Log.LogWarning($"Failed to parse faction '{factionName}', defaulting to Boss.");
             }
-
-            var character = ComponentCache.GetComponent<Character>(context.Spawn);
-
-            if (character is null)
-            {
-                return;
-            }
-
-            string factionName = null;
-
-            if (!string.IsNullOrWhiteSpace(context.Config.Faction.Value))
-            {
-                factionName = context.Config.Faction.Value;
-            }
-            else if(!string.IsNullOrWhiteSpace(context.RaidConfig.Faction.Value))
-            {
-                factionName = context.RaidConfig.Faction.Value;
-            }
-
-            Character.Faction creatureFaction = Character.Faction.Boss;
-
-            if (!string.IsNullOrWhiteSpace(factionName))
-            {
-                if (!Enum.TryParse(factionName.Trim(), out creatureFaction))
-                {
-                    Log.LogWarning($"Failed to parse faction '{factionName}', defaulting to Boss.");
-                }
-            }
+        }
 
 #if DEBUG
-            Log.LogDebug($"Setting faction {creatureFaction}");
+        Log.LogDebug($"Setting faction {creatureFaction}");
 #endif
-            character.m_faction = creatureFaction;
-            ZdoCache.GetZdo(context.Spawn).Set("faction", (int)creatureFaction);
-        }
+        character.m_faction = creatureFaction;
+        ZdoCache.GetZdo(context.Spawn).Set("faction", (int)creatureFaction);
     }
 }
