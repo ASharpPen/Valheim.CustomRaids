@@ -308,6 +308,30 @@ namespace Valheim.CustomRaids.Raids.Managers
                 conditions.Add(new ConditionEnvironment(config.ConditionEnvironment.Value.SplitByComma()));
             }
 
+            if (!string.IsNullOrWhiteSpace(config.ConditionMustBeNearPrefab?.Value))
+            {
+                int distance = config.ConditionMustBeNearPrefabDistance?.Value ?? 100;
+                var prefabs = config.ConditionMustBeNearPrefab.Value.SplitByComma();
+
+                conditions.Add(new ConditionMustBeNearPrefab(distance, prefabs));
+            }
+
+            if (!string.IsNullOrWhiteSpace(config.ConditionMustBeNearAllPrefabs?.Value))
+            {
+                int distance = config.ConditionMustBeNearAllPrefabsDistance?.Value ?? 100;
+                var prefabs = config.ConditionMustBeNearAllPrefabs.Value.SplitByComma();
+
+                conditions.Add(new ConditionMustBeNearAllPrefabs(distance, prefabs));
+            }
+
+            if (!string.IsNullOrWhiteSpace(config.ConditionMustNotBeNearPrefab?.Value))
+            {
+                int distance = config.ConditionMustNotBeNearPrefabDistance?.Value ?? 100;
+                var prefabs = config.ConditionMustNotBeNearPrefab.Value.SplitByComma();
+
+                conditions.Add(new ConditionMustNotBeNearPrefab(distance, prefabs));
+            }
+
             raid.Conditions = conditions;
 
             RaidManager.RegisterRaid(randomEvent, raid);

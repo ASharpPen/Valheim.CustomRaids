@@ -41,6 +41,14 @@ internal class ZoneManager
         [HarmonyPostfix]
         private static void Record(Heightmap __instance)
         {
+            // Sometimes distant heightmaps are generated, we need to skip those.
+            // Not sure whats going on here, but they get generated in inconsistent positions
+            // that do not fit on the zone grid.
+            if (!__instance.m_isDistantLod)
+            {
+                return;
+            }
+
             var zoneId = __instance.gameObject.transform.position.GetZoneId();
 
             HeightmapsLoaded[zoneId] = new ZoneHeightmap(__instance);
