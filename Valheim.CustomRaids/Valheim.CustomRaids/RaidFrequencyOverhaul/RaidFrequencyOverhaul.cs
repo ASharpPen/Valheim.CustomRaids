@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using UnityEngine;
-using Valheim.CustomRaids.Conditions;
 using Valheim.CustomRaids.Configuration;
 using Valheim.CustomRaids.Core;
 using Valheim.CustomRaids.Raids;
@@ -17,7 +16,7 @@ namespace Valheim.CustomRaids.RaidFrequencyOverhaul
         /// <summary>
         /// Take control over raid checking.
         /// </summary>
-        [HarmonyPatch("UpdateRandomEvent")]
+        [HarmonyPatch(nameof(RandEventSystem.UpdateRandomEvent))]
         [HarmonyPrefix]
         private static bool UpdateIndividualRandomEvents(RandEventSystem __instance, float dt, ref float ___m_eventTimer, ref float ___m_sendTimer)
         {
@@ -29,6 +28,12 @@ namespace Valheim.CustomRaids.RaidFrequencyOverhaul
             if(!ZNet.instance.IsServer())
             {
                 return true;
+            }
+
+            if (ConfigurationManager.GeneralConfig.PauseEventTimersWhileOffline.Value &&
+                ZNet.instance.GetAllCharacterZDOS().Count == 0)
+            {
+                return false;
             }
 
             ___m_eventTimer += dt;
