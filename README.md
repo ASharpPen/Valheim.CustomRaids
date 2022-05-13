@@ -20,7 +20,6 @@ Enable those raids at own risk!
 - Supplemental raid configurations. Add your own raid in its own file, and Custom Raids will scan and apply it. 
 - Potential for hours of frustration/fun as you figure out how to best configure these damn things to work as expected.
 - Server-side configurations
-- Fixed bug with raids only being able to spawn near player bases.
 - Support for [Creature Level and Loot Control](https://www.nexusmods.com/valheim/mods/495)
 
 # Documentation
@@ -71,6 +70,12 @@ If you feel like it
 <a href="https://www.buymeacoffee.com/asharppen"><img src="https://img.buymeacoffee.com/button-api/?text=Buy me a coffee&emoji=&slug=asharppen&button_colour=FFDD00&font_colour=000000&font_family=Cookie&outline_colour=000000&coffee_colour=ffffff" /></a>
 
 # Changelog 
+- v1.6.0:
+	- Added server setting for pausing raid timers while no players are online. Enabled by default.
+	- Added raid condition ConditionMustBeNearPrefab for checking if any of the listed prefabs is nearby.
+	- Added raid condition ConditionMustBeNearAllPrefabs for checking if all of the listed prefabs are nearby.
+	- Added raid condition ConditionMustNotBeNearPrefab for ensuring none of the listed prefabs are nearby.
+	- Added action for starting new raid on raid stop.
 - v1.5.3:
 	- Fixed issue with spawning on mountains due to distance check from player including height.
 	- Fixed spawn SetFaction modifier being case-sensitive.
