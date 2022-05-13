@@ -4,6 +4,7 @@ using Valheim.CustomRaids.Configuration;
 using Valheim.CustomRaids.Configuration.ConfigTypes;
 using Valheim.CustomRaids.Core;
 using Valheim.CustomRaids.Debug;
+using Valheim.CustomRaids.Raids.Actions;
 using Valheim.CustomRaids.Raids.Conditions;
 using Valheim.CustomRaids.Resetter;
 using Valheim.CustomRaids.Spawns.Caches;
@@ -252,7 +253,14 @@ namespace Valheim.CustomRaids.Raids.Managers
         {
             var raid = new Raid(randomEvent.m_name);
 
-            // Set raid conditions.
+            raid.Conditions = LoadConditions(config);
+            raid.OnStopActions = LoadOnStopActions(config);
+
+            RaidManager.RegisterRaid(randomEvent, raid);
+        }
+
+        private static List<IRaidCondition> LoadConditions(RaidEventConfiguration config)
+        {
             List<IRaidCondition> conditions = new List<IRaidCondition>();
 
             if (config.ConditionWorldAgeDaysMin?.Value > 0 || config.ConditionWorldAgeDaysMax?.Value > 0)
@@ -332,9 +340,19 @@ namespace Valheim.CustomRaids.Raids.Managers
                 conditions.Add(new ConditionMustNotBeNearPrefab(distance, prefabs));
             }
 
-            raid.Conditions = conditions;
+            return conditions;
+        }
 
-            RaidManager.RegisterRaid(randomEvent, raid);
+        private static List<IRaidAction> LoadOnStopActions(RaidEventConfiguration config)
+        {
+            List<IRaidAction> actions = new();
+
+            if (!string.IsNullOrWhiteSpace(config.OnStopStartRaid?.Value))
+            {
+                actions.Add(new StartRaidAction(config.OnStopStartRaid.Value));
+            }
+
+            return actions;
         }
     }
 }
