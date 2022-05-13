@@ -18,6 +18,8 @@ namespace Valheim.CustomRaids.Configuration.ConfigTypes
 
         public ConfigurationEntry<bool> GeneratePresetRaids = new ConfigurationEntry<bool>(true, "Generates pre-defined supplemental raids. The generated raids are disabled by default.");
 
+        public ConfigurationEntry<bool> PauseEventTimersWhileOffline = new(true, "Server option. If enabled, pauses the event timers when no players are online. \nThis means if a raid happened a minute before everyone logged out, and everyone logs in an hour later, the game will consider the last raid as having happened one minute before the login.");
+
         #endregion
 
         #region Debug
@@ -65,6 +67,7 @@ namespace Valheim.CustomRaids.Configuration.ConfigTypes
             LoadSupplementalRaids.Bind(Config, "General", nameof(LoadSupplementalRaids));
             GeneratePresetRaids.Bind(Config, "General", nameof(GeneratePresetRaids));
             StopTouchingMyConfigs.Bind(Config, "General", "StopTouchingMyConfigs");
+            PauseEventTimersWhileOffline.Bind(Config, "General", "PauseEventTimersWhileOffline");
 
             RemoveAllExistingRaids.Bind(Config, "EventSystem", nameof(RemoveAllExistingRaids));
             OverrideExisting.Bind(Config, "EventSystem", nameof(OverrideExisting));
