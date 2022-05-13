@@ -18,7 +18,14 @@ public static class EventsWriter
     [HarmonyPrefix]
     public static void WriteLocationEvents()
     {
-        WriteToFile(LocationList.GetAllLocationLists().SelectMany(x => x.m_events).ToList(), "default_location_random_events.txt", "random events (raids) for specific locations, eg. caves,");
+        try
+        {
+            WriteToFile(LocationList.GetAllLocationLists().SelectMany(x => x.m_events).ToList(), "default_location_random_events.txt", "random events (raids) for specific locations, eg. caves,");
+        }
+        catch(Exception e)
+        {
+            Log.LogWarning("Error during attempt at writing default location specific random events to file.", e);
+        }
     }
 
     public static void WriteToFile(List<RandomEvent> events, string fileName = "default_random_events.txt", string logDescription = "random events (raids)")
@@ -36,7 +43,7 @@ public static class EventsWriter
                 lines.Add($"{nameof(RaidEventConfiguration.Enabled)}={entry.m_enabled}");
                 lines.Add($"{nameof(RaidEventConfiguration.Random)}={entry.m_random}");
                 lines.Add($"{nameof(RaidEventConfiguration.Biomes)}={BiomeArray(entry.m_biome)}");
-                lines.Add($"{nameof(RaidEventConfiguration.Duration)}={entry.m_duration}");
+                lines.Add($"{nameof(RaidEventConfiguration.Duration)}={entry.m_duration.ToString(CultureInfo.InvariantCulture)}");
                 lines.Add($"{nameof(RaidEventConfiguration.StartMessage)}={entry.m_startMessage}");
                 lines.Add($"{nameof(RaidEventConfiguration.EndMessage)}={entry.m_endMessage}");
                 lines.Add($"{nameof(RaidEventConfiguration.NearBaseOnly)}={entry.m_nearBaseOnly}");

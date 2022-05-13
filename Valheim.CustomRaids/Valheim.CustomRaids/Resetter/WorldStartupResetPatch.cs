@@ -13,7 +13,7 @@ internal static class WorldStartupResetPatch
     /// <summary>
     /// Singleplayer
     /// </summary>
-    [HarmonyPatch("OnWorldStart")]
+    [HarmonyPatch(nameof(FejdStartup.OnWorldStart))]
     [HarmonyPrefix]
     private static void ResetState()
     {
@@ -28,7 +28,7 @@ internal static class WorldStartupResetPatch
     /// <summary>
     /// Multiplayer
     /// </summary>
-    [HarmonyPatch("JoinServer")]
+    [HarmonyPatch(nameof(FejdStartup.JoinServer))]
     [HarmonyPrefix]
     private static void ResetStateMultiplayer()
     {
@@ -41,7 +41,7 @@ internal static class WorldStartupResetPatch
     /// <summary>
     /// Server
     /// </summary>
-    [HarmonyPatch("ParseServerArguments")]
+    [HarmonyPatch(nameof(FejdStartup.ParseServerArguments))]
     [HarmonyPrefix]
     private static void ResetStateServer()
     {
