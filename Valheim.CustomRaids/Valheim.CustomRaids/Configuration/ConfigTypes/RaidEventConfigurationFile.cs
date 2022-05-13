@@ -79,6 +79,15 @@ namespace Valheim.CustomRaids.Configuration.ConfigTypes
         public ConfigurationEntry<int> ConditionAltitudeMax = new(1000, "Maximum altitude (distance to water surface) for raid to activate. Altitude is calculated when on dedicated server, so it might be a bit off.");
 
         public ConfigurationEntry<string> ConditionEnvironment = new("", "List of environments enabling raid. Environment to compare to when on dedicated server is calculated, so it might be a bit off. Leave empty for no requirement.");
+
+        public ConfigurationEntry<string> ConditionMustBeNearPrefab = new("", "List of prefab names enabling raid when nearby. A single prefab in the list must be near. Leave empty for no requirements.");
+        public ConfigurationEntry<int> ConditionMustBeNearPrefabDistance = new(100, "Radius from raid center used for ConditionMustBeNearPrefab.");
+
+        public ConfigurationEntry<string> ConditionMustBeNearAllPrefabs = new("", "List of prefab names enabling raid when all are nearby. If any prefab in the list is not nearby, raid will not be started. Leave empty for no requirements.");
+        public ConfigurationEntry<int> ConditionMustBeNearAllPrefabsDistance = new(100, "Radius from raid center used for ConditionMustBeNearAllPrefabs.");
+
+        public ConfigurationEntry<string> ConditionMustNotBeNearPrefab = new("", "List of prefab names disabling raid when nearby. None of the listed prefab can be near. Leave empty for no requirements.");
+        public ConfigurationEntry<int> ConditionMustNotBeNearPrefabDistance = new(100, "Radius from raid center used for ConditionMustNotBeNearPrefab.");
     }
 
     [Serializable]

@@ -1,5 +1,7 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
+using Valheim.CustomRaids.Utilities.Extensions;
 using static Heightmap;
 
 namespace Valheim.CustomRaids.World;
@@ -28,7 +30,7 @@ internal class ZoneSimulated : IZone
     {
         ZoneId = zoneId;
 
-        if (ZoneSystem.instance != null)
+        if (ZoneSystem.instance.IsNotNull())
         {
             ZonePos = ZoneSystem.instance.GetZonePos(ZoneId);
         }
@@ -49,8 +51,8 @@ internal class ZoneSimulated : IZone
         }
         else
         {
-            // Simplified lookup.
-            Biome = WorldGenerator.instance.GetBiome(ZonePos);
+            // Calculate based on corners and position.
+            Biome = GetBiome(ZonePos);
         }
     }
 
@@ -360,5 +362,55 @@ internal class ZoneSimulated : IZone
         var avgAngle = (angleNorth + angleSouth + angleWest + angleEast) / 4;
 
         return avgAngle;
+    }
+
+    /// <summary>
+    /// Calculate biome based on position in zone and biome of corners.
+    /// </summary>
+    /// <remarks>Based on <c>Heightmap.Getbiome(Vector3 point)</c></remarks>
+    public Biome GetBiome(Vector3 pos)
+    {
+        var (x, z) = WorldCoordToNormalizedZoneCoord(pos);
+
+        Dictionary<Heightmap.Biome, float> weights = new(4);
+
+        AddWeight(weights, BiomeCorners[0], Distance(x, z, 0f, 0f));
+        AddWeight(weights, BiomeCorners[1], Distance(x, z, 1f, 0f));
+        AddWeight(weights, BiomeCorners[2], Distance(x, z, 0f, 1f));
+        AddWeight(weights, BiomeCorners[3], Distance(x, z, 1f, 1f));
+
+        return weights.OrderBy(v => v.Value).First().Key;
+
+        static void AddWeight(Dictionary<Heightmap.Biome, float> weights, Heightmap.Biome key, float weight)
+        {
+            if (weights.TryGetValue(key, out float existing))
+            {
+                weights[key] = existing + weight;
+            }
+            else
+            {
+                weights[key] = weight;
+            }
+        }
+
+        static float Distance(float x1, float z1, float x2, float z2)
+        {
+            var dx = x1 - x2;
+            var dz = z1 - z2;
+            return Mathf.Sqrt(dx * dx + dz * dz);
+        }
+    }
+
+    /// <summary>
+    /// Based on <c>Heightmap.WorldToNormalizedHM(Vector3 worldPos, out float x, out float y)</c>
+    /// </summary>
+    private (float x, float z) WorldCoordToNormalizedZoneCoord(Vector3 pos)
+    {
+        Vector3 zoneCoords = pos - ZonePos;
+
+        var normalizedX = zoneCoords.x / Width + 0.5f;
+        var normalizedZ = zoneCoords.z / Width + 0.5f;
+
+        return (normalizedX, normalizedZ);
     }
 }

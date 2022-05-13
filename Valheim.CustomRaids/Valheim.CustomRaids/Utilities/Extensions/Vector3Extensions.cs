@@ -18,4 +18,11 @@ internal static class Vector3Extensions
     {
         return Mathf.FloorToInt((coordinate + 32) / 64f);
     }
+
+    public static bool WithinHorizontalDistance(this Vector3 pos1, Vector3 pos2, float distance)
+    {
+        float x = pos1.x - pos2.x;
+        float z = pos1.z - pos2.z;
+        return x * x + z * z < distance * distance;
+    }
 }
