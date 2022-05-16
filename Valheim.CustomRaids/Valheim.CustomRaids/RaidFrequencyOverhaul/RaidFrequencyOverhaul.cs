@@ -41,11 +41,28 @@ namespace Valheim.CustomRaids.RaidFrequencyOverhaul
 
             if (___m_sendTimer > 2f)
             {
-                Log.LogTrace("Checking for possible raids.");
+#if DEBUG
+                Log.LogTrace($"Raid cooldown: {___m_eventTimer}, Raid timer: {___m_sendTimer}");
+#endif
 
-                if (CheckAndStartRaids(__instance, ___m_eventTimer))
+                if (___m_eventTimer >= ConfigurationManager.GeneralConfig.EventCheckInterval.Value * 60)
                 {
+                    Log.LogTrace("Checking for possible raids.");
+
+                    CheckAndStartRaids(__instance, ___m_eventTimer);
                     ___m_eventTimer = 0;
+
+#if DEBUG
+                    foreach (RandomEvent randomEvent in __instance.m_events)
+                    {
+                        if (randomEvent.m_enabled && randomEvent.m_random)
+                        {
+                            var eventData = RandomEventCache.Get(randomEvent);
+
+                            Log.LogTrace($"\t{randomEvent.m_name}: {eventData.LastChecked}");
+                        }
+                    }
+#endif
                 }
 
                 //Update current event timer. 
