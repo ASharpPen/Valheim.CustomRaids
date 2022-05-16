@@ -70,6 +70,9 @@ If you feel like it
 <a href="https://www.buymeacoffee.com/asharppen"><img src="https://img.buymeacoffee.com/button-api/?text=Buy me a coffee&emoji=&slug=asharppen&button_colour=FFDD00&font_colour=000000&font_family=Cookie&outline_colour=000000&coffee_colour=ffffff" /></a>
 
 # Changelog 
+- v1.6.1:
+	- Fixed individual raids not being affected by paused raid timer.
+	- Changed individual raids to now be checked pr EventCheckInterval. This should make it easier to control individual raids frequency, especially when a lot of raids are available. Note this should generate less raids for most, and might require some tweaking of the EventCheckInterval if you liked it the old way.
 - v1.6.0:
 	- Added server setting for pausing raid timers while no players are online. Enabled by default.
 	- Added raid condition ConditionMustBeNearPrefab for checking if any of the listed prefabs is nearby.
