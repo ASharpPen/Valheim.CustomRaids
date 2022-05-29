@@ -16,9 +16,9 @@ namespace Valheim.CustomRaids.Raids.Conditions
 
             if (MinDays is not null)
             {
-                if (MinDays > day)
+                if (day < MinDays)
                 {
-                    Log.LogDebug($"Raid {context.RandomEvent.m_name} disabled due to world not being old enough. {MinDays} > {day}");
+                    Log.LogDebug($"Raid {context.RandomEvent.m_name} disabled due to world not being old enough. {day} < {MinDays}");
                     return false;
                 }
 
@@ -26,9 +26,9 @@ namespace Valheim.CustomRaids.Raids.Conditions
 
             if (MaxDays is not null)
             {
-                if (MaxDays > 0 && MaxDays < day)
+                if (MaxDays > 0 && day > MaxDays)
                 {
-                    Log.LogDebug($"Raid {context.RandomEvent.m_name} disabled due to world being too old. {MaxDays} < {day}");
+                    Log.LogDebug($"Raid {context.RandomEvent.m_name} disabled due to world being too old. {day} > {MaxDays}");
                     return false;
                 }
             }
