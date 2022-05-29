@@ -46,15 +46,15 @@ namespace Valheim.CustomRaids.Configuration.ConfigTypes
 
         public ConfigurationEntry<bool> OverrideExisting = new(true, "Enable/disable override of existing events when event names match.");
 
-        public ConfigurationEntry<float> EventCheckInterval = new(46f, "Frequency between checks for new raids. Value is in minutes");
+        public ConfigurationEntry<float> EventCheckInterval = new(46f, "Minutes between checks for starting raids.\nWhen the interval has passed, all raids are checked for valid conditions and a random valid one is selected. Chance is then rolled for if it should start.");
 
-        public ConfigurationEntry<float> EventTriggerChance = new(20f, "Chance of raid, per check interval. 100 is 100%.");
+        public ConfigurationEntry<float> EventTriggerChance = new(20f, "Chance of raid, per check interval. 100 is 100%.\nNote: Not used if UseIndividualRaidChecks is enabled, each raid will have their own chance in that case.");
 
         #endregion
 
         #region IndividualRaids
 
-        public ConfigurationEntry<bool> UseIndividualRaidChecks = new(false, "If enabled, Custom Raids will overhaul the games way of checking for raids. EventTriggerChance will no longer be used, as the chance will be set per raid.\nThis allows for setting individual frequences and chances for each raid.\nThis overhaul gives each raid it's own timer, independent of each other and can therefore cause a LOT of raids.\nEventCheckInterval will still be used to indicate time between checks. MinTimeBetweenRaids can be used to ensure they don't happen too often.");
+        public ConfigurationEntry<bool> UseIndividualRaidChecks = new(false, "If enabled, Custom Raids will overhaul the games way of checking for raids.\nEventTriggerChance will no longer be used, as the chance will be set per raid.\nThis allows for setting individual frequences and chances for each raid.\nThis overhaul gives each raid it's own timer, independent of each other and can therefore cause a LOT of raids.\nEventCheckInterval will still be used to indicate time between checks. \nMinTimeBetweenRaids can be used to ensure they don't happen too often.");
 
         public ConfigurationEntry<float> MinimumTimeBetweenRaids = new(46, "If overhaul is enabled, ensures a minimum amount of minutes between each raid.");
 
