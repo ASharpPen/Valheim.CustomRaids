@@ -17,7 +17,7 @@ internal class ConditionAltitude : IRaidCondition
         var floorAltitude = zone.Height(context.Position) - ZoneSystem.instance.m_waterLevel;
 
 #if DEBUG && VERBOSE
-        Log.LogTrace("Altitude: " + floorAltitude);
+        Log.LogTrace($"Altitude: {floorAltitude}, Min: {Min}, Max: {Max}");
 #endif
 
         if (Min is not null && Min > floorAltitude)

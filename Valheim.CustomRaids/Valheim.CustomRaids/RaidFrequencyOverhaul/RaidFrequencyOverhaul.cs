@@ -41,11 +41,30 @@ namespace Valheim.CustomRaids.RaidFrequencyOverhaul
 
             if (___m_sendTimer > 2f)
             {
-                Log.LogTrace("Checking for possible raids.");
+#if DEBUG
+                Log.LogTrace($"Raid cooldown: {___m_eventTimer}, Raid timer: {___m_sendTimer}");
+#endif
 
-                if (CheckAndStartRaids(__instance, ___m_eventTimer))
+                if (___m_eventTimer >= ConfigurationManager.GeneralConfig.EventCheckInterval.Value * 60)
                 {
-                    ___m_eventTimer = 0;
+                    Log.LogTrace("Checking for possible raids.");
+
+                    if (CheckAndStartRaids(__instance, ___m_eventTimer))
+                    {
+                        ___m_eventTimer = 0;
+                    }
+
+#if DEBUG
+                    foreach (RandomEvent randomEvent in __instance.m_events)
+                    {
+                        if (randomEvent.m_enabled && randomEvent.m_random)
+                        {
+                            var eventData = RandomEventCache.Get(randomEvent);
+
+                            Log.LogTrace($"\t{randomEvent.m_name}: {eventData.LastChecked}");
+                        }
+                    }
+#endif
                 }
 
                 //Update current event timer. 
@@ -60,6 +79,7 @@ namespace Valheim.CustomRaids.RaidFrequencyOverhaul
             return false;
         }
 
+        /// <returns>true, if raids were checked.</returns>
         private static bool CheckAndStartRaids(RandEventSystem instance, float m_eventTimer)
         {
             //Check if we have passed the minimum time between raids.
@@ -79,13 +99,15 @@ namespace Valheim.CustomRaids.RaidFrequencyOverhaul
             //Get list of possible raids
             var possibleRaids = GetPossibleRaids(instance, time);
 
-#if DEBUG
             Log.LogDebug($"Raids possible to spawn: {possibleRaids?.Count ?? 0}");
-#endif
+            if (possibleRaids.Count > 0)
+            {
+                Log.LogDebug($"{possibleRaids.Join(x => x.Raid.m_name)}");
+            }
 
             if (possibleRaids.Count == 0)
             {
-                return false;
+                return true;
             }
 
             //Select one randomly
@@ -96,7 +118,7 @@ namespace Valheim.CustomRaids.RaidFrequencyOverhaul
             //Check chance
             if(selectedRaid.EventChance < UnityEngine.Random.Range(0, 100))
             {
-                return false;
+                return true;
             }
 
             Log.LogDebug($"Starting raid: {selectedRaid?.Raid?.m_name}");
