@@ -70,6 +70,8 @@ If you feel like it
 <a href="https://www.buymeacoffee.com/asharppen"><img src="https://img.buymeacoffee.com/button-api/?text=Buy me a coffee&emoji=&slug=asharppen&button_colour=FFDD00&font_colour=000000&font_family=Cookie&outline_colour=000000&coffee_colour=ffffff" /></a>
 
 # Changelog 
+- v1.6.3:
+	- Fixed compatibility for v0.212.6
 - v1.6.2:
 	- Fixed individual raids not checking CanStartDuringDay and CanStartDuringNight correctly.
 	- Fixed individual raids resetting raid cooldown too early under certain conditions, causing way less or no raids.
