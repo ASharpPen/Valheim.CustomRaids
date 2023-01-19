@@ -89,6 +89,8 @@ namespace Valheim.CustomRaids.Configuration.ConfigTypes
         public ConfigurationEntry<string> ConditionMustNotBeNearPrefab = new("", "List of prefab names disabling raid when nearby. None of the listed prefab can be near. Leave empty for no requirements.");
         public ConfigurationEntry<int> ConditionMustNotBeNearPrefabDistance = new(100, "Radius from raid center used for ConditionMustNotBeNearPrefab.");
 
+        public ConfigurationEntry<string> ConditionLocation = new("", "List of locations in which this raid is enabled.");
+
         public ConfigurationEntry<string> OnStopStartRaid = new("", "When this event stops, start a new raid at the same position, with the given name. Note, this will ignore all conditions otherwise required for that raid.\nThis is intended for chaining raids.");
     }
 

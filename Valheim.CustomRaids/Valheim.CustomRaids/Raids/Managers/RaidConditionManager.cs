@@ -35,7 +35,7 @@ public static class RaidConditionManager
                 try
                 {
 #if DEBUG
-                        var isValid = x.IsValid(raidContext);
+                    var isValid = x.IsValid(raidContext);
                     if (!isValid)
                     {
                         Log.LogDebug($"[{raid.Name}] Invalid condition {x.GetType().Name}.");

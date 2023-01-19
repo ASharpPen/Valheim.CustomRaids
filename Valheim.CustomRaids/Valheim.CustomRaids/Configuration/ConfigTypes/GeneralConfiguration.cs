@@ -28,15 +28,17 @@ namespace Valheim.CustomRaids.Configuration.ConfigTypes
 
         public ConfigurationEntry<bool> TraceLogging = new(false, "Enables trace logging. Note, this will generate a LOT of log entries.");
 
-        public ConfigurationEntry<bool> WriteDefaultEventDataToDisk = new(false, "If enabled, scans existing raid event data, and dumps to a file.");
+        public ConfigurationEntry<bool> WriteDefaultEventDataToDisk = new(false, "If enabled, scans existing raid event data, and writes to a file.");
 
         public ConfigurationEntry<bool> WritePostChangeEventDataToDisk = new(false, "If enabled, dumps raid event data after applying configuration to a file.");
 
-        public ConfigurationEntry<bool> WriteEnvironmentDataToDisk = new(false, "If enabled, scans existing environment (weather) data, and dumps to a file.");
+        public ConfigurationEntry<bool> WriteEnvironmentDataToDisk = new(false, "If enabled, scans existing environment (weather) data, and writes to a file.");
 
-        public ConfigurationEntry<bool> WriteGlobalKeyDataToDisk = new(false, "If enabled, scans existing global keys, and dumps to a file.");
+        public ConfigurationEntry<bool> WriteGlobalKeyDataToDisk = new(false, "If enabled, scans existing global keys, and writes to a file.");
 
-        public ConfigurationEntry<string> DebugFileFolder = new("Debug", "Folder path to write to. Root folder is BepInEx.");
+        public ConfigurationEntry<bool> WriteLocationsToDisk = new(false, "If enabled, scans existing locations (aka. points of interest) and writes to a file.");
+
+        public ConfigurationEntry<string> DebugFileFolder = new("Debug", "Folder path to write debug files to. Root folder is BepInEx.");
 
         #endregion
 
@@ -83,6 +85,7 @@ namespace Valheim.CustomRaids.Configuration.ConfigTypes
             WritePostChangeEventDataToDisk.Bind(Config, "Debug", nameof(WritePostChangeEventDataToDisk));
             WriteEnvironmentDataToDisk.Bind(Config, "Debug", nameof(WriteEnvironmentDataToDisk));
             WriteGlobalKeyDataToDisk.Bind(Config, "Debug", nameof(WriteGlobalKeyDataToDisk));
+            WriteLocationsToDisk.Bind(Config, "Debug", nameof(WriteLocationsToDisk));
             DebugFileFolder.Bind(Config, "Debug", nameof(DebugFileFolder));
         }
     }

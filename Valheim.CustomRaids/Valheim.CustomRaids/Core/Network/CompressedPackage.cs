@@ -26,7 +26,7 @@ namespace Valheim.CustomRaids.Core.Network
                     binaryFormatter.Serialize(zipStream, this);
                 }
 
-                byte[] serialized = memStream.GetBuffer();
+                byte[] serialized = memStream.ToArray();
 
                 Log.LogDebug($"Serialized size: {serialized.Length} bytes");
 

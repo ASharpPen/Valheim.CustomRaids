@@ -1,4 +1,6 @@
 ﻿
+using Valheim.CustomRaids.Core;
+
 namespace Valheim.CustomRaids.Raids.Conditions
 {
     public class ConditionPlayersOnline : IRaidCondition
@@ -9,6 +11,14 @@ namespace Valheim.CustomRaids.Raids.Conditions
 
         public bool IsValid(RaidContext context)
         {
+            // If not a multiplayer game, skip this condition.
+            if (ZNet.m_isServer &&
+                !ZNet.m_openServer)
+            {
+                Log.LogDebug($"[{nameof(ConditionPlayersOnline)}] Not a multiplayer game. Skipping condition.");
+                return true;
+            }
+
             int playersOnline = ZNet.instance.GetPeerConnections();
 
             if (MinPlayersOnline is not null)
