@@ -12,6 +12,10 @@ Comes preconfigured with two additional end-game raids (disabled by default), to
 
 Enable those raids at own risk!
 
+# Documentation
+
+Documentation can be found on the [Custom Raids Wiki](https://github.com/ASharpPen/Valheim.CustomRaids/wiki).
+
 # Features
 
 - Can change frequency of raids
@@ -21,10 +25,6 @@ Enable those raids at own risk!
 - Potential for hours of frustration/fun as you figure out how to best configure these damn things to work as expected.
 - Server-side configurations
 - Support for [Creature Level and Loot Control](https://www.nexusmods.com/valheim/mods/495)
-
-# Documentation
-
-Documentation can be found on the [Custom Raids Wiki](https://github.com/ASharpPen/Valheim.CustomRaids/wiki).
 
 # FAQ
 
@@ -70,6 +70,11 @@ If you feel like it
 <a href="https://www.buymeacoffee.com/asharppen"><img src="https://img.buymeacoffee.com/button-api/?text=Buy me a coffee&emoji=&slug=asharppen&button_colour=FFDD00&font_colour=000000&font_family=Cookie&outline_colour=000000&coffee_colour=ffffff" /></a>
 
 # Changelog 
+- v1.7.0:
+	- Added new raid condition 'ConditionLocation'.
+	- Added new debug setting 'WriteLocationsToDisk'.
+	- Changed ConditionPlayersOnlineMin/Max to be skipped if not in a multiplayer game.
+	- Fixed network packages being up to twize the size they needed, woops!
 - v1.6.3:
 	- Fixed compatibility for v0.212.6
 - v1.6.2:

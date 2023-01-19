@@ -8,9 +8,13 @@ namespace Valheim.CustomRaids
 {
     [BepInDependency("asharppen.valheim.enhanced_progress_tracker", BepInDependency.DependencyFlags.SoftDependency)]
     [BepInDependency("asharppen.valheim.spawn_that", BepInDependency.DependencyFlags.SoftDependency)]
-    [BepInPlugin("asharppen.valheim.custom_raids", "Custom Raids", "1.6.3")]
+    [BepInPlugin(ModId, PluginName, Version)]
     public class CustomRaidPlugin : BaseUnityPlugin
     {
+        public const string ModId = "asharppen.valheim.custom_raids";
+        public const string PluginName = "Custom Raids";
+        public const string Version = "1.7.0";
+
         void Awake()
         {
             Log.Logger = Logger;
@@ -32,7 +36,7 @@ namespace Valheim.CustomRaids
                 Log.LogDebug("Detected installation of Enhanced Progress Tracker.");
             }
 
-            var harmony = new Harmony("mod.custom_raids");
+            var harmony = new Harmony(ModId);
 
             harmony.PatchAll();
         }
