@@ -340,6 +340,11 @@ namespace Valheim.CustomRaids.Raids.Managers
                 conditions.Add(new ConditionMustNotBeNearPrefab(distance, prefabs));
             }
 
+            if (!string.IsNullOrWhiteSpace(config.ConditionLocation?.Value))
+            {
+                conditions.Add(new ConditionLocation(config.ConditionLocation.Value.SplitByComma()));
+            }
+
             return conditions;
         }
 
