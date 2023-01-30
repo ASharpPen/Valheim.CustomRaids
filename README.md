@@ -70,6 +70,8 @@ If you feel like it
 <a href="https://www.buymeacoffee.com/asharppen"><img src="https://img.buymeacoffee.com/button-api/?text=Buy me a coffee&emoji=&slug=asharppen&button_colour=FFDD00&font_colour=000000&font_family=Cookie&outline_colour=000000&coffee_colour=ffffff" /></a>
 
 # Changelog 
+- v1.7.1:
+	- Fixed individual raids 'RaidFrequency' and 'RaidChance' not using their intended default values, causing raids to sometimes happen a lot less frequently than expected (or never).
 - v1.7.0:
 	- Added new raid condition 'ConditionLocation'.
 	- Added new debug setting 'WriteLocationsToDisk'.

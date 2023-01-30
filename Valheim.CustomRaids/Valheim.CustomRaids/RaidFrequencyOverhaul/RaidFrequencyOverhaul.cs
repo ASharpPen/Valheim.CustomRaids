@@ -152,7 +152,11 @@ namespace Valheim.CustomRaids.RaidFrequencyOverhaul
                     var delta = currentTime - lastRun;
 
                     //Check if enough time has passed
-                    if(delta < (eventData.Config?.RaidFrequency?.Value ?? 46) * 60) //Use default frequency of 46 minutes if something is wrong here.
+                    var eventFrequency = (eventData.Config?.RaidFrequency?.Value ?? 0) == 0
+                        ? 46 //Use default frequency of 46 minutes.
+                        : eventData.Config.RaidFrequency.Value;
+
+                    if (delta < (eventFrequency * 60))
                     {
                         Log.LogTrace($"Skipping raid {randomEvent.m_name} due not enough time having passed.");
                         continue;
@@ -172,7 +176,9 @@ namespace Valheim.CustomRaids.RaidFrequencyOverhaul
                         possibleRaids.Add(new PossibleRaid
                         {
                             EventData = eventData,
-                            EventChance = eventData.Config?.RaidChance?.Value ?? 20, //Use default of 20% chance if something is wrong.
+                            EventChance = (eventData.Config?.RaidChance?.Value ?? 0) == 0
+                                ? 20 //Use default of 20% chance.
+                                : eventData.Config.RaidChance.Value, 
                             Raid = randomEvent,
                             RaidCenter = raidCenter
                         });
