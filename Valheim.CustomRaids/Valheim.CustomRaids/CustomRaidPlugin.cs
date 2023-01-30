@@ -13,7 +13,7 @@ namespace Valheim.CustomRaids
     {
         public const string ModId = "asharppen.valheim.custom_raids";
         public const string PluginName = "Custom Raids";
-        public const string Version = "1.7.0";
+        public const string Version = "1.7.1";
 
         void Awake()
         {
