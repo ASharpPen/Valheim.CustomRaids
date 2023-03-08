@@ -139,7 +139,7 @@ namespace Valheim.CustomRaids.RaidFrequencyOverhaul
                 if (randomEvent.m_enabled && randomEvent.m_random)
                 {
                     //Check for default global key handling. Only check standard ValidGlobalKeys if enhanced keys are NOT installed.
-                    if(!CustomRaidPlugin.EnhancedProgressTrackerInstalled && !ValidGlobalKeys(randomEventSystem, randomEvent))
+                    if(!ValidGlobalKeys(randomEventSystem, randomEvent))
                     {
                         Log.LogDebug($"Skipping raid '{randomEvent.m_name}' due to not finding valid global keys.");
                         continue;
@@ -188,28 +188,28 @@ namespace Valheim.CustomRaids.RaidFrequencyOverhaul
             return possibleRaids;
         }
 
-        private static MethodInfo HaveGlobalKeys = AccessTools.Method(typeof(RandEventSystem), "HaveGlobalKeys", new[] { typeof(RandomEvent) });
+        private static MethodInfo HaveGlobalKeys = AccessTools.Method(typeof(RandEventSystem), nameof(RandEventSystem.HaveGlobalKeys), new[] { typeof(RandomEvent) });
 
         private static bool ValidGlobalKeys(RandEventSystem instance, RandomEvent randomEvent)
         {
             return (bool)(HaveGlobalKeys.Invoke(instance, new object[] { randomEvent }) ?? false);
         }
 
-        private static MethodInfo GetValidEventPoints = AccessTools.Method(typeof(RandEventSystem), "GetValidEventPoints", new[] { typeof(RandomEvent), typeof(List<ZDO>)});
+        private static MethodInfo GetValidEventPoints = AccessTools.Method(typeof(RandEventSystem), nameof(RandEventSystem.GetValidEventPoints), new[] { typeof(RandomEvent), typeof(List<ZDO>)});
 
         private static List<Vector3> GetRaidCenters(RandEventSystem instance, RandomEvent randomEvent, List<ZDO> characterZDOs)
         {
             return GetValidEventPoints.Invoke(instance, new object[] { randomEvent, characterZDOs }) as List<Vector3>;
         }
 
-        private static MethodInfo SetRandomEventMethod = AccessTools.Method(typeof(RandEventSystem), "SetRandomEvent", new[] { typeof(RandomEvent), typeof(Vector3) });
+        private static MethodInfo SetRandomEventMethod = AccessTools.Method(typeof(RandEventSystem), nameof(RandEventSystem.SetRandomEvent), new[] { typeof(RandomEvent), typeof(Vector3) });
 
         private static void SetRandomEvent(RandEventSystem instance, RandomEvent randomEvent, Vector3 raidCenter)
         {
             SetRandomEventMethod.Invoke(instance, new object[] { randomEvent, raidCenter });
         }
 
-        private static MethodInfo SendCurrentRandomEventMethod = AccessTools.Method(typeof(RandEventSystem), "SendCurrentRandomEvent");
+        private static MethodInfo SendCurrentRandomEventMethod = AccessTools.Method(typeof(RandEventSystem), nameof(RandEventSystem.SendCurrentRandomEvent));
 
         private static void SendCurrentRandomEvent(RandEventSystem instance)
         {

@@ -345,6 +345,22 @@ namespace Valheim.CustomRaids.Raids.Managers
                 conditions.Add(new ConditionLocation(config.ConditionLocation.Value.SplitByComma()));
             }
 
+            if (!string.IsNullOrWhiteSpace(config.RequiredGlobalKeys?.Value))
+            {
+                conditions.Add(new ConditionRequiredGlobalKeys(config.RequiredGlobalKeys.Value.SplitByComma()));
+            }
+
+            if (!string.IsNullOrWhiteSpace(config.NotRequiredGlobalKeys?.Value))
+            {
+                conditions.Add(new ConditionRequiredNotGlobalKeys(config.NotRequiredGlobalKeys.Value.SplitByComma()));
+            }
+
+            if (!string.IsNullOrWhiteSpace(config.RequireOneOfGlobalKeys?.Value))
+            {
+                conditions.Add(new ConditionRequireOneOfGlobalKeys(config.RequireOneOfGlobalKeys.Value.SplitByComma()));
+            }
+
+
             return conditions;
         }
 
