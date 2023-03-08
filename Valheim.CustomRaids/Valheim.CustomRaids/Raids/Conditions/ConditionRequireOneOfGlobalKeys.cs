@@ -1,69 +1,26 @@
-﻿using System;
-using Valheim.CustomRaids.Compatibilities;
-using Valheim.CustomRaids.Core;
-using Valheim.CustomRaids.Raids;
+﻿using System.Collections.Generic;
+using System.Linq;
 
-namespace Valheim.CustomRaids.Conditions
+namespace Valheim.CustomRaids.Raids.Conditions
 {
-    internal static class ConditionRequireOneOfGlobalKeys
+    public class ConditionRequireOneOfGlobalKeys : IRaidCondition
     {
-        public static bool ShouldFilter(RandomEvent randomEvent, string playerName)
+        public List<string> GlobalKeys { get; set; }
+
+        public ConditionRequireOneOfGlobalKeys(List<string> globalKeys)
         {
-            var raidConfig = RandomEventCache.GetConfig(randomEvent);
-
-            if(raidConfig is null)
-            {
-                return false;
-            }
-
-            //Check key conditions.
-            if (raidConfig.RequireOneOfGlobalKeys.Value.Length > 0)
-            {
-                var keys = raidConfig.RequireOneOfGlobalKeys.Value.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
-
-#if DEBUG
-                Log.LogInfo("Found RequireOneOfGlobalKeys keys: ");
-                foreach (var key in keys)
-                {
-                    Log.LogInfo("\t" + key);
-                }
-#endif
-                bool foundRequiredKey = false;
-                foreach (var key in keys)
-                {
-                    if (HasKey(key.Trim(), playerName))
-                    {
-#if DEBUG
-                        Log.LogInfo("Found RequiredOneOfKey: " + key);
-#endif
-
-                        foundRequiredKey = true;
-                        break;
-                    }
-                }
-
-                if (!foundRequiredKey)
-                {
-#if DEBUG
-                    Log.LogDebug($"Unable to find any of the keys {raidConfig.RequireOneOfGlobalKeys.Value}");
-#endif
-                    return true;
-                }
-            }
-
-            return false;
+            GlobalKeys = globalKeys;
         }
 
-        private static bool HasKey(string key, string playerName)
+        public bool IsValid(RaidContext context)
         {
-            if(CustomRaidPlugin.EnhancedProgressTrackerInstalled)
+            if (GlobalKeys is null || 
+                GlobalKeys.Count == 0)
             {
-                return EnhancedProgressTrackerCompatibilities.HaveGlobalKey(playerName, key);
+                return true;
             }
-            else
-            {
-                return ZoneSystem.instance.GetGlobalKey(key.Trim());
-            }
+
+            return GlobalKeys.Any(ZoneSystem.instance.GetGlobalKey);
         }
     }
 }

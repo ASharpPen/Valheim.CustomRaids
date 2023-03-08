@@ -1,23 +1,24 @@
-﻿using System.Linq;
-using Valheim.CustomRaids.Compatibilities;
+﻿using System.Collections.Generic;
+using System.Linq;
 
-namespace Valheim.CustomRaids.Conditions
+namespace Valheim.CustomRaids.Raids.Conditions;
+
+public class ConditionRequiredGlobalKeys : IRaidCondition
 {
-    public static class ConditionRequiredGlobalKeys
+    public List<string> RequiredGlobalKeys { get; set; }
+
+    public ConditionRequiredGlobalKeys(List<string> requiredGlobalKeys)
     {
-        public static bool ShouldFilter(RandomEvent randomEvent, string playerName)
+        RequiredGlobalKeys = requiredGlobalKeys;
+    }
+
+    public bool IsValid(RaidContext context)
+    {
+        if ((RequiredGlobalKeys?.Count ?? 0) == 0)
         {
-            if((randomEvent.m_requiredGlobalKeys?.Count ?? 0) == 0)
-            {
-                return false;
-            }
-
-            if (CustomRaidPlugin.EnhancedProgressTrackerInstalled)
-            {
-                return randomEvent.m_requiredGlobalKeys.Any(x => !EnhancedProgressTrackerCompatibilities.HaveGlobalKey(playerName, x.Trim()));
-            }
-
-            return randomEvent.m_requiredGlobalKeys.Any(x => !ZoneSystem.instance.GetGlobalKey(x.Trim()));
+            return true;
         }
+
+        return RequiredGlobalKeys.All(ZoneSystem.instance.GetGlobalKey);
     }
 }
