@@ -70,6 +70,8 @@ If you feel like it
 <a href="https://www.buymeacoffee.com/asharppen"><img src="https://img.buymeacoffee.com/button-api/?text=Buy me a coffee&emoji=&slug=asharppen&button_colour=FFDD00&font_colour=000000&font_family=Cookie&outline_colour=000000&coffee_colour=ffffff" /></a>
 
 # Changelog 
+- v1.7.3:
+	- Compatibility: Default biome settings for spawns and raids changed to include customly added biomes.
 - v1.7.2:
 	- Removed compatibility with deprecated mod (Enhanced Progress Tracker) in favour of adding compatibility with World Advancement Progression.
 - v1.7.1:
