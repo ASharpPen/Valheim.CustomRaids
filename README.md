@@ -24,12 +24,11 @@ Documentation can be found on the [Custom Raids Wiki](https://github.com/ASharpP
 - Supplemental raid configurations. Add your own raid in its own file, and Custom Raids will scan and apply it. 
 - Potential for hours of frustration/fun as you figure out how to best configure these damn things to work as expected.
 - Server-side configurations
-- Support for [Creature Level and Loot Control](https://www.nexusmods.com/valheim/mods/495)
 
 # FAQ
 
 - Is it server side only?
-	- No. Both client and server needs the mod.
+	- No. Both client and server needs the mod for most features. It can be server-only in very limited scenarios, like disabling raids, but generally it will need to be on both sides.
 	- The way events work is that the host / dedicated server will run the logic for when to apply raids, and then send a message with the name of the raid to be assigned to all clients. The client in charge of zone (valheim multiplayer is weird) will then manage the actual spawning for the raid.
 - Can I just have no raids?
 	- Yes. Raid activation happens server-side, making this even simpler, you should only need this mod serverside if you just want no raids. (You can also use Event Enhancer for this)
@@ -42,7 +41,7 @@ Custom Raids needs to be installed on all clients (and server) to work.
 
 From v1.2.0 clients will request the configurations currently loaded by the server, and use those without affecting the clients config files.
 This means you should be able to have server-specific configurations, and the client can have its own setup for singleplayer.
-For this to work, the mod needs to be installed on the server, and have configs set up properly there. When players join with Custom Raids v1.2.0, their mod will use the servers configs.
+For this to work, the mod needs to be installed on the server, and have configs set up properly there. When players join with Custom Raids v1.2.0 or later, their mod will use the servers configs.
 
 # Example
 
@@ -70,6 +69,8 @@ If you feel like it
 <a href="https://www.buymeacoffee.com/asharppen"><img src="https://img.buymeacoffee.com/button-api/?text=Buy me a coffee&emoji=&slug=asharppen&button_colour=FFDD00&font_colour=000000&font_family=Cookie&outline_colour=000000&coffee_colour=ffffff" /></a>
 
 # Changelog 
+- v1.7.4:
+	- Compatibility: Moved all applications of spawn modifier settings to happen slightly later. This should solve issues with settings like CLLC UseDefaultLevels.
 - v1.7.3:
 	- Compatibility: Default biome settings for spawns and raids changed to include customly added biomes.
 - v1.7.2:

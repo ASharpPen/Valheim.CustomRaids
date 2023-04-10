@@ -5,10 +5,10 @@
     <AssemblyName>Valheim.CustomRaids</AssemblyName>
     <RootNamespace>Valheim.CustomRaids</RootNamespace>
     <Authors>A Sharp Pen</Authors>
-    <Version>1.7.3</Version>
+    <Version>1.7.4</Version>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="BepInEx.Core" Version="5.4.17" />
+    <PackageReference Include="BepInEx.Core" Version="5.4.21" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="assembly_utils">
@@ -28,9 +28,6 @@
     </Reference>
     <Reference Include="UnityEngine.PhysicsModule">
       <HintPath>..\..\Libs\Unity\UnityEngine.PhysicsModule.dll</HintPath>
-    </Reference>
-    <Reference Include="Valheim.EnhancedProgressTracker">
-      <HintPath>..\..\Libs\ASharpPen-Enhanced_Progress_Tracker\Valheim.EnhancedProgressTracker.dll</HintPath>
     </Reference>
     <Reference Include="Valheim.SpawnThat">
       <HintPath>..\..\Libs\ASharpPen-Spawn_That\Valheim.SpawnThat.dll</HintPath>
