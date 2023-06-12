@@ -111,7 +111,7 @@ public static class EventsWriter
         string biomeArray = "";
         foreach (var b in Enum.GetValues(typeof(Heightmap.Biome)))
         {
-            if (b is Heightmap.Biome biome && biome != Heightmap.Biome.BiomesMax)
+            if (b is Heightmap.Biome biome)
             {
                 biome = (biome & spawnerBiome);
 

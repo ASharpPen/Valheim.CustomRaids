@@ -21,7 +21,7 @@ namespace Valheim.CustomRaids.Patches
             });
         }
 
-        [HarmonyPatch("FindSpawnPoint")]
+        [HarmonyPatch(nameof(Game.FindSpawnPoint))]
         [HarmonyPostfix]
         private static void LoadConfigs(Game __instance)
         {
