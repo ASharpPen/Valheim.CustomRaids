@@ -1,6 +1,7 @@
 ﻿using static Heightmap;
 using UnityEngine;
 using Valheim.CustomRaids.Utilities.Extensions;
+using System.Linq;
 
 namespace Valheim.CustomRaids.World;
 
@@ -22,7 +23,7 @@ internal class ZoneHeightmap : IZone
 
         Width = heightmap.m_width;
         Biome = heightmap.GetBiome(ZonePos);
-        BiomeCorners = heightmap.GetBiomes().ToArray();
+        BiomeCorners = heightmap.m_cornerBiomes.ToArray();
         BiomeArea = heightmap.GetBiomeArea();
     }
 
