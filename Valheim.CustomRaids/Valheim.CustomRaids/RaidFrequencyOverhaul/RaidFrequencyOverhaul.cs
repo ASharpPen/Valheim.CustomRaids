@@ -132,8 +132,6 @@ namespace Valheim.CustomRaids.RaidFrequencyOverhaul
         {
             var possibleRaids = new List<PossibleRaid>();
 
-            List<ZDO> allCharacterZDOS = ZNet.instance.GetAllCharacterZDOS();
-
             foreach (RandomEvent randomEvent in randomEventSystem.m_events)
             {
                 if (randomEvent.m_enabled && randomEvent.m_random)
@@ -162,7 +160,7 @@ namespace Valheim.CustomRaids.RaidFrequencyOverhaul
                         continue;
                     }
 
-                    List<Vector3> possibleRaidCenterPositions = GetRaidCenters(randomEventSystem, randomEvent, allCharacterZDOS.ToList());
+                    List<Vector3> possibleRaidCenterPositions = GetRaidCenters(randomEventSystem, randomEvent);
 
                     if (possibleRaidCenterPositions.Count != 0)
                     {
@@ -188,18 +186,32 @@ namespace Valheim.CustomRaids.RaidFrequencyOverhaul
             return possibleRaids;
         }
 
-        private static MethodInfo HaveGlobalKeys = AccessTools.Method(typeof(RandEventSystem), nameof(RandEventSystem.HaveGlobalKeys), new[] { typeof(RandomEvent) });
+        private static MethodInfo HaveGlobalKeys = AccessTools.Method(
+            typeof(RandEventSystem), 
+            nameof(RandEventSystem.HaveGlobalKeys), 
+            new[] 
+            { 
+                typeof(RandomEvent), 
+                typeof(List<RandEventSystem.PlayerEventData>)
+            });
 
         private static bool ValidGlobalKeys(RandEventSystem instance, RandomEvent randomEvent)
         {
-            return (bool)(HaveGlobalKeys.Invoke(instance, new object[] { randomEvent }) ?? false);
+            return (bool)(HaveGlobalKeys.Invoke(instance, new object[] { randomEvent, RandEventSystem.playerEventDatas }) ?? false);
         }
 
-        private static MethodInfo GetValidEventPoints = AccessTools.Method(typeof(RandEventSystem), nameof(RandEventSystem.GetValidEventPoints), new[] { typeof(RandomEvent), typeof(List<ZDO>)});
+        private static MethodInfo GetValidEventPoints = AccessTools.Method(
+            typeof(RandEventSystem), 
+            nameof(RandEventSystem.GetValidEventPoints), 
+            new[] 
+            { 
+                typeof(RandomEvent), 
+                typeof(List<RandEventSystem.PlayerEventData>)
+            });
 
-        private static List<Vector3> GetRaidCenters(RandEventSystem instance, RandomEvent randomEvent, List<ZDO> characterZDOs)
+        private static List<Vector3> GetRaidCenters(RandEventSystem instance, RandomEvent randomEvent)
         {
-            return GetValidEventPoints.Invoke(instance, new object[] { randomEvent, characterZDOs }) as List<Vector3>;
+            return GetValidEventPoints.Invoke(instance, new object[] { randomEvent, RandEventSystem.playerEventDatas }) as List<Vector3>;
         }
 
         private static MethodInfo SetRandomEventMethod = AccessTools.Method(typeof(RandEventSystem), nameof(RandEventSystem.SetRandomEvent), new[] { typeof(RandomEvent), typeof(Vector3) });
