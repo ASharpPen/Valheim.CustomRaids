@@ -5,7 +5,7 @@ namespace Valheim.CustomRaids.Spawns.Patches
     [HarmonyPatch(typeof(Character))]
     public static class CharacterSetFactionPatch
     {
-        [HarmonyPatch("Start")]
+        [HarmonyPatch(nameof(Character.Awake))]
         [HarmonyPostfix]
         private static void AssignFaction(Character __instance, ZNetView ___m_nview)
         {
