@@ -70,7 +70,7 @@ If you feel like it
 
 # Changelog 
 - v1.7.8:
-	- Fixed: SetFaction was only applying the faction on creature spawn, it now correctly re-applies on creature load.
+	- Fixed: Setting "Faction" was only applying the faction on creature spawn, it now correctly re-applies on creature load.
 - v1.7.7:
 	- Fixed: Compatibility with Valheim v0.217.14.
 - v1.7.6:
