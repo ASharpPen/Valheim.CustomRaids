@@ -69,6 +69,8 @@ If you feel like it
 <a href="https://www.buymeacoffee.com/asharppen"><img src="https://img.buymeacoffee.com/button-api/?text=Buy me a coffee&emoji=&slug=asharppen&button_colour=FFDD00&font_colour=000000&font_family=Cookie&outline_colour=000000&coffee_colour=ffffff" /></a>
 
 # Changelog 
+- v1.7.8:
+	- Fixed: SetFaction was only applying the faction on creature spawn, it now correctly re-applies on creature load.
 - v1.7.7:
 	- Fixed: Compatibility with Valheim v0.217.14.
 - v1.7.6:
