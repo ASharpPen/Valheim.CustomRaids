@@ -20,7 +20,10 @@ public static class EventsWriter
     {
         try
         {
-            WriteToFile(LocationList.GetAllLocationLists().SelectMany(x => x.m_events).ToList(), "default_location_random_events.txt", "random events (raids) for specific locations, eg. caves,");
+            WriteToFile(
+                LocationList.GetAllLocationLists().SelectMany(x => x.m_events).ToList(), 
+                "custom_raids.default_location_random_events.txt", 
+                "random events (raids) for specific locations, eg. caves,");
         }
         catch(Exception e)
         {

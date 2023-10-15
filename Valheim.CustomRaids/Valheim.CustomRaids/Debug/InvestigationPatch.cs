@@ -18,7 +18,7 @@ internal static class EvnManTest
         {
             if (ConfigurationManager.GeneralConfig?.WriteEnvironmentDataToDisk?.Value == true)
             {
-                string filePath = FileUtils.PrepareWriteDebugFile("environments.txt", "environments (aka. weather)");
+                string filePath = FileUtils.PrepareWriteDebugFile("custom_raids.environments.txt", "environments (aka. weather)");
 
                 var fields = typeof(EnvSetup).GetFields();
                 List<string> lines = new List<string>(__instance.m_environments.Count * fields.Length);
@@ -36,26 +36,6 @@ internal static class EvnManTest
         catch (Exception e)
         {
             Log.LogWarning("Error while attempting to write environments to file.", e);
-        }
-    }
-}
-
-[HarmonyPatch(typeof(ZoneSystem), nameof(ZoneSystem.Start))]
-internal static class ZoneSystemPatch
-{
-    private static void Postfix(ref ZoneSystem __instance)
-    {
-        try
-        {
-            if (ConfigurationManager.GeneralConfig?.WriteGlobalKeyDataToDisk?.Value == true)
-            {
-                string filePath = FileUtils.PrepareWriteDebugFile("global_keys.txt", "global keys");
-                File.WriteAllLines(filePath, __instance.GetGlobalKeys());
-            }
-        }
-        catch (Exception e)
-        {
-            Log.LogWarning("Error while attempting to write global keys to file.", e);
         }
     }
 }

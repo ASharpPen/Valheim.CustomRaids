@@ -45,7 +45,7 @@ public static class RaidConfigManager
 
             if (ConfigurationManager.GeneralConfig?.WriteDefaultEventDataToDisk?.Value == true)
             {
-                EventsWriter.WriteToFile(eventSystem.m_events);
+                EventsWriter.WriteToFile(eventSystem.m_events, "custom_raids.raids.before_changes.txt");
             }
 
             if (ConfigurationManager.GeneralConfig?.EventCheckInterval is not null)
@@ -125,7 +125,7 @@ public static class RaidConfigManager
 
             if (ConfigurationManager.GeneralConfig.WritePostChangeEventDataToDisk.Value)
             {
-                EventsWriter.WriteToFile(eventSystem.m_events, "custom_random_events.txt", "random events (raids) after configuration");
+                EventsWriter.WriteToFile(eventSystem.m_events, "custom_raids.raids.after_changes.txt", "random events (raids) after configuration");
             }
         }
         catch (Exception e)
