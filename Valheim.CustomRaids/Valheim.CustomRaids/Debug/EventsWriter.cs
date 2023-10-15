@@ -1,5 +1,4 @@
-﻿using BepInEx;
-using HarmonyLib;
+﻿using HarmonyLib;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -8,6 +7,7 @@ using System.Linq;
 using Valheim.CustomRaids.Configuration.ConfigTypes;
 using Valheim.CustomRaids.Core;
 using Valheim.CustomRaids.Utilities;
+using Valheim.CustomRaids.Utilities.Extensions;
 
 namespace Valheim.CustomRaids.Debug;
 
@@ -52,6 +52,28 @@ public static class EventsWriter
                 lines.Add($"{nameof(RaidEventConfiguration.PauseIfNoPlayerInArea)}={entry.m_pauseIfNoPlayerInArea}");
                 lines.Add($"{nameof(RaidEventConfiguration.ForceEnvironment)}={entry.m_forceEnvironment}");
                 lines.Add($"{nameof(RaidEventConfiguration.ForceMusic)}={entry.m_forceMusic}");
+                lines.Add($"{nameof(RaidEventConfiguration.ConditionPlayerMustHaveAnyOfGlobalKeys)}={entry.m_altRequiredPlayerKeysAny?.Join() ?? ""}");
+                lines.Add($"{nameof(RaidEventConfiguration.ConditionPlayerMustNotHaveAnyOfGlobalKeys)}={entry.m_altNotRequiredPlayerKeys?.Join() ?? ""}");
+
+                List<string> playerMustKnowItems = new List<string>();
+                foreach (var item in entry.m_altRequiredKnownItems ?? Enumerable.Empty<ItemDrop>())
+                {
+                    if (item.IsNotNull())
+                    {
+                        playerMustKnowItems.Add(item.name);
+                    }
+                }
+                lines.Add($"{nameof(RaidEventConfiguration.ConditionPlayerMustKnowAnyOfItems)}={playerMustKnowItems.Join()}");
+
+                List<string> playerMustNotKnowItems = new List<string>();
+                foreach (var item in entry.m_altRequiredNotKnownItems ?? Enumerable.Empty<ItemDrop>())
+                {
+                    if (item.IsNotNull())
+                    {
+                        playerMustNotKnowItems.Add(item.name);
+                    }
+                }
+                lines.Add($"{nameof(RaidEventConfiguration.ConditionPlayerMustNotKnowAnyOfItems)}={playerMustNotKnowItems.Join()}");
 
                 lines.Add("");
                 for (int i = 0; i < entry.m_spawn.Count; ++i)

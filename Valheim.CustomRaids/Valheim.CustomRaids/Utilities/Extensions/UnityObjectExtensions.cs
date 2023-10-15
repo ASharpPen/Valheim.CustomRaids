@@ -1,6 +1,6 @@
 ﻿namespace Valheim.CustomRaids.Utilities.Extensions;
 
-public static class UnityObjectExtensions
+internal static class UnityObjectExtensions
 {
     public static bool IsNull(this UnityEngine.Object obj)
     {
