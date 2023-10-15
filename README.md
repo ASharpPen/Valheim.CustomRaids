@@ -69,8 +69,15 @@ If you feel like it
 <a href="https://www.buymeacoffee.com/asharppen"><img src="https://img.buymeacoffee.com/button-api/?text=Buy me a coffee&emoji=&slug=asharppen&button_colour=FFDD00&font_colour=000000&font_family=Cookie&outline_colour=000000&coffee_colour=ffffff" /></a>
 
 # Changelog 
+- v1.7.9:
+	- Fixed: Issue with raids not always being added to "possible" list when using individual raids.
+	- Fixed: Vanilla does not immediately update player-based keys added on creature kill. Custom Raids will always try to trigger the key update on creature kills now.
+	- Added: Player-based raid conditions. These are the vanilla conditions that get enabled when using the world-modifiers for player-based events.
+	- Added: Terminal commands for debugging the player-based events.
+	- Changed: The global-key debug file now shows a list of creatures and which key is gained from killing it.
+	- Various minor tweaks to generated debug files.
 - v1.7.8:
-	- Fixed: SetFaction was only applying the faction on creature spawn, it now correctly re-applies on creature load.
+	- Fixed: Setting "Faction" was only applying the faction on creature spawn, it now correctly re-applies on creature load.
 - v1.7.7:
 	- Fixed: Compatibility with Valheim v0.217.14.
 - v1.7.6:

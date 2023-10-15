@@ -92,6 +92,14 @@ namespace Valheim.CustomRaids.Configuration.ConfigTypes
         public ConfigurationEntry<string> ConditionLocation = new("", "List of locations in which this raid is enabled.");
 
         public ConfigurationEntry<string> OnStopStartRaid = new("", "When this event stops, start a new raid at the same position, with the given name. Note, this will ignore all conditions otherwise required for that raid.\nThis is intended for chaining raids.");
+
+        public ConfigurationEntry<string> ConditionPlayerMustHaveAnyOfPlayerKeys = new("", $"(Enabled by world-modifier) List player-specific keys used for player-based raids, of which player must have at least one. Ignored if empty or if a required known item was found from {nameof(ConditionPlayerMustKnowAnyOfItems)}.");
+
+        public ConfigurationEntry<string> ConditionPlayerMustNotHaveAnyOfPlayerKeys = new("", "(Enabled by world-modifier) List player-specific keys used for player-based raids, of which player must not have any of the listed. Ignored if empty.");
+
+        public ConfigurationEntry<string> ConditionPlayerMustKnowAnyOfItems = new("", "(Enabled by world-modifier) List of player-known items used for player-based raids, of which player must know at least one. Ignored if empty.");
+
+        public ConfigurationEntry<string> ConditionPlayerMustNotKnowAnyOfItems = new("", "(Enabled by world-modifier) List of player-known items used for player-based raids, of which player must not know any of the listed. Ignored if empty.");
     }
 
     [Serializable]

@@ -1,7 +1,6 @@
 ﻿using HarmonyLib;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 using UnityEngine;
 using Valheim.CustomRaids.Configuration;
 using Valheim.CustomRaids.Core;
@@ -72,7 +71,7 @@ namespace Valheim.CustomRaids.RaidFrequencyOverhaul
                 if (___m_sendTimer > 2f)
                 {
                     ___m_sendTimer = 0f;
-                    SendCurrentRandomEvent(__instance);
+                    __instance.SendCurrentRandomEvent();
                 }
             }
 
@@ -124,7 +123,7 @@ namespace Valheim.CustomRaids.RaidFrequencyOverhaul
             Log.LogDebug($"Starting raid: {selectedRaid?.Raid?.m_name}");
 
             //Start event.
-            SetRandomEvent(instance, selectedRaid.Raid, selectedRaid.RaidCenter);
+            instance.SetRandomEvent(selectedRaid.Raid, selectedRaid.RaidCenter);
             return true;
         }
 
@@ -132,12 +131,14 @@ namespace Valheim.CustomRaids.RaidFrequencyOverhaul
         {
             var possibleRaids = new List<PossibleRaid>();
 
+            RandEventSystem.RefreshPlayerEventData();
+
             foreach (RandomEvent randomEvent in randomEventSystem.m_events)
             {
                 if (randomEvent.m_enabled && randomEvent.m_random)
                 {
-                    //Check for default global key handling. Only check standard ValidGlobalKeys if enhanced keys are NOT installed.
-                    if(!ValidGlobalKeys(randomEventSystem, randomEvent))
+                    //Check for default global key handling.
+                    if(!randomEventSystem.HaveGlobalKeys(randomEvent, RandEventSystem.playerEventDatas))
                     {
                         Log.LogDebug($"Skipping raid '{randomEvent.m_name}' due to not finding valid global keys.");
                         continue;
@@ -162,70 +163,35 @@ namespace Valheim.CustomRaids.RaidFrequencyOverhaul
 
                     List<Vector3> possibleRaidCenterPositions = GetRaidCenters(randomEventSystem, randomEvent);
 
-                    if (possibleRaidCenterPositions.Count != 0)
+                    if (possibleRaidCenterPositions.Count == 0)
                     {
-                        Vector3 raidCenter = possibleRaidCenterPositions[UnityEngine.Random.Range(0, possibleRaidCenterPositions.Count)];
-
-                        if (!RaidConditionManager.HasValidConditions(randomEvent, raidCenter))
-                        {
-                            continue;
-                        }
-
-                        possibleRaids.Add(new PossibleRaid
-                        {
-                            EventData = eventData,
-                            EventChance = (eventData.Config?.RaidChance?.Value ?? 0) == 0
-                                ? 20 //Use default of 20% chance.
-                                : eventData.Config.RaidChance.Value, 
-                            Raid = randomEvent,
-                            RaidCenter = raidCenter
-                        });
+                        Log.LogDebug($"Skipping raid {randomEvent.m_name} due to player position conditions not being fulfilled (eg., biome or base-object count).");
+                        continue;
                     }
+
+                    Vector3 raidCenter = possibleRaidCenterPositions[UnityEngine.Random.Range(0, possibleRaidCenterPositions.Count)];
+
+                    if (!RaidConditionManager.HasValidConditions(randomEvent, raidCenter))
+                    {
+                        Log.LogDebug($"Skipping raid {randomEvent.m_name} due not fulfilling conditions.");
+                        continue;
+                    }
+
+                    possibleRaids.Add(new PossibleRaid
+                    {
+                        EventData = eventData,
+                        EventChance = (eventData.Config?.RaidChance?.Value ?? 0) == 0
+                            ? 20 //Use default of 20% chance.
+                            : eventData.Config.RaidChance.Value, 
+                        Raid = randomEvent,
+                        RaidCenter = raidCenter
+                    });
                 }
             }
             return possibleRaids;
         }
 
-        private static MethodInfo HaveGlobalKeys = AccessTools.Method(
-            typeof(RandEventSystem), 
-            nameof(RandEventSystem.HaveGlobalKeys), 
-            new[] 
-            { 
-                typeof(RandomEvent), 
-                typeof(List<RandEventSystem.PlayerEventData>)
-            });
-
-        private static bool ValidGlobalKeys(RandEventSystem instance, RandomEvent randomEvent)
-        {
-            return (bool)(HaveGlobalKeys.Invoke(instance, new object[] { randomEvent, RandEventSystem.playerEventDatas }) ?? false);
-        }
-
-        private static MethodInfo GetValidEventPoints = AccessTools.Method(
-            typeof(RandEventSystem), 
-            nameof(RandEventSystem.GetValidEventPoints), 
-            new[] 
-            { 
-                typeof(RandomEvent), 
-                typeof(List<RandEventSystem.PlayerEventData>)
-            });
-
-        private static List<Vector3> GetRaidCenters(RandEventSystem instance, RandomEvent randomEvent)
-        {
-            return GetValidEventPoints.Invoke(instance, new object[] { randomEvent, RandEventSystem.playerEventDatas }) as List<Vector3>;
-        }
-
-        private static MethodInfo SetRandomEventMethod = AccessTools.Method(typeof(RandEventSystem), nameof(RandEventSystem.SetRandomEvent), new[] { typeof(RandomEvent), typeof(Vector3) });
-
-        private static void SetRandomEvent(RandEventSystem instance, RandomEvent randomEvent, Vector3 raidCenter)
-        {
-            SetRandomEventMethod.Invoke(instance, new object[] { randomEvent, raidCenter });
-        }
-
-        private static MethodInfo SendCurrentRandomEventMethod = AccessTools.Method(typeof(RandEventSystem), nameof(RandEventSystem.SendCurrentRandomEvent));
-
-        private static void SendCurrentRandomEvent(RandEventSystem instance)
-        {
-            SendCurrentRandomEventMethod.Invoke(instance, new object[0]);
-        }
+        private static List<Vector3> GetRaidCenters(RandEventSystem instance, RandomEvent randomEvent) => 
+            instance.GetValidEventPoints(randomEvent, RandEventSystem.playerEventDatas);
     }
 }

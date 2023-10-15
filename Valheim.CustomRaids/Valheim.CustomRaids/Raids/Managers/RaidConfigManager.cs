@@ -45,7 +45,7 @@ public static class RaidConfigManager
 
             if (ConfigurationManager.GeneralConfig?.WriteDefaultEventDataToDisk?.Value == true)
             {
-                EventsWriter.WriteToFile(eventSystem.m_events);
+                EventsWriter.WriteToFile(eventSystem.m_events, "custom_raids.raids.before_changes.txt");
             }
 
             if (ConfigurationManager.GeneralConfig?.EventCheckInterval is not null)
@@ -125,7 +125,7 @@ public static class RaidConfigManager
 
             if (ConfigurationManager.GeneralConfig.WritePostChangeEventDataToDisk.Value)
             {
-                EventsWriter.WriteToFile(eventSystem.m_events, "custom_random_events.txt", "random events (raids) after configuration");
+                EventsWriter.WriteToFile(eventSystem.m_events, "custom_raids.raids.after_changes.txt", "random events (raids) after configuration");
             }
         }
         catch (Exception e)
@@ -228,6 +228,35 @@ public static class RaidConfigManager
         var notRequiredGlobalKeys = raidEvent.NotRequiredGlobalKeys?.Value?.SplitByComma();
         var requiredGlobalKeys = raidEvent.RequiredGlobalKeys?.Value?.SplitByComma();
 
+        var playerMustHaveAnyKey = raidEvent.ConditionPlayerMustHaveAnyOfPlayerKeys?.Value?.SplitByComma();
+        var playerMustNotHaveAnyKey = raidEvent.ConditionPlayerMustNotHaveAnyOfPlayerKeys?.Value?.SplitByComma();
+
+        var playerMustKnowItem = new List<ItemDrop>(); 
+        var playerMustNotKnowItem = new List<ItemDrop>(); 
+
+        raidEvent.ConditionPlayerMustKnowAnyOfItems?.Value?
+            .SplitByComma()?
+            .ForEach(x => AddItem(x, playerMustKnowItem));
+
+        raidEvent.ConditionPlayerMustNotKnowAnyOfItems?.Value?
+            .SplitByComma()
+            .ForEach(x => AddItem(x, playerMustNotKnowItem));
+
+        void AddItem(string prefabName, List<ItemDrop> dropList)
+        {
+            var itemPrefab = ZNetScene.instance.GetPrefab(prefabName);
+
+            if (itemPrefab.IsNotNull() &&
+                itemPrefab.TryGetComponent<ItemDrop>(out var itemDrop))
+            {
+                dropList.Add(itemDrop);
+            }
+            else
+            {
+                Log.LogWarning($"Unable to find prefab for item '{prefabName}' while configuring raid '{raidEvent.Name.Value}'. Verify that the listed prefab is actually an item or that the item is actually added to the game.");
+            }
+        }
+
         RandomEvent newEvent = new RandomEvent
         {
             m_name = raidEvent.Name.Value,
@@ -244,6 +273,10 @@ public static class RaidConfigManager
             m_notRequiredGlobalKeys = notRequiredGlobalKeys,
             m_requiredGlobalKeys = requiredGlobalKeys,
             m_pauseIfNoPlayerInArea = raidEvent.PauseIfNoPlayerInArea.Value,
+            m_altRequiredPlayerKeysAny = playerMustHaveAnyKey,
+            m_altNotRequiredPlayerKeys = playerMustNotHaveAnyKey,
+            m_altRequiredKnownItems = playerMustKnowItem,
+            m_altRequiredNotKnownItems = playerMustNotKnowItem,
         };
 
         return newEvent;

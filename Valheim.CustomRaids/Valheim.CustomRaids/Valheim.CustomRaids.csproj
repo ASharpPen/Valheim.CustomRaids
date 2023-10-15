@@ -5,7 +5,7 @@
     <AssemblyName>Valheim.CustomRaids</AssemblyName>
     <RootNamespace>Valheim.CustomRaids</RootNamespace>
     <Authors>A Sharp Pen</Authors>
-    <Version>1.7.8</Version>
+    <Version>1.7.9</Version>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="BepInEx.Core" Version="5.4.21" />
@@ -34,7 +34,7 @@
     </Reference>
   </ItemGroup>
 
-	<Target Name="PropagateVersionNumber" BeforeTargets="Build" Condition="'$(Configuration)'=='Release'">
+	<Target Name="PropagateVersionNumber" BeforeTargets="Build">
 
 		<PropertyGroup>
 			<RepoDir>$([System.IO.Path]::GetFullPath($([System.IO.Path]::Combine($(MSBuildProjectDirectory),'..','..'))))</RepoDir>

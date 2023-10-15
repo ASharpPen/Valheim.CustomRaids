@@ -34,7 +34,7 @@ namespace Valheim.CustomRaids.Configuration.ConfigTypes
 
         public ConfigurationEntry<bool> WriteEnvironmentDataToDisk = new(false, "If enabled, scans existing environment (weather) data, and writes to a file.");
 
-        public ConfigurationEntry<bool> WriteGlobalKeyDataToDisk = new(false, "If enabled, scans existing global keys, and writes to a file.");
+        public ConfigurationEntry<bool> WriteGlobalKeyDataToDisk = new(false, "If enabled, scans for possible global keys from creture kills, and writes to a file.");
 
         public ConfigurationEntry<bool> WriteLocationsToDisk = new(false, "If enabled, scans existing locations (aka. points of interest) and writes to a file.");
 
