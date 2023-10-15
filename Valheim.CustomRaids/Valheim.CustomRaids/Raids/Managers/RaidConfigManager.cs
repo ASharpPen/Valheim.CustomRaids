@@ -228,8 +228,8 @@ public static class RaidConfigManager
         var notRequiredGlobalKeys = raidEvent.NotRequiredGlobalKeys?.Value?.SplitByComma();
         var requiredGlobalKeys = raidEvent.RequiredGlobalKeys?.Value?.SplitByComma();
 
-        var playerMustHaveAnyKey = raidEvent.ConditionPlayerMustHaveAnyOfGlobalKeys?.Value?.SplitByComma();
-        var playerMustNotHaveAnyKey = raidEvent.ConditionPlayerMustNotHaveAnyOfGlobalKeys?.Value?.SplitByComma();
+        var playerMustHaveAnyKey = raidEvent.ConditionPlayerMustHaveAnyOfPlayerKeys?.Value?.SplitByComma();
+        var playerMustNotHaveAnyKey = raidEvent.ConditionPlayerMustNotHaveAnyOfPlayerKeys?.Value?.SplitByComma();
 
         var playerMustKnowItem = new List<ItemDrop>(); 
         var playerMustNotKnowItem = new List<ItemDrop>(); 
