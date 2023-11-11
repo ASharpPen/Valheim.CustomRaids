@@ -69,6 +69,10 @@ If you feel like it
 <a href="https://www.buymeacoffee.com/asharppen"><img src="https://img.buymeacoffee.com/button-api/?text=Buy me a coffee&emoji=&slug=asharppen&button_colour=FFDD00&font_colour=000000&font_family=Cookie&outline_colour=000000&coffee_colour=ffffff" /></a>
 
 # Changelog 
+- v1.7.10:
+	- Fixed: Compatibility with Valheim v.0.217.29. Serialization issue when syncing configs from servers resolved.
+	- Added soft-dependency for LocalizationCache, to help it get loaded earlier.
+	- Changed default value for setting 'StopTouchingMyConfigs' in custom_raids.cfg to true.
 - v1.7.9:
 	- Fixed: Issue with raids not always being added to "possible" list when using individual raids.
 	- Fixed: Vanilla does not immediately update player-based keys added on creature kill. Custom Raids will always try to trigger the key update on creature kills now.

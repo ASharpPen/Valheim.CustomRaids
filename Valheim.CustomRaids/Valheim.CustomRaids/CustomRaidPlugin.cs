@@ -7,13 +7,15 @@ using Valheim.CustomRaids.TerminalCommands;
 
 namespace Valheim.CustomRaids;
 
+// The LocalizationCache is only here to help ordering mods for slightly improved load performance.
+[BepInDependency("com.maxsch.valheim.LocalizationCache", BepInDependency.DependencyFlags.SoftDependency)] 
 [BepInDependency("asharppen.valheim.spawn_that", BepInDependency.DependencyFlags.SoftDependency)]
 [BepInPlugin(ModId, PluginName, Version)]
 public class CustomRaidPlugin : BaseUnityPlugin
 {
     public const string ModId = "asharppen.valheim.custom_raids";
     public const string PluginName = "Custom Raids";
-    public const string Version = "1.7.9";
+    public const string Version = "1.7.10";
 
     void Awake()
     {

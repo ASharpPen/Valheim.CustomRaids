@@ -21,7 +21,7 @@ namespace Valheim.CustomRaids.Core.Configuration
         public ConfigEntry<TIn> Config;
 
         [OnSerializing]
-        internal void OnSerialize()
+        internal void OnSerialize(StreamingContext _)
         {
             // We cheat, and don't actually use the bepinex bindings for syncronized configurations.
             // Due to Config not being set, this should result in DefaultValue always being used instead.
