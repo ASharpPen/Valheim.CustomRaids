@@ -12,7 +12,7 @@ namespace Valheim.CustomRaids.Configuration.ConfigTypes
 
         #region General
 
-        public ConfigurationEntry<bool> StopTouchingMyConfigs = new ConfigurationEntry<bool>(false, "Disables automatic updating and saving of raid configurations.\nThis means no comments or missing options will be added, but.. allows you to keep things compact.\nNote: This also has a massive impact upon load time.");
+        public ConfigurationEntry<bool> StopTouchingMyConfigs = new ConfigurationEntry<bool>(true, "Disables automatic updating and saving of raid configurations on loadup.\nThis mainly means no comments or missing options will be added, but.. allows you to keep things compact.\nNote: This also has a massive impact upon load time.");
 
         public ConfigurationEntry<bool> LoadSupplementalRaids = new ConfigurationEntry<bool>(true, "Loads raid configurations from supplemental files.\nEg. custom_raid.supplemental.my_raid.cfg will be included on load.");
 
