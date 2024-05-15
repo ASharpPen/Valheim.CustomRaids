@@ -15,7 +15,7 @@ public class CustomRaidPlugin : BaseUnityPlugin
 {
     public const string ModId = "asharppen.valheim.custom_raids";
     public const string PluginName = "Custom Raids";
-    public const string Version = "1.7.10";
+    public const string Version = "1.7.11";
 
     void Awake()
     {
