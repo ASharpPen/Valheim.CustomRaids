@@ -69,6 +69,8 @@ If you feel like it
 <a href="https://www.buymeacoffee.com/asharppen"><img src="https://img.buymeacoffee.com/button-api/?text=Buy me a coffee&emoji=&slug=asharppen&button_colour=FFDD00&font_colour=000000&font_family=Cookie&outline_colour=000000&coffee_colour=ffffff" /></a>
 
 # Changelog 
+- v1.7.11:
+	- Compatibility: Valheim v0.218.15.
 - v1.7.10:
 	- Fixed: Compatibility with Valheim v.0.217.29. Serialization issue when syncing configs from servers resolved.
 	- Added soft-dependency for LocalizationCache, to help it get loaded earlier.

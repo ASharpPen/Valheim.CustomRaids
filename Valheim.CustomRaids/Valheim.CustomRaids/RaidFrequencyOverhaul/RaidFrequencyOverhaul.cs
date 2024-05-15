@@ -138,7 +138,7 @@ namespace Valheim.CustomRaids.RaidFrequencyOverhaul
                 if (randomEvent.m_enabled && randomEvent.m_random)
                 {
                     //Check for default global key handling.
-                    if(!randomEventSystem.HaveGlobalKeys(randomEvent, RandEventSystem.playerEventDatas))
+                    if(!randomEventSystem.HaveGlobalKeys(randomEvent, RandEventSystem.s_playerEventDatas))
                     {
                         Log.LogDebug($"Skipping raid '{randomEvent.m_name}' due to not finding valid global keys.");
                         continue;
@@ -192,6 +192,6 @@ namespace Valheim.CustomRaids.RaidFrequencyOverhaul
         }
 
         private static List<Vector3> GetRaidCenters(RandEventSystem instance, RandomEvent randomEvent) => 
-            instance.GetValidEventPoints(randomEvent, RandEventSystem.playerEventDatas);
+            instance.GetValidEventPoints(randomEvent, RandEventSystem.s_playerEventDatas);
     }
 }

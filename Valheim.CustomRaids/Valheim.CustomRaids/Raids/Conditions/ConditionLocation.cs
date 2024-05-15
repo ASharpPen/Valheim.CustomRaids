@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Valheim.CustomRaids.Utilities.Extensions;
-using static CreatureLevelControl.OriginalItemData;
 
 namespace Valheim.CustomRaids.Raids.Conditions;
 

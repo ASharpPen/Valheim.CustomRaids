@@ -55,7 +55,7 @@ public static class EventsWriter
                 lines.Add($"{nameof(RaidEventConfiguration.Name)}={entry.m_name}");
                 lines.Add($"{nameof(RaidEventConfiguration.Enabled)}={entry.m_enabled}");
                 lines.Add($"{nameof(RaidEventConfiguration.Random)}={entry.m_random}");
-                lines.Add($"{nameof(RaidEventConfiguration.Biomes)}={BiomeArray(entry.m_biome)}");
+                lines.Add($"{nameof(RaidEventConfiguration.Biomes)}={entry.m_biome.Split().Join()}");
                 lines.Add($"{nameof(RaidEventConfiguration.Duration)}={entry.m_duration.ToString(CultureInfo.InvariantCulture)}");
                 lines.Add($"{nameof(RaidEventConfiguration.StartMessage)}={entry.m_startMessage}");
                 lines.Add($"{nameof(RaidEventConfiguration.EndMessage)}={entry.m_endMessage}");
@@ -139,24 +139,5 @@ public static class EventsWriter
         {
             Log.LogWarning("Error while attempting to write raid events to file.", e);
         }
-    }
-
-    private static string BiomeArray(Heightmap.Biome spawnerBiome)
-    {
-        string biomeArray = "";
-        foreach (var b in Enum.GetValues(typeof(Heightmap.Biome)))
-        {
-            if (b is Heightmap.Biome biome)
-            {
-                biome = (biome & spawnerBiome);
-
-                if (biome > Heightmap.Biome.None)
-                {
-                    biomeArray += biome + ",";
-                }
-            }
-        }
-
-        return biomeArray;
     }
 }

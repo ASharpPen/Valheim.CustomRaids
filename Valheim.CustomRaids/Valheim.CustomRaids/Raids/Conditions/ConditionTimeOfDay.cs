@@ -12,7 +12,7 @@ namespace Valheim.CustomRaids.Raids.Conditions
         {
             if (DuringDay is not null)
             {
-                if (!DuringDay.Value && EnvMan.instance.IsDay())
+                if (!DuringDay.Value && EnvMan.IsDay())
                 {
                     Log.LogDebug($"Raid {context.RandomEvent.m_name} disabled due to not being allowed to start during day.");
                     return false;
@@ -21,7 +21,7 @@ namespace Valheim.CustomRaids.Raids.Conditions
 
             if (DuringNight is not null)
             {
-                if (!DuringNight.Value && EnvMan.instance.IsNight())
+                if (!DuringNight.Value && EnvMan.IsNight())
                 {
                     Log.LogDebug($"Raid {context.RandomEvent.m_name} disabled due to not being allowed to start during night.");
                     return false;
