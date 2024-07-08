@@ -6,7 +6,7 @@ using Valheim.CustomRaids.Patches;
 namespace Valheim.CustomRaids.Resetter;
 
 [HarmonyPatch(typeof(FejdStartup))]
-internal static class WorldStartupResetPatch
+internal static class LifecycleManager
 {
     internal static GameState State { get; set; }
 
@@ -56,6 +56,7 @@ internal static class WorldStartupResetPatch
 
 internal enum GameState
 {
+    Invalid,
     Singleplayer,
     Multiplayer,
     Dedicated

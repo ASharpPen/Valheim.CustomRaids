@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Valheim.CustomRaids.Integrations;
 
 namespace Valheim.CustomRaids.Raids.Conditions;
 
@@ -19,6 +20,21 @@ public class ConditionRequiredGlobalKeys : IRaidCondition
             return true;
         }
 
-        return RequiredGlobalKeys.All(ZoneSystem.instance.GetGlobalKey);
+        if (InstallationManager.WAPInstalled &&
+            WAPKeyChecks.ShouldUseWAP())
+        {
+            var playerId = context.PlayerUserId ?? context.IdentifyPlayerByPos(context.Position);
+
+            if (playerId is not null)
+            {
+                return RequiredGlobalKeys.All(x => WAPKeyChecks.Check(playerId.Value, x));
+            }
+
+            return false; // Unable to identify player.
+        }
+        else
+        {
+            return RequiredGlobalKeys.All(ZoneSystem.instance.GetGlobalKey);
+        }
     }
 }
