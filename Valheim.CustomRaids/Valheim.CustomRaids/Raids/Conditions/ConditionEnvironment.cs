@@ -43,7 +43,7 @@ internal class ConditionEnvironment : IRaidCondition
 
     public static EnvSetup GetCurrent(Vector3 position)
 {
-        if (WorldStartupResetPatch.State == GameState.Dedicated)
+        if (LifecycleManager.State == GameState.Dedicated)
         {
             // If environment is forced on server, grab that.
             if (EnvMan.instance && !string.IsNullOrWhiteSpace(EnvMan.instance.m_forceEnv))

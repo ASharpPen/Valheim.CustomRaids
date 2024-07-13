@@ -5,7 +5,7 @@
     <AssemblyName>Valheim.CustomRaids</AssemblyName>
     <RootNamespace>Valheim.CustomRaids</RootNamespace>
     <Authors>A Sharp Pen</Authors>
-    <Version>1.7.11</Version>
+    <Version>1.7.12</Version>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="BepInEx.Core" Version="5.4.21" />
@@ -31,6 +31,9 @@
     </Reference>
     <Reference Include="Valheim.SpawnThat">
       <HintPath>..\..\Libs\ASharpPen-Spawn_That\Valheim.SpawnThat.dll</HintPath>
+    </Reference>
+    <Reference Include="VentureValheim.Progression">
+      <HintPath>..\..\Libs\VentureValheim-World_Advancement_Progression\VentureValheim.Progression.dll</HintPath>
     </Reference>
   </ItemGroup>
 
