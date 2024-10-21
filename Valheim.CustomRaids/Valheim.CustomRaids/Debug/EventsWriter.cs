@@ -66,6 +66,7 @@ public static class EventsWriter
                 lines.Add($"{nameof(RaidEventConfiguration.ForceEnvironment)}={entry.m_forceEnvironment}");
                 lines.Add($"{nameof(RaidEventConfiguration.ForceMusic)}={entry.m_forceMusic}");
                 lines.Add($"{nameof(RaidEventConfiguration.ConditionPlayerMustHaveAnyOfPlayerKeys)}={entry.m_altRequiredPlayerKeysAny?.Join() ?? ""}");
+                lines.Add($"{nameof(RaidEventConfiguration.ConditionPlayerMustHaveAllOfPlayerKeys)}={entry.m_altRequiredPlayerKeysAll?.Join() ?? ""}");
                 lines.Add($"{nameof(RaidEventConfiguration.ConditionPlayerMustNotHaveAnyOfPlayerKeys)}={entry.m_altNotRequiredPlayerKeys?.Join() ?? ""}");
 
                 List<string> playerMustKnowItems = new List<string>();
