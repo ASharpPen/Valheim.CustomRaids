@@ -13,7 +13,7 @@ internal class ConditionAltitude : IRaidCondition
 
     public bool IsValid(RaidContext context)
 {
-        var zone = ZoneManager.GetZone(ZoneSystem.instance.GetZone(context.Position));
+        var zone = ZoneManager.GetZone(ZoneSystem.GetZone(context.Position));
         var floorAltitude = zone.Height(context.Position) - ZoneSystem.instance.m_waterLevel;
 
 #if DEBUG && VERBOSE

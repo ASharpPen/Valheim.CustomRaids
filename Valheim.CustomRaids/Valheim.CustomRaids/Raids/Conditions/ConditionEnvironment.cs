@@ -52,7 +52,7 @@ internal class ConditionEnvironment : IRaidCondition
             }
 
             // Simulate current environment.
-            var biome = ZoneManager.GetZone(ZoneSystem.instance.GetZone(position)).Biome;
+            var biome = ZoneManager.GetZone(ZoneSystem.GetZone(position)).Biome;
 
             var potentialEnvs = EnvMan.instance.GetAvailableEnvironments(biome);
 

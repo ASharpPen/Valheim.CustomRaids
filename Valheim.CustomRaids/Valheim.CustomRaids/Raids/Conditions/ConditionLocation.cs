@@ -34,7 +34,7 @@ public class ConditionLocation : IRaidCondition
             return true;
         }
 
-        var zoneId = ZoneSystem.instance.GetZone(context.Position);
+        var zoneId = ZoneSystem.GetZone(context.Position);
 
         if (ZoneSystem.instance.m_locationInstances?.TryGetValue(zoneId, out var location) == true &&
             location.m_location is not null)
