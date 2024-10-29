@@ -95,6 +95,8 @@ namespace Valheim.CustomRaids.Configuration.ConfigTypes
 
         public ConfigurationEntry<string> ConditionPlayerMustHaveAnyOfPlayerKeys = new("", $"(Enabled by world-modifier) List player-specific keys used for player-based raids, of which player must have at least one. Ignored if empty or if a required known item was found from {nameof(ConditionPlayerMustKnowAnyOfItems)}.");
 
+        public ConfigurationEntry<string> ConditionPlayerMustHaveAllOfPlayerKeys = new("", $"(Enabled by world-modifier) List player-specific keys used for player-based raids, of which player must have all. Ignored if empty.");
+
         public ConfigurationEntry<string> ConditionPlayerMustNotHaveAnyOfPlayerKeys = new("", "(Enabled by world-modifier) List player-specific keys used for player-based raids, of which player must not have any of the listed. Ignored if empty.");
 
         public ConfigurationEntry<string> ConditionPlayerMustKnowAnyOfItems = new("", "(Enabled by world-modifier) List of player-known items used for player-based raids, of which player must know at least one. Ignored if empty.");
