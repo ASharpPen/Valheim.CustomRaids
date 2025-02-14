@@ -78,15 +78,15 @@ public static class RaidConfigManager
                     //Check for overrides
                     if ((eventSystem.m_events?.Count ?? 0) > 0)
                     {
-                        for (int i = 0; i < eventSystem.m_events.Count; ++i)
-                        {
+                        for (int i = eventSystem.m_events.Count - 1; i >= 0; --i)
+                        { 
                             string cleanedEventName = eventSystem.m_events[i].m_name.ToUpperInvariant().Trim();
                             string cleanedRaidName = raid.Name.Value.ToUpperInvariant().Trim();
+
                             if (cleanedEventName == cleanedRaidName)
                             {
                                 Log.LogDebug($"Overriding existing event {eventSystem.m_events[i].m_name} with configured");
                                 eventSystem.m_events.RemoveAt(i);
-                                break;
                             }
                         }
                     }
@@ -184,7 +184,7 @@ public static class RaidConfigManager
 
             SpawnSystem.SpawnData spawn = new SpawnSystem.SpawnData
             {
-                m_name = spawnConfig.SectionKey,
+                m_name = spawnConfig.Name.Value,
                 m_enabled = spawnConfig.Enabled.Value,
                 m_prefab = spawnObject,
                 m_maxSpawned = spawnConfig.MaxSpawned.Value,
