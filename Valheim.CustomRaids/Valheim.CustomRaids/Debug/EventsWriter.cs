@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using Valheim.CustomRaids.Configuration;
 using Valheim.CustomRaids.Configuration.ConfigTypes;
 using Valheim.CustomRaids.Core;
 using Valheim.CustomRaids.Utilities;
@@ -20,10 +21,14 @@ public static class EventsWriter
     {
         try
         {
-            WriteToFile(
-                LocationList.GetAllLocationLists().SelectMany(x => x.m_events).ToList(), 
-                "custom_raids.raids.location_events_before_changes.txt", 
-                "random events (raids) for specific locations, eg. caves,");
+            if (ConfigurationManager.GeneralConfig?.WriteDefaultEventDataToDisk?.Value == true)
+            {
+                WriteToFile(
+                    LocationList.GetAllLocationLists().SelectMany(x => x.m_events).ToList(),
+                    "custom_raids.raids.location_events_before_changes.txt",
+                    "random events (raids) for specific locations, eg. caves,");
+            }
+
         }
         catch(Exception e)
         {
