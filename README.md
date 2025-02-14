@@ -69,6 +69,9 @@ If you feel like it
 <a href="https://www.buymeacoffee.com/asharppen"><img src="https://img.buymeacoffee.com/button-api/?text=Buy me a coffee&emoji=&slug=asharppen&button_colour=FFDD00&font_colour=000000&font_family=Cookie&outline_colour=000000&coffee_colour=ffffff" /></a>
 
 # Changelog 
+- v1.7.14:
+	- Fixed: Issue with overriding raids when multiple shared same name. This caused only one of the two raids to get modified and the other left as is. From now on, a raid configuration will replace all raids with same name with a single configured one. This was detected due to the two vanilla raids "army_theelder" and "army_moder" having duplicates.
+	- Fixed: `custom_raids.raids.location_events_before_changes.txt` printing to disk even though debug option was disabled.
 - v1.7.13:
 	- Compatibility: Valheim v0.219.10.
 	- Added: Support for new vanilla player-based raid condition - ConditionPlayerMustHaveAllOfPlayerKeys.
