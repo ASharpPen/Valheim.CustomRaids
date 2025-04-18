@@ -90,6 +90,7 @@ If you feel like it
 	- Added: Terminal commands for debugging the player-based events.
 	- Changed: The global-key debug file now shows a list of creatures and which key is gained from killing it.
 	- Various minor tweaks to generated debug files.
+ 	- Fixed: Compatibility with Valheim v0.217.24. 
 - v1.7.8:
 	- Fixed: Setting "Faction" was only applying the faction on creature spawn, it now correctly re-applies on creature load.
 - v1.7.7:
