@@ -10,13 +10,20 @@ public class RaidContext
 
     public long? PlayerUserId { get; set; }
 
+    public long? PlayerProfileId { get; set; }
+
     public long? IdentifyPlayerByPos(Vector3 pos)
     {
         foreach (var peer in ZNet.instance.GetPeers())
         {
             if (peer.m_refPos == pos)
             {
-                return PlayerUserId = peer.m_characterID.UserID;
+                PlayerProfileId = ZDOMan.instance.GetZDO(peer.m_characterID)?.GetLong(ZDOVars.s_playerID);
+                PlayerUserId = peer.m_characterID.UserID;
+
+                return PlayerProfileId != 0
+                    ? PlayerProfileId
+                    : null;
             }
         }
 

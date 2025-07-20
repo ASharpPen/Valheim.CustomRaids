@@ -214,6 +214,9 @@ public static class RaidConfigManager
                 m_requiredEnvironments = requiredEnvironments,
                 m_biome = (Heightmap.Biome)int.MaxValue,
                 m_biomeArea = (Heightmap.BiomeArea)7,
+                m_inLava = spawnConfig.InLava.Value,
+                m_outsideLava = spawnConfig.OutsideLava.Value,
+                m_insidePlayerBase = spawnConfig.InsidePlayerBase.Value,
             };
 
             Log.LogDebug($"Adding {spawnConfig.Name} to {raidEvent.Name}");
@@ -271,14 +274,18 @@ public static class RaidConfigManager
             m_random = raidEvent.Random.Value,
             m_spawn = spawnList,
             m_biome = GetBiome(raidEvent),
-            m_notRequiredGlobalKeys = notRequiredGlobalKeys,
-            m_requiredGlobalKeys = requiredGlobalKeys,
+            //m_notRequiredGlobalKeys = notRequiredGlobalKeys,
+            //m_requiredGlobalKeys = requiredGlobalKeys,
             m_pauseIfNoPlayerInArea = raidEvent.PauseIfNoPlayerInArea.Value,
             m_altRequiredPlayerKeysAny = playerMustHaveAnyKey,
             m_altRequiredPlayerKeysAll = playerMustHaveAllKeys,
             m_altNotRequiredPlayerKeys = playerMustNotHaveAnyKey,
             m_altRequiredKnownItems = playerMustKnowItem,
             m_altRequiredNotKnownItems = playerMustNotKnowItem,
+
+            // We manage these options through conditions.
+            m_notRequiredGlobalKeys = [],
+            m_requiredGlobalKeys = [],
         };
 
         return newEvent;

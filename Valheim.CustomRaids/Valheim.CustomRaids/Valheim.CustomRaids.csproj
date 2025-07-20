@@ -5,35 +5,47 @@
     <AssemblyName>Valheim.CustomRaids</AssemblyName>
     <RootNamespace>Valheim.CustomRaids</RootNamespace>
     <Authors>A Sharp Pen</Authors>
-    <Version>1.7.14</Version>
+    <Version>1.8.0</Version>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="BepInEx.Core" Version="5.4.21" />
-  </ItemGroup>
-  <ItemGroup>
+    <Reference Include="0Harmony">
+      <HintPath>..\..\src\Libs\BepInEx\0Harmony.dll</HintPath>
+    </Reference>
     <Reference Include="assembly_utils">
-      <HintPath>..\..\Libs\Valheim\assembly_utils.dll</HintPath>
+      <HintPath>..\..\src\Libs\Valheim\assembly_utils.dll</HintPath>
     </Reference>
     <Reference Include="assembly_valheim">
-      <HintPath>..\..\Libs\Valheim\assembly_valheim.dll</HintPath>
+      <HintPath>..\..\src\Libs\Valheim\assembly_valheim.dll</HintPath>
+    </Reference>
+    <Reference Include="BepInEx">
+      <HintPath>..\..\src\Libs\BepInEx\BepInEx.dll</HintPath>
     </Reference>
     <Reference Include="CreatureLevelControl">
-      <HintPath>..\..\Libs\Smoothbrain-CreatureLevelAndLootControl\CreatureLevelControl.dll</HintPath>
+      <HintPath>..\..\src\Libs\Smoothbrain-CreatureLevelAndLootControl\CreatureLevelControl.dll</HintPath>
+    </Reference>
+    <Reference Include="SoftReferenceableAssets">
+      <HintPath>..\..\src\Libs\Valheim\SoftReferenceableAssets.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine">
-      <HintPath>..\..\Libs\Unity\UnityEngine.dll</HintPath>
+      <HintPath>..\..\src\Libs\Unity\UnityEngine.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.CoreModule">
-      <HintPath>..\..\Libs\Unity\UnityEngine.CoreModule.dll</HintPath>
+      <HintPath>..\..\src\Libs\Unity\UnityEngine.CoreModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.ImageConversionModule">
+      <HintPath>..\..\src\Libs\Unity\UnityEngine.ImageConversionModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.PhysicsModule">
-      <HintPath>..\..\Libs\Unity\UnityEngine.PhysicsModule.dll</HintPath>
+      <HintPath>..\..\src\Libs\Unity\UnityEngine.PhysicsModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UI">
+      <HintPath>..\..\src\Libs\Unity\UnityEngine.UI.dll</HintPath>
     </Reference>
     <Reference Include="Valheim.SpawnThat">
-      <HintPath>..\..\Libs\ASharpPen-Spawn_That\Valheim.SpawnThat.dll</HintPath>
+      <HintPath>..\..\src\Libs\ASharpPen-Spawn_That\Valheim.SpawnThat.dll</HintPath>
     </Reference>
     <Reference Include="VentureValheim.Progression">
-      <HintPath>..\..\Libs\VentureValheim-World_Advancement_Progression\VentureValheim.Progression.dll</HintPath>
+      <HintPath>..\..\src\Libs\VentureValheim-World_Advancement_Progression\VentureValheim.Progression.dll</HintPath>
     </Reference>
   </ItemGroup>
 

@@ -235,6 +235,12 @@ namespace Valheim.CustomRaids.Configuration.ConfigTypes
 
         public ConfigurationEntry<float> OceanDepthMax = new(0, "Maximum ocean depth to spawn in. Ignored if min == max.");
 
+        public ConfigurationEntry<bool> InLava = new(false, "Toggles spawning in lava.");
+
+        public ConfigurationEntry<bool> OutsideLava = new(true, "Toggles spawning outside lava.");
+
+        public ConfigurationEntry<bool> InsidePlayerBase = new(false, "Toggles spawning inside player-base area.");
+
         #endregion
     }
 
