@@ -7,6 +7,8 @@ using System.Linq;
 using Valheim.CustomRaids.Configuration;
 using Valheim.CustomRaids.Configuration.ConfigTypes;
 using Valheim.CustomRaids.Core;
+using Valheim.CustomRaids.Raids.Conditions;
+using Valheim.CustomRaids.Raids.Managers;
 using Valheim.CustomRaids.Utilities;
 using Valheim.CustomRaids.Utilities.Extensions;
 
@@ -56,6 +58,24 @@ public static class EventsWriter
 
             foreach (var entry in events)
             {
+                List<string> requiredGlobalkeys = entry.m_requiredGlobalKeys ?? [];
+                List<string> requiredNotGlobalkeys = entry.m_notRequiredGlobalKeys ?? [];
+
+                if (RaidManager.TryGetRaid(entry.m_name, out var raid))
+                {
+                    requiredGlobalkeys = raid.Conditions
+                        .OfType<ConditionRequiredGlobalKeys>()
+                        .FirstOrDefault()?
+                        .RequiredGlobalKeys?.ToList()
+                        ?? [];
+
+                    requiredNotGlobalkeys = raid.Conditions
+                        .OfType<ConditionRequiredNotGlobalKeys>()
+                        .FirstOrDefault()?
+                        .GlobalKeys?.ToList()
+                        ?? [];
+                }
+
                 lines.Add($"[{entry.m_name}]");
                 lines.Add($"{nameof(RaidEventConfiguration.Name)}={entry.m_name}");
                 lines.Add($"{nameof(RaidEventConfiguration.Enabled)}={entry.m_enabled}");
@@ -65,8 +85,8 @@ public static class EventsWriter
                 lines.Add($"{nameof(RaidEventConfiguration.StartMessage)}={entry.m_startMessage}");
                 lines.Add($"{nameof(RaidEventConfiguration.EndMessage)}={entry.m_endMessage}");
                 lines.Add($"{nameof(RaidEventConfiguration.NearBaseOnly)}={entry.m_nearBaseOnly}");
-                lines.Add($"{nameof(RaidEventConfiguration.RequiredGlobalKeys)}={entry.m_requiredGlobalKeys?.Join() ?? ""}");
-                lines.Add($"{nameof(RaidEventConfiguration.NotRequiredGlobalKeys)}={entry.m_notRequiredGlobalKeys?.Join() ?? ""}");
+                lines.Add($"{nameof(RaidEventConfiguration.RequiredGlobalKeys)}={requiredGlobalkeys.Join()}");
+                lines.Add($"{nameof(RaidEventConfiguration.NotRequiredGlobalKeys)}={requiredNotGlobalkeys.Join()}");
                 lines.Add($"{nameof(RaidEventConfiguration.PauseIfNoPlayerInArea)}={entry.m_pauseIfNoPlayerInArea}");
                 lines.Add($"{nameof(RaidEventConfiguration.ForceEnvironment)}={entry.m_forceEnvironment}");
                 lines.Add($"{nameof(RaidEventConfiguration.ForceMusic)}={entry.m_forceMusic}");
@@ -135,6 +155,9 @@ public static class EventsWriter
                     lines.Add($"{nameof(SpawnConfiguration.OutsideForest)}={spawner.m_outsideForest}");
                     lines.Add($"{nameof(SpawnConfiguration.OceanDepthMin)}={spawner.m_minOceanDepth.ToString(CultureInfo.InvariantCulture)}");
                     lines.Add($"{nameof(SpawnConfiguration.OceanDepthMax)}={spawner.m_maxOceanDepth.ToString(CultureInfo.InvariantCulture)}");
+                    lines.Add($"{nameof(SpawnConfiguration.InLava)}={spawner.m_inLava}");
+                    lines.Add($"{nameof(SpawnConfiguration.OutsideLava)}={spawner.m_outsideLava}");
+                    lines.Add($"{nameof(SpawnConfiguration.InsidePlayerBase)}={spawner.m_insidePlayerBase}");
 
                     lines.Add("");
                 }

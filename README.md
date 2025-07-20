@@ -69,6 +69,9 @@ If you feel like it
 <a href="https://www.buymeacoffee.com/asharppen"><img src="https://img.buymeacoffee.com/button-api/?text=Buy me a coffee&emoji=&slug=asharppen&button_colour=FFDD00&font_colour=000000&font_family=Cookie&outline_colour=000000&coffee_colour=ffffff" /></a>
 
 # Changelog 
+- v1.8.0:
+	- Compatibility: World Advancement Progression. This should fix issue with private key lookups caused by changes in id used for storing player keys.
+	- Added: Support for vanilla spawn conditions 'InsidePlayerBase', 'InLava' and 'OutsideLava'. Note, these are conditions on the individual spawns, not the raid itself.
 - v1.7.14:
 	- Fixed: Issue with overriding raids when multiple shared same name. This caused only one of the two raids to get modified and the other left as is. From now on, a raid configuration will replace all raids with same name with a single configured one. This was detected due to the two vanilla raids "army_theelder" and "army_moder" having duplicates.
 	- Fixed: `custom_raids.raids.location_events_before_changes.txt` printing to disk even though debug option was disabled.

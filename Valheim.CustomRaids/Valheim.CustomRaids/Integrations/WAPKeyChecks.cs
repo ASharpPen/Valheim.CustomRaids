@@ -1,4 +1,5 @@
-﻿using Valheim.CustomRaids.Resetter;
+﻿using Valheim.CustomRaids.Core;
+using Valheim.CustomRaids.Resetter;
 using VentureValheim.Progression;
 
 namespace Valheim.CustomRaids.Integrations;
@@ -20,7 +21,7 @@ internal static class WAPKeyChecks
     {
         if (KeyManager.Instance.ServerPrivateKeysList.TryGetValue(playerId, out var playerKeys))
         {
-            return playerKeys.Contains(key);
+            return playerKeys.Contains(key.ToLower());
         }
 
         return false;

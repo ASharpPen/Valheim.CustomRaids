@@ -28,7 +28,8 @@ internal class ExplainPlayerReadyEventCommand
     {
         try
         {
-            if (args.Length == 0)
+            if (args is null ||
+                args.Length == 0)
             {
                 context.AddString("Must specify an event name.");
                 return;
