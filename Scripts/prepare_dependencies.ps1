@@ -2,7 +2,7 @@
 $profilePath = ""
 
 # Path to Valheim\valheim_Data\Managed dir.
-$valheimPath = ""
+$valheimPath = "C:\Program Files (x86)\Steam\steamapps\common\Valheim\valheim_Data\Managed"
 
 $output = "..\src\Libs\";
 $nstripDir = ".\NStrip"

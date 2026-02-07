@@ -69,6 +69,9 @@ If you feel like it
 <a href="https://www.buymeacoffee.com/asharppen"><img src="https://img.buymeacoffee.com/button-api/?text=Buy me a coffee&emoji=&slug=asharppen&button_colour=FFDD00&font_colour=000000&font_family=Cookie&outline_colour=000000&coffee_colour=ffffff" /></a>
 
 # Changelog 
+- v1.8.1:
+	- Fixed: ConditionPlayersNearbyMin and ConditionPlayersNearbyMax did not count correctly and would stop raid from running.
+	- Documentation: Wiki had incorrect names for conditions for players nearby and players online.
 - v1.8.0:
 	- Compatibility: World Advancement Progression. This should fix issue with private key lookups caused by changes in id used for storing player keys.
 	- Added: Support for vanilla spawn conditions 'InsidePlayerBase', 'InLava' and 'OutsideLava'. Note, these are conditions on the individual spawns, not the raid itself.
