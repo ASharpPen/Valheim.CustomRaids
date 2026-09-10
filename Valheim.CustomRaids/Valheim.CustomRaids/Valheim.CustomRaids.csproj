@@ -1,11 +1,11 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>net48</TargetFramework>
+    <TargetFramework>net481</TargetFramework>
     <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
     <AssemblyName>Valheim.CustomRaids</AssemblyName>
     <RootNamespace>Valheim.CustomRaids</RootNamespace>
     <Authors>A Sharp Pen</Authors>
-    <Version>1.8.1</Version>
+    <Version>1.8.2</Version>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="0Harmony">
