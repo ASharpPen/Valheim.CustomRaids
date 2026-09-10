@@ -7,8 +7,8 @@ namespace Valheim.CustomRaids.World;
 
 internal class ZoneManager
 {
-    private static Dictionary<Vector2i, ZoneHeightmap> HeightmapsLoaded = new();
-    private static Dictionary<Vector2i, ZoneSimulated> SimulatedCache = new();
+    private static Dictionary<Vector2s, ZoneHeightmap> HeightmapsLoaded = new();
+    private static Dictionary<Vector2s, ZoneSimulated> SimulatedCache = new();
 
     static ZoneManager()
     {
@@ -19,7 +19,7 @@ internal class ZoneManager
         });
     }
 
-    public static IZone GetZone(Vector2i zoneId)
+    public static IZone GetZone(Vector2s zoneId)
     {
         if (HeightmapsLoaded.TryGetValue(zoneId, out var cached))
         {

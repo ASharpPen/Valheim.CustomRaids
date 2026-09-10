@@ -4,14 +4,14 @@ namespace Valheim.CustomRaids.Utilities.Extensions;
 
 internal static class Vector3Extensions
 {
-    public static Vector2i GetZoneId(this Vector3 position)
+    public static Vector2s GetZoneId(this Vector3 position)
     {
         return GetZone((int)position.x, (int)position.z);
     }
 
-    private static Vector2i GetZone(int x, int z)
+    private static Vector2s GetZone(int x, int z)
     {
-        return new Vector2i(Zonify(x), Zonify(z));
+        return new Vector2s(Zonify(x), Zonify(z));
     }
 
     private static int Zonify(int coordinate)

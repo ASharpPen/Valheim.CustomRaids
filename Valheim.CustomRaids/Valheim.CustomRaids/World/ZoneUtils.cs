@@ -5,9 +5,9 @@ namespace Valheim.CustomRaids.World.Zone;
 
 public static class ZoneUtils
 {
-    public static List<Vector2i> GetZonesInSquare(int minX, int minZ, int maxX, int maxZ)
+    public static List<Vector2s> GetZonesInSquare(int minX, int minZ, int maxX, int maxZ)
     {
-        List<Vector2i> sectors = new List<Vector2i>();
+        List<Vector2s> sectors = new List<Vector2s>();
 
         int stepMinX = Zonify(minX);
         int stepMaxX = Zonify(maxX);
@@ -19,27 +19,27 @@ public static class ZoneUtils
         {
             for (int z = stepMinZ; z <= stepMaxZ; ++z)
             {
-                sectors.Add(new Vector2i(x, z));
+                sectors.Add(new Vector2s(x, z));
             }
         }
 
         return sectors;
     }
 
-    public static Vector2i GetZone(Vector3 pos) => ZoneSystem.GetZone(pos);
-
-    public static Vector2i GetZone(int x, int z)
-    {
-        return new Vector2i(Zonify(x), Zonify(z));
-    }
-
-    public static int GetZoneIndex(Vector2i zone)
-    {
-        return ZDOMan.instance.SectorToIndex(zone);
-    }
-
     public static int Zonify(int coordinate)
     {
         return Mathf.FloorToInt((coordinate + 32) / 64f);
+    }
+
+    public static Vector2s GetZone(Vector3 pos) => ZoneSystem.GetZone(pos);
+
+    public static Vector2s GetZone(int x, int z)
+    {
+        return new Vector2s(Zonify(x), Zonify(z));
+    }
+
+    public static uint GetZoneIndex(Vector2s zone)
+    {
+        return ZoneSystem.SectorToIndex(zone).Sector;
     }
 }
